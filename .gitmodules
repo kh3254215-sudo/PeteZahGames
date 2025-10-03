@@ -1,24 +1,24 @@
-[submodule "external/scramjet"]
-	path = external/scramjet
-	url = https://github.com/MercuryWorkshop/scramjet.git
-[submodule "external/ultraviolet"]
-	path = external/ultraviolet
-	url = https://github.com/titaniumnetwork-dev/Ultraviolet.git
 [submodule "external/bare-server-node"]
 	path = external/bare-server-node
 	url = https://github.com/tomphttp/bare-server-node.git
 [submodule "external/wisp-server-node"]
 	path = external/wisp-server-node
 	url = https://github.com/MercuryWorkshop/wisp-server-node.git
-[submodule "external/libcurl.js"]
-	path = external/libcurl.js
-	url = https://github.com/ading2210/libcurl.js.git
 [submodule "external/bare-mux"]
 	path = external/bare-mux
 	url = https://github.com/MercuryWorkshop/bare-mux.git
 [submodule "external/epoxy"]
 	path = external/epoxy
 	url = https://github.com/MercuryWorkshop/EpoxyTransport.git
-[submodule "wisp-client-js"]
+[submodule "external/libcurl-transport"]
+	path = external/libcurl-transport
+	url = https://github.com/MercuryWorkshop/CurlTransport.git
+[submodule "external/wisp-client-js"]
 	path = external/wisp-client-js
 	url = https://github.com/MercuryWorkshop/wisp-client-js.git
+[submodule "external/ultraviolet"]
+	path = external/ultraviolet
+	url = https://github.com/titaniumnetwork-dev/Ultraviolet.git
+[submodule "external/scramjet"]
+	path = external/scramjet
+	url = https://github.com/MercuryWorkshop/scramjet.git
