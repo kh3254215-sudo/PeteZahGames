@@ -13,6 +13,14 @@ const scramjet = new ScramjetServiceWorker();
 
 async function handleRequest(event) {
   await scramjet.loadConfig();
+
+  const url = new URL(event.request.url);
+
+  if (url.hostname.includes("youtube.com") || url.hostname.includes("youtube-nocookie.com")) {
+    const redirectUrl = `/api/youtube-bypass/embed.html#${url.href}`;
+    return Response.redirect(redirectUrl, 302);
+  }
+
   if (scramjet.route(event)) {
     return scramjet.fetch(event);
   }

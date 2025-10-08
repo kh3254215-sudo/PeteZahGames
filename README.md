@@ -55,6 +55,7 @@ pnpm start
 
 If you would like to use one of the following buttons to deploy
 
+> [![Deploy to Vercel](https://binbashbanana.github.io/deploy-buttons/buttons/remade/vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/PeteZah-Games/petezahgames)
 > [![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/PeteZah-Games/petezahgames)
 > [![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://replit.com/github/PeteZah-Games/petezahgames)
 > [![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/PeteZah-Games/petezahgames)
@@ -77,53 +78,79 @@ If you would like to use one of the following buttons to deploy
 
 - https://\*.supergisfire.com.cdn.cloudflare.net/
 
+---
+
 ### **Lightspeed**
 
-- [https://supergisfire.com.cdn.cloudflare.net](supergisfire.com.cdn.cloudflare.net)
-- [https://51.222.141.36.ip.addr.tools](51.222.141.36.ip.addr.tools)
-- [https://ffd.travelpage.biz](ffd.travelpage.biz)
-- [https://snoopyshouldbeadmintrust.jobvn.com](snoopyshouldbeadmintrust.jobvn.com)
-- [https://reallyhardenglishcourses.neo-space.space](reallyhardenglishcourses.neo-space.space)
-- [https://fastermath.neo-space.space](fastermath.neo-space.space)
-- [https://nice.neo-space.space](nice.neo-space.space)
-- [https://civics.jobvn.com](civics.jobvn.com)
-- [https://english.jobvn.com](english.jobvn.com)
-- [https://dashboard.adidasnmdcitysock.com.cdn.cloudflare.net](dashboard.adidasnmdcitysock.com.cdn.cloudflare.net)
+- [supergisfire.com.cdn.cloudflare.net](https://supergisfire.com.cdn.cloudflare.net)
+- [51.222.141.36.ip.addr.tools](https://51.222.141.36.ip.addr.tools)
+- [ffd.travelpage.biz](https://ffd.travelpage.biz)
+- [snoopyshouldbeadmintrust.jobvn.com](https://snoopyshouldbeadmintrust.jobvn.com)
+- [reallyhardenglishcourses.neo-space.space](https://reallyhardenglishcourses.neo-space.space)
+- [fastermath.neo-space.space](https://fastermath.neo-space.space)
+- [nice.neo-space.space](https://nice.neo-space.space)
+- [civics.jobvn.com](https://civics.jobvn.com)
+- [english.jobvn.com](https://english.jobvn.com)
+- [dashboard.adidasnmdcitysock.com.cdn.cloudflare.net](https://dashboard.adidasnmdcitysock.com.cdn.cloudflare.net)
 
-### **Goguardian**
+---
 
-- [https://mathhelp.moorcroftmr.uk](mathhelp.moorcroftmr.uk)
-- [https://mathhelp.deezpotatos.cc](mathhelp.deezpotatos.cc)
-- [https://sciencias.rawal-karan.com.np](sciencias.rawal-karan.com.np)
-- [https://sciencias.redinfosys.com](sciencias.redinfosys.com)
-- [https://thisistakingtoolong.dj-jam.be](thisistakingtoolong.dj-jam.be)
+### **GoGuardian**
+
+- [mathhelp.moorcroftmr.uk](https://mathhelp.moorcroftmr.uk)
+- [mathhelp.deezpotatos.cc](https://mathhelp.deezpotatos.cc)
+- [sciencias.rawal-karan.com.np](https://sciencias.rawal-karan.com.np)
+- [sciencias.redinfosys.com](https://sciencias.redinfosys.com)
+- [thisistakingtoolong.dj-jam.be](https://thisistakingtoolong.dj-jam.be)
+
+---
 
 ### **Securly**
 
-- [https://boing.macleod.nom.za](boing.macleod.nom.za)
-- [https://type.shela.nu](type.shela.nu)
-- [https://1copa.1copa.com](1copa.1copa.com)
-- [https://yayjobs.juniorjobs.ro](yayjobs.juniorjobs.ro)
+- [boing.macleod.nom.za](https://boing.macleod.nom.za)
+- [type.shela.nu](https://type.shela.nu)
+- [1copa.1copa.com](https://1copa.1copa.com)
+- [yayjobs.juniorjobs.ro](https://yayjobs.juniorjobs.ro)
+
+---
 
 ### **Content Keeper**
 
-- [https://theythem.itfiredup.com](theythem.itfiredup.com)
-- [https://yoooooo.itfiredup.com](yoooooo.itfiredup.com)
+- [theythem.itfiredup.com](https://theythem.itfiredup.com)
+- [yoooooo.itfiredup.com](https://yoooooo.itfiredup.com)
+
+---
 
 ### **Linewize**
 
-- [https://yoooo.primatools.ro](yoooo.primatools.ro)
-- [https://happy.primatools.ro](happy.primatools.ro)
+- [yoooo.primatools.ro](https://yoooo.primatools.ro)
+- [happy.primatools.ro](https://happy.primatools.ro)
+
+---
 
 ### **Palo Alto**
 
-- [https://petezahmybeloved.shela.nu](petezahmybeloved.shela.nu)
-- [https://ilikemath.shela.nu](ilikemath.shela.nu)
+- [petezahmybeloved.shela.nu](https://petezahmybeloved.shela.nu)
+- [ilikemath.shela.nu](https://ilikemath.shela.nu)
+
+---
 
 ### **Blocksi**
 
-- [https://precalculuslessons.dj-jam.be](precalculuslessons.dj-jam.be)
+- [precalculuslessons.dj-jam.be](https://precalculuslessons.dj-jam.be)
+
+---
 
 ### **Cisco Umbrella**
 
-- [https://blueinfosys.redinfosys.com](blueinfosys.redinfosys.com)
+- [blueinfosys.redinfosys.com](https://blueinfosys.redinfosys.com)
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=PeteZah-Games/PeteZahGames&type=Date)](https://www.star-history.com/#PeteZah-Games/PeteZahGames&Date)
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=PeteZah-Games/PeteZahGames)](https://github.com/PeteZah-Games/PeteZahGames/graphs/contributors)

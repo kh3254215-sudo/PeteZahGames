@@ -1158,6 +1158,14 @@
         const activeTab = getActiveTab();
         if (addressBar && activeTab) {
           addressBar.value = activeTab.url;
+          if (
+            activeTab.url.startsWith("https://www.youtube.com") ||
+            activeTab.url === "www.youtube.com"
+          ) {
+            console.log("Switching iframe src to YouTube embed");
+            activeTab.frame.frame.src =
+              "/static/youtube-embed.html#https://youtube.com";
+          }
         }
       }
 
