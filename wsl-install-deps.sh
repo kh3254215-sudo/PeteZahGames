@@ -56,9 +56,24 @@ install_pkg() {
 
 
 # Install base dependencies
-for dep in git nodejs npm curl build-essential; do
+for dep in git curl build-essential; do
   install_pkg "$dep"
 done
+
+# Install NVM and Node 22+
+if ! has nvm; then
+  echo "Installing NVM..."
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  export NVM_DIR="$HOME/.nvm"
+  source "$NVM_DIR/nvm.sh"
+fi
+
+echo "Installing Node.js 22 via NVM..."
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+nvm install 22
+nvm use 22
+
 
 # Install pnpm globally
 if ! has pnpm; then
@@ -92,7 +107,7 @@ if ! grep -q 'export PATH="$HOME/.cargo/bin:$PATH"' "$HOME/.bashrc"; then
   echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> "$HOME/.bashrc"
   echo 'Added ~/.cargo/bin to PATH in .bashrc'
 else
-  echo 'ℹ~/.cargo/bin is already in PATH in .bashrc'
+  echo '$HOME/.cargo/bin is already in PATH in .bashrc'
 fi
 # Install Binaryen (wasm-opt)
 install_pkg binaryen

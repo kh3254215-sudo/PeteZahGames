@@ -1120,7 +1120,7 @@ async function __uvHook(window, config = {}, bare = "/bare/") {
   });
 
   // Proper hash emulation.
-  if (!!window.window) {
+  if (window.window) {
     __uv.addEventListener.call(window, "hashchange", (event) => {
       if (event.__uv$dispatched) return false;
       event.stopImmediatePropagation();

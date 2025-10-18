@@ -3,16 +3,15 @@ import { promises as fs } from "fs";
 import fse from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
-import { exec as execCb, execSync } from "child_process";
+import { exec as execSync } from "child_process";
 import sharp from "sharp";
 import os from "os";
-import util from "util";
-
-const exec = util.promisify(execCb);
+import minimist from 'minimist';
+import { spawn } from "child_process";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const projdir = __dirname;
+const args = minimist(process.argv.slice(2));
 
 // --- Submodules configuration (mirrors .gitmodules and bash array)
 const Submodules = [
@@ -28,17 +27,18 @@ const Submodules = [
 
 // --- Build commands ---
 const buildCommands = {
-  /*
   "scramjet": "CI=true pnpm install && PATH='$HOME/.cargo/bin:$PATH' npm run rewriter:build && npm run build:all",
   "ultraviolet": "CI=true pnpm install && pnpm run build",
   "bare-mux": "CI=true pnpm install && pnpm run build",
   "epoxy": "CI=true pnpm install && pnpm run build",
-  "libcurl-transport": "CI=truepnpm install && pnpm run build",
-  "wisp-client-js": "CI=truenpm install && npm run build",
+  "libcurl-transport": "CI=true pnpm install && pnpm run build",
+  "wisp-client-js": "CI=true npm install && npm run build",
   "bare-server-node": "CI=true pnpm install && pnpm run build",
-  "wisp-server-node": "CI=true pnpm install && pnpm build",*/
+  "wisp-server-node": "CI=true pnpm install && pnpm run build"
 };
-
+const YELLOW = "\x1b[33m";
+const GREEN = "\x1b[32m";
+const RESET = "\x1b[0m"
 // --- Asset building ---
 const INPUT_IMAGES = path.join(projdir, "inputimages");
 const INPUT_VECTORS = path.join(projdir, "inputvectors");
@@ -87,7 +87,7 @@ async function ensureSubmodules() {
 
   if (missing) {
     console.log("Not all submodules found, installing...");
-    await exec("git submodule update --init --recursive", { cwd: projdir });
+    spawn("git submodule update --init --recursive", { cwd: projdir });
   } else {
     console.log("All submodules exist, continuing...");
   }
@@ -95,17 +95,13 @@ async function ensureSubmodules() {
 
 function checkWSL() {
   try {
-    const output = execSync("wsl.exe --list --quiet", {
-      stdio: "pipe",
-    }).toString();
+    const output = execSync('wsl.exe --list --quiet', { encoding: 'utf-8' });
     const distros = output
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
     if (distros.length === 0) {
       throw new Error("WSL is installed but no distros found.");
     }
-    console.log(`WSL distros detected: ${distros.join(", ")}`);
+    console.log(typeof distros); // should be 'string'
+    console.log(`WSL distros detected: ${distros}`);
   } catch (err) {
     throw new Error(
       "WSL is not installed or inaccessible. Details: " + err.message,
@@ -114,7 +110,7 @@ function checkWSL() {
 }
 
 function wrapCommandForWSL(command, cwd) {
-  if (os.platform() !== "win32") return command;
+  if (os.platform() !== "win32") { console.log("Non-Windows platform detected, continuing"); return command; }
   console.log("Windows detected, checking WSL...");
   checkWSL();
 
@@ -137,10 +133,29 @@ async function buildSubmodules() {
     }
 
     const wrapped = wrapCommandForWSL(buildcommand, subdir);
-    await exec(wrapped, {
-      shell: true,
-      env: { ...process.env, RELEASE: "1" },
-      stdio: "inherit",
+
+    await new Promise((resolve, reject) => {
+      const command = spawn(wrapped, {
+        shell: true,
+        env: { ...process.env, RELEASE: "1" },
+        stdio: ["inherit", "pipe", "pipe"],
+      });
+
+      command.stdout.on("data", (data) => {
+        process.stdout.write(`${GREEN}${data}${RESET}`);
+      });
+      if (args.env === "debug") {
+        command.stderr.on("data", (data) => {
+          process.stderr.write(`${YELLOW}${data}${RESET}`);
+        });
+      }
+      command.on("close", (code) => {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`Build failed for ${name} with exit code ${code}`));
+        }
+      });
     });
   }
 }
@@ -203,7 +218,7 @@ async function walk(dir, handler) {
   const stack = [dir];
   while (stack.length) {
     const current = stack.pop();
-    const entries = await fs.readdir(current, { withFileTypes: true });
+    const entries = await fse.readdir(current, { withFileTypes: true });
     for (const entry of entries) {
       const full = path.join(current, entry.name);
       if (entry.isDirectory()) {
@@ -283,10 +298,10 @@ function getGitCommitCount(filePath) {
 
 function crawl(dir, baseUrl = "") {
   let results = [];
-  const list = fs.readdirSync(dir);
+  const list = fse.readdirSync(dir);
   list.forEach((file) => {
     const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
+    const stat = fse.statSync(filePath);
     if (stat.isDirectory()) {
       results = results.concat(crawl(filePath, baseUrl + "/" + file));
     } else {
@@ -347,7 +362,7 @@ async function main() {
   await processInputImages();
   await processInputVectors();
   const urls = crawl(path.join(__dirname, "public"));
-  fs.writeFileSync(".sitemap-base.json", JSON.stringify(urls, null, 2));
+  fse.writeFileSync(".sitemap-base.json", JSON.stringify(urls, null, 2));
   console.log("Sitemap base built with", urls.length, "entries");
 
   logSection(`Done in ${(Date.now() - start) / 1000}s`);

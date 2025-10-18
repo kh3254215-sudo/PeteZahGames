@@ -72,15 +72,51 @@ function installBinaryen() {
     installLinux("binaryen");
   }
 }
+function runRegularInstall() {
+  const args = process.argv.slice(2);
+  const pnpm = spawn("pnpm install", ...args, {
+    shell: true,
+    stdio: ["inherit", "pipe", "pipe"],
+  });
 
+  pnpm.stdout.on("data", (data) => {
+    process.stdout.write(`${GREEN}${data}${RESET}`);
+  });
+  pnpm.on("close", (code) => {
+    if (code === 0) {
+      resolve();
+    } else {
+      reject(new Error(`Build failed for ${name} with exit code ${code}`));
+    }
+  }
+  );
+}
 function installDepsUnix() {
   const platform = os.platform();
   console.log(`Detected platform: ${platform}`);
 
   if (platform === "linux") {
-    ["git", "nodejs", "npm"].forEach(installLinux);
+    ["git", "curl"].forEach(installLinux);
+
+    if (!has("nvm")) {
+      console.log("Installing NVM...");
+      run("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash");
+      run("export NVM_DIR=\"$HOME/.nvm\" && source \"$NVM_DIR/nvm.sh\"");
+    }
+
+    console.log("Installing Node.js 22 via NVM...");
+    run("export NVM_DIR=\"$HOME/.nvm\" && source \"$NVM_DIR/nvm.sh\" && nvm install 22 && nvm use 22");
   } else if (platform === "darwin") {
-    ["git", "node", "npm"].forEach(installMac);
+    ["git", "curl"].forEach(installMac);
+    if (!has("nvm")) {
+      console.log("Installing NVM...");
+      run("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash");
+      run("export NVM_DIR=\"$HOME/.nvm\" && source \"$NVM_DIR/nvm.sh\"");
+    }
+
+    console.log("Installing Node.js 22 via NVM...");
+    run("export NVM_DIR=\"$HOME/.nvm\" && source \"$NVM_DIR/nvm.sh\" && nvm install 22 && nvm use 22");
+
   } else {
     console.error("Unsupported OS for this script");
     process.exit(1);
@@ -94,7 +130,7 @@ function installDepsUnix() {
 
   installRustTools();
   installBinaryen();
-
+  runRegularInstall();
   console.log("All dependencies installed successfully!");
 }
 
@@ -105,7 +141,6 @@ function main() {
     // Running on Windows outside WSL
     if (has("wsl")) {
       console.log("Windows detected. Running dependency install inside WSL...");
-      // Forward this script into WSL
       run(`wsl bash -ic "bash ./wsl-install-deps.sh"`);
     } else {
       console.error("WSL not detected. Please install WSL first.");
