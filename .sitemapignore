@@ -1,0 +1,8 @@
+# Ignore .png files in subdirectories of /ag/g/*
+/ag/g/*/*/**/*.png
+!/ag/g/*/*.png
+*.png
+*.webp
+*.avif
+*.jpeg
+*.jpg

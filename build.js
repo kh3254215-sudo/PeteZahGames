@@ -2,6 +2,7 @@
 import { execSync, spawn } from 'child_process';
 import { createWriteStream, promises as fs } from 'fs';
 import fse from 'fs-extra';
+import ignore from 'ignore';
 import git from 'isomorphic-git';
 import minimist from 'minimist';
 import os from 'os';
@@ -14,53 +15,94 @@ const __dirname = path.dirname(__filename);
 const projdir = __dirname;
 
 // JSON stream writer for large arrays
+// Helper to safely encode JSON values
+function safeJsonStringify(obj) {
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'string') {
+      // Only keep printable ASCII characters (space through tilde)
+      return value.replace(/[^\x20-\x7E]/g, '');
+    }
+    if (DEBUG === true) {
+      console.log(`Safely strigified value: ${value}`);
+    }
+    return value;
+  });
+}
+
 class JsonArrayWriter {
   constructor(filePath) {
-    this.stream = createWriteStream(filePath);
+    this.stream = createWriteStream(filePath, { encoding: 'utf8' });
     this.count = 0;
+    this.hasError = false;
     this.stream.write('[\n');
+
+    // Handle stream errors
+    this.stream.on('error', (err) => {
+      console.error(`Error writing to ${filePath}:`, err);
+      this.hasError = true;
+    });
   }
 
   async write(obj) {
-    if (this.count > 0) {
-      this.stream.write(',\n');
+    if (this.hasError) {
+      throw new Error('Stream is in error state');
     }
-    this.stream.write('  ' + JSON.stringify(obj));
-    this.count++;
+
+    return new Promise((resolve, reject) => {
+      const data = this.count > 0 ? ',\n  ' : '  ';
+      this.stream.write(data + safeJsonStringify(obj), 'utf8', (err) => {
+        if (err) {
+          this.hasError = true;
+          reject(err);
+        } else {
+          this.count++;
+          resolve();
+        }
+      });
+    });
   }
 
   async end() {
-    this.stream.write('\n]\n');
+    if (this.hasError) {
+      throw new Error('Stream is in error state');
+    }
+
     return new Promise((resolve, reject) => {
-      this.stream.end((err) => (err ? reject(err) : resolve(this.count)));
+      this.stream.end('\n]\n', 'utf8', (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this.count);
+        }
+      });
     });
   }
 }
 
 // Move remaining top-level constants and configuration outside the class
 const args = minimist(process.argv.slice(2));
+let DEBUG = false;
+if (args.env === 'debug') {
+  DEBUG = true;
+  console.log('Debug mode enabled');
+}
 const SKIP_SUBMODULES = args['skip-submodules'] || process.env.SKIP_SUBMODULES === '1' || false;
 const USAGE = `build.js [options]
 
 Options:
   --help, -h              Show this help message
   --skip-submodules       Skip building external submodules (env SKIP_SUBMODULES=1)
+  --keep-submodules       Do not refresh submodules (env KEEP_SUBMODULES=1)
   --env=NAME              Set environment mode (e.g., --env=debug)
 `;
 
 // --- Submodules configuration (mirrors .gitmodules and bash array)
-const Submodules = ['scramjet', 'ultraviolet', 'bare-mux', 'libcurl-transport', 'epoxy', 'wisp-client-js', 'bare-server-node', 'wisp-server-node'];
+const Submodules = ['scramjet', 'ultraviolet'];
 
 // --- Build commands ---
 const buildCommands = {
-  'scramjet': "CI=true pnpm install && PATH='$HOME/.cargo/bin:$PATH' npm run rewriter:build && npm run build:all",
-  'ultraviolet': 'CI=true pnpm install && pnpm run build',
-  'bare-mux': 'CI=true pnpm install && pnpm run build',
-  'epoxy': 'CI=true pnpm install && pnpm run build',
-  'libcurl-transport': 'CI=true pnpm install && pnpm run build',
-  'wisp-client-js': 'CI=true npm install && npm run build',
-  'bare-server-node': 'CI=true pnpm install && pnpm run build',
-  'wisp-server-node': 'CI=true pnpm install && pnpm run build'
+  scramjet: "CI=true pnpm install && PATH='$HOME/.cargo/bin:$PATH' npm run rewriter:build && npm run build:all",
+  ultraviolet: 'CI=true pnpm install --ignore-workspace-root-check && pnpm run build'
 };
 const YELLOW = '\x1b[33m';
 const GREEN = '\x1b[32m';
@@ -97,8 +139,13 @@ async function ensureSubmodules() {
     const dir = path.join(projdir, 'external', name);
     const exists = await fse.pathExists(dir);
     if (!exists) {
-      missing = true;
-      break;
+      if (args['keep-submodules'] || process.env.KEEP_SUBMODULES === '1') {
+        console.log(`Submodule ${name} missing, but KEEP_SUBMODULES is set; skipping initialization.`);
+        continue;
+      } else {
+        missing = true;
+        break;
+      }
     }
   }
 
@@ -138,11 +185,13 @@ function wrapCommandForWSL(command, cwd) {
   checkWSL();
 
   // Convert Windows path to WSL path
-  const wslPath = cwd
-    .replace(/\\/g, '/')
-    .replace(/^([A-Za-z]):/, '/mnt/$1')
-    .toLowerCase();
-  return `wsl bash -c "source ~/.bashrc && cd '${wslPath}' && ${command}"`;
+  const wslPath = cwd.replace(/\\/g, '/').replace(/^([A-Za-z]):/, (_, d) => `/mnt/${d.toLowerCase()}`);
+  if (DEBUG === true) {
+    console.log(`Converted Windows path ${cwd} to WSL path ${wslPath}`);
+    return `wsl bash -c "source ~/.bashrc && (cd '${wslPath}' && echo '${command}' && ${command})"`;
+  } else {
+    return `wsl bash -c "source ~/.bashrc && (cd '${wslPath}' && ${command})"`;
+  }
 }
 
 async function buildSubmodules() {
@@ -156,22 +205,33 @@ async function buildSubmodules() {
     }
 
     const wrapped = wrapCommandForWSL(buildcommand, subdir);
-
     await new Promise((resolve, reject) => {
-      const command = spawn(wrapped, {
-        shell: true,
-        env: { ...process.env, RELEASE: '1' },
-        stdio: ['inherit', 'pipe', 'pipe']
-      });
-
+      let command;
+      if (DEBUG === true && os.platform !== 'win32') {
+        command = spawn(wrapped, {
+          shell: true,
+          cwd: subdir,
+          env: { ...process.env, RELEASE: '1' },
+          stdio: ['inherit', 'pipe', 'pipe']
+        });
+      } else {
+        command = spawn(wrapped, {
+          shell: true,
+          cwd: subdir,
+          env: { ...process.env, RELEASE: '1' },
+          stdio: ['inherit', 'pipe', 'pipe']
+        });
+      }
       command.stdout.on('data', (data) => {
         process.stdout.write(`${GREEN}${data}${RESET}`);
       });
-      if (args.env === 'debug') {
+
+      if (DEBUG === true) {
         command.stderr.on('data', (data) => {
           process.stderr.write(`${YELLOW}${data}${RESET}`);
         });
       }
+
       command.on('close', (code) => {
         if (code === 0) {
           resolve();
@@ -289,70 +349,158 @@ const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov'];
 
 // Synchronous git helpers removed in favor of async variants (getGitLastModAsync, getGitCommitCountAsync)
 // Async crawl that collects file entries without running git per-file synchronously
+// Set of valid extensions for faster lookup
+const VALID_EXTENSIONS = new Set([HTML_EXT, ...IMAGE_EXTENSIONS, ...VIDEO_EXTENSIONS]);
+const ignorePath = path.join(__dirname, '.sitemapignore');
+let sitemapIgnore;
+try {
+  const ignoreContent = await fse.readFile(ignorePath, 'utf8');
+  sitemapIgnore = ignore().add(ignoreContent);
+  console.log('Loaded .sitemapignore rules');
+} catch (err) {
+  console.warn('No .sitemapignore file found or failed to read:', err.message);
+  sitemapIgnore = ignore();
+}
+
 async function crawlAsync(dir, baseUrl = '') {
-  const results = [];
-  const entries = await fse.readdir(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      const child = await crawlAsync(full, baseUrl + '/' + entry.name);
-      results.push(...child);
-      continue;
-    }
-    const ext = path.extname(entry.name).toLowerCase();
-    if (![HTML_EXT, ...IMAGE_EXTENSIONS, ...VIDEO_EXTENSIONS].includes(ext)) continue;
-    // Determine URL path: index.html maps to directory
-    const urlPath = ext === HTML_EXT && entry.name.toLowerCase() === 'index.html' ? (baseUrl === '' ? '/' : baseUrl) : baseUrl + '/' + entry.name;
-    const stat = await fse.stat(full);
-    // For now set lastmod and commitCount to null; we'll fetch in parallel later
-    results.push({ filePath: full, loc: urlPath.replace(/\/+/g, '/'), lastmod: stat.mtime.toISOString(), ext, commitCount: 0 });
+  try {
+    const results = [];
+    const entries = await fse.readdir(dir, { withFileTypes: true });
+
+    // Process directories and files in parallel
+    const processPromises = entries.map(async (entry) => {
+      const full = path.join(dir, entry.name);
+
+      try {
+        if (entry.isDirectory()) {
+          const children = await crawlAsync(full, baseUrl + '/' + entry.name);
+          results.push(...children);
+          return;
+        }
+
+        const ext = path.extname(entry.name).toLowerCase();
+        if (!VALID_EXTENSIONS.has(ext)) return;
+
+        // Sanitize and validate URL path
+        const urlPath = ext === HTML_EXT && entry.name.toLowerCase() === 'index.html' ? (baseUrl === '' ? '/' : baseUrl) : baseUrl + '/' + entry.name;
+
+        const sanitizedPath = urlPath.replace(/\/+/g, '/').replace(/[^\x20-\x7E]/g, '');
+
+        try {
+          const stat = await fse.stat(full);
+          results.push({
+            filePath: full,
+            loc: sanitizedPath,
+            lastmod: stat.mtime.toISOString(),
+            ext,
+            commitCount: 0
+          });
+        } catch (statErr) {
+          console.warn(`Warning: Could not stat file ${full}: ${statErr.message}`);
+        }
+      } catch (err) {
+        console.warn(`Warning: Error processing ${full}: ${err.message}`);
+      }
+    });
+
+    await Promise.all(processPromises);
+    return results;
+  } catch (err) {
+    console.error(`Error crawling directory ${dir}: ${err.message}`);
+    return [];
   }
-  return results;
 }
 
 // execPromise removed; replaced by isomorphic-git
 
-// Use isomorphic-git for fast, native git metadata
+// Use isomorphic-git for fast, native git metadata with caching
 const workdir = __dirname;
-async function getGitLastModAsync(filePath) {
-  try {
-    const relPath = path.relative(workdir, filePath).replace(/\\/g, '/');
-    const commits = await git.log({ fs: fse, dir: workdir, filepath: relPath, depth: 1 });
-    if (commits && commits.length > 0) {
-      return new Date(commits[0].commit.committer.timestamp * 1000).toISOString();
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
+const gitCache = new Map();
 
-async function getGitCommitCountAsync(filePath) {
+async function getFileGitData(filePath) {
+  const cacheKey = filePath;
+  if (gitCache.has(cacheKey)) {
+    return gitCache.get(cacheKey);
+  }
+
   try {
     const relPath = path.relative(workdir, filePath).replace(/\\/g, '/');
     const commits = await git.log({ fs: fse, dir: workdir, filepath: relPath });
-    return commits.length;
-  } catch {
-    return 0;
+
+    if (!commits || commits.length === 0) {
+      const result = { lastmod: null, commitCount: 0 };
+      gitCache.set(cacheKey, result);
+      return result;
+    }
+
+    const result = {
+      lastmod: new Date(commits[0].commit.committer.timestamp * 1000).toISOString(),
+      commitCount: commits.length
+    };
+    gitCache.set(cacheKey, result);
+    return result;
+  } catch (err) {
+    if (DEBUG) {
+      console.warn(`Git data fetch failed for ${filePath}: ${err.message}`);
+    }
+    const result = { lastmod: null, commitCount: 0 };
+    gitCache.set(cacheKey, result);
+    return result;
   }
 }
-
-// Simple concurrency limiter for promises
-function withConcurrencyLimit(items, limit, fn) {
+function withConcurrencyLimit(items, limit, fn, flushCallback = null, options = {}) {
   const results = [];
   let i = 0;
-  const workers = new Array(Math.min(limit, items.length)).fill(null).map(async () => {
+  let activeWorkers = 0;
+  const maxMemoryUsage = options.maxMemoryUsage || 0.8;
+  const flushInterval = options.flushInterval || 100; // flush every N items
+  let lastFlushIndex = 0;
+  if (DEBUG) {
+    console.log(`withConcurrencyLimit: limit=${limit}, maxMemoryUsage=${maxMemoryUsage}, flushInterval=${flushInterval}`);
+  }
+  async function runWorker() {
     while (i < items.length) {
+      const memUsage = process.memoryUsage().heapUsed / process.memoryUsage().heapTotal;
+
+      // Flush if memory usage is high or enough items have accumulated
+      if ((memUsage > maxMemoryUsage || i - lastFlushIndex >= flushInterval) && flushCallback && results.length > 0) {
+        console.warn(`Flushing ${results.length} items at index ${i} (mem: ${Math.round(memUsage * 100)}%)`);
+        await flushCallback(results.filter(Boolean));
+        results.length = 0; // clear flushed results
+        lastFlushIndex = i;
+      }
+
       const idx = i++;
       try {
-        results[idx] = await fn(items[idx], idx);
-      } catch {
-        results[idx] = null;
+        activeWorkers++;
+        const result = await fn(items[idx], idx);
+        if (result) results.push(result);
+        if (DEBUG) {
+          console.log(`Worker started. Active: ${activeWorkers}`);
+        }
+      } catch (err) {
+        console.warn(`Worker error at index ${idx}:`, err.message);
+      } finally {
+        activeWorkers--;
+        if (DEBUG) {
+          console.log(`Worker ended. Active: ${activeWorkers}`);
+        }
       }
     }
+  }
+
+  const workers = new Array(Math.min(limit, items.length)).fill(null).map(() => runWorker());
+
+  return Promise.all(workers).then(async () => {
+    // Final flush after all workers complete
+    if (flushCallback && results.length > 0) {
+      console.warn(`Final flush of ${results.length} items`);
+      await flushCallback(results.filter(Boolean));
+    }
+    return results;
   });
-  return Promise.all(workers).then(() => results);
 }
+
 function computePriority(commitCount, maxCommits) {
   if (maxCommits === 0) return 0.5;
   const normalized = commitCount / maxCommits;
@@ -400,56 +548,209 @@ async function main() {
 
   await processInputImages();
   await processInputVectors();
+  // Setup sitemap paths
+  const sitemapDir = path.join(__dirname);
+  const sitemapBasePath = path.join(sitemapDir, 'sitemap-base.json');
+  const sitemapCachePath = path.join(sitemapDir, '.sitemap-cache.json');
+
+  // Load previous git cache if available
+  try {
+    const previousCache = await fse.readJson(sitemapCachePath);
+    if (previousCache && typeof previousCache === 'object') {
+      for (const [key, value] of Object.entries(previousCache)) {
+        gitCache.set(key, value);
+      }
+      console.log(`Loaded ${Object.keys(previousCache).length} cached git entries`);
+    }
+  } catch (err) {
+    console.warn(err.message);
+    console.log('No previous git cache found, starting fresh');
+  }
+
   // Crawl files asynchronously
-  const crawled = await crawlAsync(path.join(__dirname, 'public'));
-  console.log('Crawled', crawled.length, 'files, fetching git metadata in parallel...');
+  const allCrawled = await crawlAsync(path.join(__dirname, 'public'));
+  const rootDir = path.join(__dirname, 'public');
+
+  const crawled = allCrawled.filter((entry) => {
+    const relativePath = path.relative(rootDir, entry.filePath).replace(/\\/g, '/');
+    return !sitemapIgnore.ignores(relativePath);
+  });
+
+  // Ensure sitemap directory exists
+  await fse.ensureDir(sitemapDir);
 
   // Initialize JSON array writer
-  const writer = new JsonArrayWriter('.sitemap-base.json');
+  const writer = new JsonArrayWriter(sitemapBasePath);
 
-  // Process files in batches for memory efficiency
-  const batchSize = 20;
+  // Group files by directory for more efficient processing
+  const filesByDir = new Map();
+  for (const entry of crawled) {
+    const dir = path.dirname(entry.filePath);
+    if (!filesByDir.has(dir)) {
+      filesByDir.set(dir, []);
+    }
+    filesByDir.get(dir).push(entry);
+  }
+
+  console.log(`Grouped ${crawled.length} files into ${filesByDir.size} directories`);
+
+  // Process directories in parallel for better git data caching
+  const dirEntries = await Promise.all(
+    Array.from(filesByDir.entries()).map(async ([dir, entries]) => {
+      try {
+        // Get git data for directory once
+        const dirGitData = await getFileGitData(dir);
+        return entries.map((entry) => ({
+          entry,
+          gitData: dirGitData // Use directory git data as fallback
+        }));
+      } catch (err) {
+        console.warn(`Warning: Failed to get git data for directory ${dir} with error: ${err.message}`);
+        return entries.map((entry) => ({ entry, gitData: null }));
+      }
+    })
+  );
+
+  // Process all entries in larger batches
+  const batchSize = 200; // Much larger batch size
+  const maxConcurrency = Math.min(200, os.cpus().length * 8); // Scale with CPU cores
   let processed = 0;
   let maxCommits = 0;
-  const batches = Math.ceil(crawled.length / batchSize);
 
-  for (let i = 0; i < batches; i++) {
-    const start = i * batchSize;
-    const end = Math.min(start + batchSize, crawled.length);
-    const batch = crawled.slice(start, end);
+  // Flatten directory results
+  const allEntries = dirEntries.flat();
+  const batches = Math.ceil(allEntries.length / batchSize);
 
-    // Enrich batch entries with git metadata in parallel
-    const enriched = await withConcurrencyLimit(batch, 40, async (entry) => {
-      const [lm, cc] = await Promise.all([getGitLastModAsync(entry.filePath), getGitCommitCountAsync(entry.filePath)]);
-      const commitCount = cc || 0;
-      maxCommits = Math.max(maxCommits, commitCount);
-      return {
-        loc: entry.loc,
-        lastmod: lm || entry.lastmod,
-        ext: entry.ext,
-        commitCount
-      };
-    });
+  try {
+    for (let i = 0; i < batches; i++) {
+      const start = i * batchSize;
+      const end = Math.min(start + batchSize, allEntries.length);
+      const batch = allEntries.slice(start, end);
 
-    // Process and write entries
-    for (const entry of enriched) {
-      await writer.write({
-        ...entry,
-        priority: computePriority(entry.commitCount, maxCommits),
-        changefreq: computeChangefreq(entry.lastmod)
-      });
-      processed++;
+      const enriched = await withConcurrencyLimit(
+        batch,
+        maxConcurrency,
+        async ({ entry, gitData: dirGitData }) => {
+          try {
+            let gitData = dirGitData;
+            if (!gitData || !gitData.lastmod) {
+              gitData = await getFileGitData(entry.filePath);
+            }
+
+            maxCommits = Math.max(maxCommits, gitData.commitCount || 0);
+
+            return {
+              loc: entry.loc,
+              lastmod: gitData.lastmod || entry.lastmod,
+              ext: entry.ext,
+              commitCount: gitData.commitCount || 0
+            };
+          } catch (err) {
+            console.warn(`Warning: Failed to process entry ${entry.filePath}: ${err.message}`);
+            return {
+              loc: entry.loc,
+              lastmod: entry.lastmod,
+              ext: entry.ext,
+              commitCount: 0
+            };
+          }
+        },
+        async (partialResults) => {
+          // Flush partial results to disk
+          for (const entry of partialResults.filter(Boolean)) {
+            try {
+              await writer.write({
+                ...entry,
+                priority: computePriority(entry.commitCount, maxCommits),
+                changefreq: computeChangefreq(entry.lastmod)
+              });
+              processed++;
+            } catch (writeErr) {
+              console.error(`Error writing entry ${entry.loc}: ${writeErr.message}`);
+            }
+          }
+          partialResults.length = 0; // clear memory
+        }
+      );
+
+      // Final flush after batch
+      for (const entry of enriched.filter(Boolean)) {
+        try {
+          await writer.write({
+            ...entry,
+            priority: computePriority(entry.commitCount, maxCommits),
+            changefreq: computeChangefreq(entry.lastmod)
+          });
+          processed++;
+        } catch (writeErr) {
+          console.error(`Error writing entry ${entry.loc}: ${writeErr.message}`);
+        }
+      }
+
+      if ((i + 1) % 10 === 0 || i === batches - 1) {
+        console.log(`Processed ${processed}/${crawled.length} files (${Math.round((processed / crawled.length) * 100)}%)...`);
+      }
     }
-
-    if ((i + 1) % 5 === 0 || i === batches - 1) {
-      console.log(`Processed ${processed}/${crawled.length} files...`);
-    }
+  } catch (err) {
+    console.error('Error during sitemap generation:', err);
+    throw err;
   }
 
   const finalCount = await writer.end();
   console.log('Sitemap base built with', finalCount, 'entries');
 
+  // Save git cache for future runs
+  try {
+    const cacheObject = Object.fromEntries(gitCache);
+    await fse.writeJson(sitemapCachePath, cacheObject, { spaces: 2 });
+    console.log(`Saved git cache with ${gitCache.size} entries`);
+  } catch (err) {
+    console.warn('Failed to save git cache:', err.message);
+  }
+
+  // Validate generated sitemap
+  try {
+    const generated = await fse.readJson(sitemapBasePath);
+    if (!Array.isArray(generated)) {
+      throw new Error('Generated sitemap is not an array');
+    }
+    if (generated.length !== finalCount) {
+      throw new Error(`Count mismatch: expected ${finalCount} but found ${generated.length}`);
+    }
+
+    // Basic validation of each entry
+    const invalid = generated.filter((entry) => {
+      return (
+        !entry.loc ||
+        typeof entry.loc !== 'string' ||
+        !entry.lastmod ||
+        typeof entry.lastmod !== 'string' ||
+        typeof entry.priority !== 'number' ||
+        !entry.changefreq ||
+        typeof entry.changefreq !== 'string'
+      );
+    });
+
+    if (invalid.length > 0) {
+      console.warn(`Found ${invalid.length} invalid entries in sitemap`);
+      console.warn('First invalid entry:', invalid[0]);
+    } else {
+      console.log('Sitemap validation successful');
+    }
+  } catch (err) {
+    console.error('Sitemap validation failed:', err.message);
+    throw err;
+  }
+
   logSection(`Done in ${formatDuration(Date.now() - start)}`);
+
+  // Return success status
+  return {
+    totalFiles: crawled.length,
+    processedFiles: finalCount,
+    duration: Date.now() - start,
+    sitemapPath: sitemapBasePath
+  };
 }
 
 main().catch((err) => {

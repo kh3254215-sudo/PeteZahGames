@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+
 :root {
   --main-color: #fff;
   --sub-color: #646669;
@@ -16,12 +17,12 @@
   --bg-color: #fff;
 } */
 body {
+  background: var(--bg-color);
+  color: var(--main-color);
+  font-family: 'Lexend Deca', sans-serif;
+  height: 100vh;
   margin: 0;
   padding: 2rem;
-  height: 100vh;
-  background: var(--bg-color);
-  font-family: 'Lexend Deca', sans-serif;
-  color: var(--main-color);
 }
 
 a {
@@ -38,134 +39,146 @@ a:hover {
 }
 
 .outOfFocusWarning{
-  margin: auto;
-  text-align: center;
   height: 0;
-  line-height: 150px;
-  z-index: 999;
-  position: relative;
-  user-select: none;
-  pointer-events: none;
   line-height: 117.083px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
+  margin: auto;
+  pointer-events: none;
+  position: relative;
+  text-align: center;
   transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  user-select: none;
+  z-index: 999;
 }
 
 #top .logo {
   cursor: pointer;
   display: grid;
-  grid-template-columns: auto 1fr;
   gap: 0.5rem;
-  white-space: nowrap;
+  grid-template-columns: auto 1fr;
   user-select: none;
+  white-space: nowrap;
 }
 
 #top .logo .icon {
-  width: 2.5rem;
-  display: grid;
   align-items: center;
   background-color: transparent;
+  display: grid;
+  width: 2.5rem;
 }
 
 #top .logo .text {
-  position: relative;
   font-size: 2rem;
   margin-bottom: 0.4rem;
+  position: relative;
   transition: .25s;
 }
 
 
 #commandLineWrapper {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-  display: grid;
-  justify-content: center;
   align-items: start;
+  background: rgb(0 0 0 / 75%);
+  display: grid;
+  height: 100%;
+  justify-content: center;
+  left: 0;
   padding: 5rem 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
+
 #commandLineWrapper #commandLine {
-  width: 50vw;
   background: var(--bg-color);
   border-radius: var(--roundness);
+  width: 50vw;
 }
+
 #commandLineWrapper #commandLine input {
   background: var(--bg-color);
-  padding: 1rem;
-  color: var(--main-color);
   border: none;
-  outline: none;
-  font-size: 1rem;
+  color: var(--main-color);
   font-family: "Roboto Mono";
+  font-size: 1rem;
+  outline: none;
+  padding: 1rem;
   width: 100%;
 }
+
 #commandLineWrapper #commandLine .separator {
   background: black;
-  width: 100%;
   height: 1px;
   margin-bottom: 0.5rem;
+  width: 100%;
 }
+
 #commandLineWrapper #commandLine .listTitle {
   color: var(--main-color);
-  padding: 0.5rem 1rem;
   font-size: 0.75rem;
   line-height: 0.75rem;
+  padding: 0.5rem 1rem;
 }
+
 #commandLineWrapper #commandLine .suggestions {
   display: grid;
 }
+
 #commandLineWrapper #commandLine .suggestions .entry {
-  padding: 0.5rem 1rem;
+  color: var(--sub-color);
   font-size: 0.75rem;
   line-height: 0.75rem;
-  color: var(--sub-color);
+  padding: 0.5rem 1rem;
 }
+
 #commandLineWrapper #commandLine .suggestions .entry.active {
+  background: rgb(0 0 0 / 50%);
   color: var(--main-color);
-  background: rgba(0, 0, 0, 0.5);
 }
 
 #resultScreenshot {
-  display: none;
-  position: absolute;
-  width: min-content;
-  white-space: nowrap;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
   background: var(--bg-color);
+  border-radius: 0.25rem;
+  display: none;
+  padding: 0.5rem;
+  position: absolute;
+  white-space: nowrap;
+  width: min-content;
 }
+
 #resultScreenshot .logo .top {
   color: var(--sub-color);
   font-size: 0.42rem;
   line-height: 0.42rem;
+  margin: 0.5rem;
   margin-bottom: -0.3rem;
   margin-left: 0.05rem;
-  margin: 0.5rem;
 }
+
 #resultScreenshot .logo .bottom {
+  color: var(--caret-color);
   font-size: 0.75rem;
   line-height: 0.75rem;
-  color: var(--caret-color);
-  padding: 0 0.5rem 0.5rem 0.5rem;
+  padding: 0 0.5rem 0.5rem;
 }
+
 #resultScreenshot .stats {
   display: grid;
   grid-auto-flow: column;
   justify-content: space-between;
 }
+
 #resultScreenshot .stats .group {
   padding: 0.5rem;
 }
+
 #resultScreenshot .stats .group .top {
   color: var(--sub-color);
   line-height: 1rem;
 }
+
 #resultScreenshot .stats .group .bottom {
   font-size: 1.5rem;
   line-height: 1.5rem;
@@ -178,107 +191,118 @@ a:hover {
 }
 
 #timer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 0vw;
+  background: var(--caret-color);
+
   /*   height: 0.5rem; */
   height: 0.5rem;
-  background: var(--caret-color);
+  position: fixed;
+  right: 0;
+  top: 0;
+
   /*   background: #0f0f0f; */
+
   /*   background: red; */
   transition: 1s linear;
+  width: 0;
   z-index: -1;
 }
 
 #liveWpm {
-  font-size: 10rem;
   color: black;
-  opacity: 0.25;
-  width: 100%;
-  text-align: center;
-  z-index: -1;
+  font-size: 10rem;
   height: 0;
+  opacity: 0.25;
+  text-align: center;
   transition: 0.25s;
+  width: 100%;
+  z-index: -1;
 }
 
 #centerContent {
-  max-width: 800px;
-  min-width: 600px;
-  margin: 0 auto;
-  display: grid;
-  grid-auto-flow: row;
-  /* grid-template-rows: 2rem auto 1rem; */
-  height: 100%;
-  gap: 1rem;
   /* margin-top: 1rem; */
+
   /* margin-bottom: 1rem; */
   align-items: center;
-  z-index: 999;
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: row;
   grid-template-rows: 1fr auto;
+
+  /* grid-template-rows: 2rem auto 1rem; */
+  height: 100%;
+  margin: 0 auto;
+  max-width: 800px;
+  min-width: 600px;
+  z-index: 999;
 }
 
 #caret {
-  width: 2px;
-  height: 1.5rem;
-  background: var(--caret-color);
-  animation-name: caretFlash;
+  animation-duration: 1s;
+
   /* animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955); */
   animation-iteration-count: infinite;
-  animation-duration: 1s;
+  animation-name: caretFlash;
+  background: var(--caret-color);
+  height: 1.5rem;
   position: absolute;
   transition: 0.05s;
+  width: 2px;
 }
 
 @keyframes caretFlash {
   0% {
     background: transparent;
   }
+
   50% {
     background: var(--caret-color);
   }
+
   100% {
     background: transparent;
   }
 }
+
 #menu {
-  font-size: 1rem;
-  line-height: 1rem;
   color: var(--sub-color);
   display: grid;
+  font-size: 1rem;
   grid-auto-flow: column;
+  line-height: 1rem;
+
   /*   gap: 1rem; */
   margin-bottom: -0.4rem;
   width: fit-content;
-  width: -moz-fit-content;
+  width: fit-content;
+
   /*   transition: 0.25s; */
 }
 
 #menu .button {
+  align-content: center;
   display: grid;
   grid-auto-flow: column;
-  align-content: center;
-  transition: 0.25s;
   padding: 0.5rem;
+  transition: 0.25s;
 }
 
 #menu .button .icon {
+  place-items: center center;
   display: grid;
-  align-items: center;
-  justify-items: center;
+  height: 1.25rem;
   text-align: center;
   width: 1.25rem;
-  height: 1.25rem;
 }
 
 #menu .button:hover {
-  cursor: pointer;
   color: var(--main-color);
+  cursor: pointer;
 }
 
 #menu .button .text {
-  width: 0;
   overflow: hidden;
+  width: 0;
+
   /*   transition: .25s; */
 }
 
@@ -290,24 +314,25 @@ a:hover {
 }
 
 #menu .separator {
-  width: 2px;
-  height: 1rem;
   background-color: var(--sub-color);
+  height: 1rem;
+  width: 2px;
 }
 
 #top {
-  line-height: 2.3rem;
-  font-size: 2.3rem;
-  /* text-align: center; */
-  transition: 0.5s;
-  padding: 0 5px;
+  align-items: center;
   display: grid;
+  font-size: 2.3rem;
+  gap: 0.5rem;
   grid-auto-flow: column;
   grid-template-columns: auto 1fr auto;
+  line-height: 2.3rem;
   margin-bottom: 1rem;
+  padding: 0 5px;
+
+  /* text-align: center; */
+  transition: 0.5s;
   z-index: 2;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 #top .logo {
@@ -316,11 +341,11 @@ a:hover {
 }
 
 #top .logo .top {
+  color: var(--sub-color);
   font-size: 0.65rem;
   line-height: 0.65rem;
   margin-bottom: -0.4rem;
   margin-left: 0.25rem;
-  color: var(--sub-color);
 }
 
 #top .logo .bottom {
@@ -330,12 +355,13 @@ a:hover {
 #top .config {
   display: grid;
   grid-auto-flow: row;
-  grid-gap: 0.2rem;
-  width: min-content;
-  transition: 0.25s;
+
   /*   margin-bottom: 0.1rem; */
   grid-column: 3/4;
+  gap: 0.2rem;
   grid-row: 1/2;
+  transition: 0.25s;
+  width: min-content;
 }
 
 #top .config .group {
@@ -347,16 +373,16 @@ a:hover {
 }
 
 #top .config .group .buttons {
+  display: flex;
   font-size: 0.7rem;
   line-height: 0.7rem;
-  display: flex;
 }
 
 #top .config .group .buttons .button {
-  transition: 0.25s;
   color: var(--sub-color);
   cursor: pointer;
   margin-right: 0.25rem;
+  transition: 0.25s;
 }
 
 #top .config .group .buttons .button:last-child {
@@ -389,11 +415,11 @@ a:hover {
 #top .result {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 1rem;
-  width: min-content;
-  transition: 0.25s;
   grid-column: 3/4;
+  gap: 1rem;
   grid-row: 1/2;
+  transition: 0.25s;
+  width: min-content;
 }
 
 #top.focus .result {
@@ -401,44 +427,45 @@ a:hover {
 }
 
 #top .result .group .title {
+  color: var(--sub-color);
   font-size: 0.65rem;
   line-height: 0.65rem;
-  color: var(--sub-color);
 }
 
 #top .result .group .val {
+  color: var(--main-color);
   font-size: 1.7rem;
   line-height: 1.7rem;
-  color: var(--main-color);
   transition: 0.25s;
 }
 
 #tip {
-  font-size: 0.75rem;
-  line-height: 0.75rem;
-  color: var(--sub-color);
-  text-align: center;
   /*   margin-top: 1rem; */
   align-self: center;
+  color: var(--sub-color);
+  font-size: 0.75rem;
+  line-height: 0.75rem;
   margin-top: 1rem;
   opacity: 0;
+  text-align: center;
   transition: 0.25s;
 }
 
 key {
-  color: var(--bg-color);
   background-color: var(--sub-color);
+  border-radius: 0.1rem;
+  color: var(--bg-color);
+  display: inline-block;
+
   /*   font-weight: bold; */
   padding: 3px 5px;
-  border-radius: 0.1rem;
-  display: inline-block;
 }
 
 #bottom {
-  text-align: center;
-  line-height: 1rem;
-  font-size: 0.75rem;
   color: var(--caret-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-align: center;
   transition: 0.5s;
 }
 
@@ -456,22 +483,24 @@ key {
 
 #middle {
   /* display:grid; */
+
   /* align-items: center; */
+
   /* justify-content: center; */
   z-index: 999;
 }
 
 #result {
-  height: 400px;
-  display: grid;
-  justify-content: center;
   align-items: center;
+  display: grid;
+  height: 400px;
+  justify-content: center;
 }
 
 #result .groups {
   display: grid;
-  grid-auto-flow: column;
   gap: 1rem;
+  grid-auto-flow: column;
   width: min-content;
 }
 
@@ -486,49 +515,51 @@ key {
 }
 
 #wordsInput {
-  height: 0;
-  padding: 0;
-  margin: 0;
   border: none;
-  outline: none;
   display: block;
+  height: 0;
+  margin: 0;
+  outline: none;
+  padding: 0;
 }
 
 #words {
-  font-family: "Roboto Mono";
-  height: fit-content;
+  align-content: flex-start;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  align-content: flex-start;
+  font-family: "Roboto Mono";
+  height: fit-content;
   user-select: none;
+  width: 100%;
 }
 
 #restartTestButton {
   border-radius: var(--roundness);
-  padding: 1rem 5rem;
-  width: min-content;
-  width: -moz-min-content;
   color: var(--sub-color);
-  transition: 0.25s;
-  margin: 0 auto 0 auto;
   cursor: pointer;
+  margin: 0 auto;
+  padding: 1rem 5rem;
+  transition: 0.25s;
+  width: min-content;
+  width: min-content;
 }
+
 #restartTestButton:hover, #restartTestButton:focus {
   color: var(--main-color);
   outline: none;
 }
+
 #restartTestButton:focus {
   background: #0d0d0d;
 }
 
 .word {
-  margin: 5px 5px;
-  color: var(--sub-color);
-  display: flex;
-  transition: 0.25s;
   /*   margin-bottom: 1px; */
   border-bottom: 2px solid transparent;
+  color: var(--sub-color);
+  display: flex;
+  margin: 5px;
+  transition: 0.25s;
 }
 
 .word.error {
@@ -540,6 +571,7 @@ key {
   /*   transition: 0.1s; */
   height: 1rem;
   line-height: 1rem;
+
   /* margin: 0 1px; */
 }
 

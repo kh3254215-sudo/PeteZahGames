@@ -21,7 +21,6 @@ import path, { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { signinHandler } from './server/api/signin.js';
 import { signupHandler } from './server/api/signup.js';
-import e from 'express';
 
 const cache = new NodeCache({ stdTTL: 86400 });
 let SESSION_SECRET;

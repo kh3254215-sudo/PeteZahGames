@@ -4,7 +4,7 @@
   --surface-color: #28346a;
   --surface-secondary-color: #212b58;
   --surface-tertiary-color: #192042;
-  --surface-transparent-color: rgba(40, 52, 106, 0.5);
+  --surface-transparent-color: rgb(40 52 106 / 50%);
   --button-color: #112052;
   --button-hover-color: #334b77;
   --button-active-color: #151f41;
@@ -21,13 +21,12 @@
 
 html,
 body {
+  background: #000;
+  height: 100%;
   margin: 0;
+  overflow: hidden;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  background: #000;
 }
 
 * {
@@ -36,33 +35,34 @@ body {
 }
 
 #screen {
+  height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
 }
 
 #ui {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
   height: 100%;
-  transform-origin: 0 0;
+  left: 0;
   pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  position: absolute;
+  top: 0;
+  transform-origin: 0 0;
   user-select: none;
+  user-select: none;
+  user-select: none;
+  user-select: none;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
   background-color: #223;
+  width: 8px;
 }
+
 ::-webkit-scrollbar-thumb {
-  border-radius: 4px;
   background-color: #7272c2;
+  border-radius: 4px;
 }
 
 ::selection {
@@ -83,72 +83,79 @@ body {
 }
 
 input[type="text"] {
-  margin: 0;
-  padding: 4px 8px;
-  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--text-color);
   background-color: var(--surface-tertiary-color);
   border: none;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  color: var(--text-color);
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  padding: 4px 8px;
   pointer-events: auto;
 }
+
 input[type="text"]:focus-visible {
   outline: none;
 }
 
 .button {
-  position: relative;
-  margin: 0;
-  padding: 8px 18px;
   background-color: var(--button-color);
   border: none;
   clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
   color: var(--text-color);
-  font-size: 32px;
-
-  pointer-events: auto;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   cursor: pointer;
+  font-size: 32px;
+  margin: 0;
+  padding: 8px 18px;
+  pointer-events: auto;
+  position: relative;
+  user-select: none;
+  user-select: none;
+  user-select: none;
+  user-select: none;
 }
+
 .button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: -1;
-  width: 0;
-  height: 100%;
   background-color: var(--button-hover-color);
   border-bottom: 2px solid var(--text-color);
+  bottom: 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
   transition: width 0.1s ease-in-out;
+  width: 0;
+  z-index: -1;
 }
+
 .button:hover::after {
   width: 100%;
 }
+
 .button:active::after {
   background-color: var(--button-active-color);
 }
+
 .button:focus-visible {
   background-color: var(--button-hover-color);
-  text-decoration: underline;
   outline: none;
+  text-decoration: underline;
 }
+
 .button > img.button-icon {
-  margin: -6px -4px 0 -4px;
-  padding: 0;
   height: 32px;
-  vertical-align: middle;
+  margin: -6px -4px 0;
+  padding: 0;
   pointer-events: none;
+  vertical-align: middle;
 }
+
 .button:disabled {
   background-color: var(--button-disabled-color);
   color: var(--text-disabled-color);
   cursor: default;
 }
-.button:disabled:after {
+
+.button:disabled::after {
   content: none;
 }

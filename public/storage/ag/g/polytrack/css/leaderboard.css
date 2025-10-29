@@ -1,29 +1,29 @@
 .leaderboard {
-  margin: 0;
-  padding: 0;
-  width: 600px;
-  height: 100%;
-  text-align: left;
+  background-color: var(--surface-color);
   display: flex;
   flex-direction: column;
-  background-color: var(--surface-color);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  width: 600px;
 }
 
 .leaderboard > h2 {
+  color: var(--text-color);
+  font-size: 38px;
+  font-weight: normal;
   margin: 10px;
   padding: 0;
-  font-weight: normal;
-  font-size: 38px;
   text-align: center;
-  color: var(--text-color);
 }
 
 .leaderboard > .container {
-  margin: 0;
-  padding: 0;
-  flex-grow: 1;
   background-color: var(--surface-secondary-color);
+  flex-grow: 1;
+  margin: 0;
   overflow-y: scroll;
+  padding: 0;
   pointer-events: auto;
 }
 
@@ -32,20 +32,20 @@
 }
 
 .leaderboard > .container > .error-message {
+  color: var(--text-color);
   font-size: 20px;
   text-align: center;
-  color: var(--text-color);
 }
 
 .leaderboard > .container > button {
-  margin: 10px 10px 0 10px;
-  padding: 0;
-  vertical-align: top;
-  width: calc(100% - 2 * 10px);
-  height: 100px;
   clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  height: 100px;
+  margin: 10px 10px 0;
+  padding: 0;
   text-align: left;
+  vertical-align: top;
   white-space: nowrap;
+  width: calc(100% - 2 * 10px);
 }
 
 .leaderboard > .container > button:last-of-type {
@@ -57,9 +57,9 @@
 }
 
 .leaderboard > .container > button > img {
-  background-color: rgba(0, 0, 0, 0.1);
-  width: 100px;
+  background-color: rgb(0 0 0 / 10%);
   height: 100px;
+  width: 100px;
 }
 
 .leaderboard > .container > button > .left,
@@ -69,51 +69,57 @@
 }
 
 .leaderboard > .container > button > div > p {
+  color: var(--text-color);
+  font-size: 28px;
   margin: 0;
   padding: 12px;
-  font-size: 28px;
-  color: var(--text-color);
 }
 
 .leaderboard > .container > button > div > .name {
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
   width: 300px;
 }
 
 .leaderboard > .container > button > div > .verified-state {
+  font-size: 18px;
+  margin: 6px 0 0;
   opacity: 0.8;
   position: absolute;
   right: 6px;
-  margin: 6px 0 0 0;
-  font-size: 18px;
 }
+
 .leaderboard > .container > button > div > .verified-state > img {
+  height: 12px;
   margin: 0 0 0 2px;
   padding: 0;
-  height: 12px;
   vertical-align: middle;
 }
+
 .leaderboard > .container > button > div > .verified-state.verified {
   color: #5f5;
 }
+
 .leaderboard > .container > button > div > .verified-state.invalid {
   color: #f55;
 }
+
 .leaderboard > .container > button > div > .verified-state.pending {
   color: #ff5;
 }
 
 .leaderboard > .pages {
-  margin: 10px 10px 0 10px;
   display: flex;
   flex-direction: row;
+  margin: 10px 10px 0;
 }
+
 .leaderboard > .pages > button.page {
+  flex-grow: 1;
   padding: 0;
   width: 0;
-  flex-grow: 1;
 }
+
 .leaderboard > .pages > button.selected {
   background-color: var(--button-hover-color);
 }

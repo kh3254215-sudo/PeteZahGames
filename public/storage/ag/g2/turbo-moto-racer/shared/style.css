@@ -1,42 +1,42 @@
 .sound-overlay {
-    z-index: 99999;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    opacity: 0.9;
     background: black;
+    height: 100%;
+    left: 0;
+    opacity: 0.9;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
   }
   
   .sound-text {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     color: white;
     font-size: 20px;
+    position: relative;
     text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
   .redirect-overlay {
-    z-index: 99999;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
     background: black;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
   }
   
   .redirect-text {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     color: white;
     font-size: 20px;
+    position: relative;
     text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
   .redirect-text a {
@@ -44,11 +44,11 @@
   }
   
   .link-to-y8-url {
-    height: 40px;
-    float: left;
-    padding: 0 10px;
     color: white;
+    float: left;
     font-size: 18px;
+    height: 40px;
+    padding: 0 10px;
   }
   
   .link-to-y8-url a {
@@ -56,10 +56,10 @@
   }
   
   .game-name {
-    padding: 0 10px;
-    margin: 0;
     color: #fff;
-    font-size: 18px;
     display: inline-block;
+    font-size: 18px;
     font-weight: normal;
+    margin: 0;
+    padding: 0 10px;
   }

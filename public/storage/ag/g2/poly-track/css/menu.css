@@ -1,76 +1,81 @@
 
 .menu {
-	position: absolute;
+	background-color: rgb(10 10 20 / 80%);
+	height: 100%;
 	left: 0;
+	position: absolute;
+	text-align: center;
 	top: 0;
 	width: 100%;
-	height: 100%;
-	background-color: rgba(10,10,20,0.8);
-	text-align: center;
 }
 
 .menu > .logo {
 	display: block;
-	margin: 80px auto 80px auto;
-	padding: 0;
-	-webkit-filter: drop-shadow(0 0 3px #000);
 	filter: drop-shadow(0 0 3px #000);
+	filter: drop-shadow(0 0 3px #000);
+	margin: 80px auto;
+	padding: 0;
 }
 
 .menu .button-image {
-	display: inline-block;
-	margin: 100px 10px 0 10px;
-	padding: 0;
-	width: 200px;
-	height: 200px;
-	pointer-events: auto;
 	cursor: pointer;
+	display: inline-block;
+	height: 200px;
+	margin: 100px 10px 0;
+	padding: 0;
+	pointer-events: auto;
+	width: 200px;
 }
+
 .menu .button-image > img {
-	margin: 40px 40px 0 40px;
+	margin: 40px 40px 0;
 	padding: 0;
-	width: 96px;
 	pointer-events: none;
+	width: 96px;
 }
+
 .menu .button-image > p {
-	margin: 0;
-	padding: 0;
 	color: var(--text-color);
 	font-size: 27px;
+	margin: 0;
+	padding: 0;
 }
 
 .menu > .bottom-buttons {
+	bottom: 0;
+	left: 0;
 	margin: 4px;
 	padding: 0;
 	position: absolute;
-	left: 0;
-	bottom: 0;
 }
 
 .menu > .bottom-buttons > .small {
-	padding: 6px 12px;
 	clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
 	font-size: 22px;
+	padding: 6px 12px;
 }
+
 .menu > .bottom-buttons > .small > img {
 	vertical-align: middle;
 }
 
 .menu > .info {
-	position: absolute;
-	left: 0;
 	bottom: 0;
+	left: 0;
+	position: absolute;
 	width: 100%;
 }
+
 .menu > .info > a {
+	color: var(--text-color);
 	display: inline-block;
+	font-size: 20px;
 	margin: 0;
 	padding: 5px;
-	color: var(--text-color);
-	text-decoration: none;
-	font-size: 20px;
 	pointer-events: auto;
+	text-decoration: none;
 }
+
 .menu > .info > a:hover {
 	text-decoration: underline;
 }

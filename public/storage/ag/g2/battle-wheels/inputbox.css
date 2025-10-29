@@ -1,6 +1,6 @@
 #inputbox {
+  border: 3px solid #fff;
   border-radius: 8px;
-  border: 3px solid #ffffff;
+  font-family: LilitaOne-Regular;
   font-size: 22px;
-  font-family: "LilitaOne-Regular";
 }

@@ -4,6 +4,6 @@
 } */
 
 @font-face {
-  font-family: Retron2000;
-  src: url(./retron2000.ttf);
+  font-family: "Retron2000";
+  src: url("./retron2000.ttf");
 }

@@ -1,8 +1,8 @@
 body {
-  font-family: "Oxygen";
-  font-size: 1.5rem;
-  color: white;
   background-color: #383838;
+  color: white;
+  font-family: Oxygen;
+  font-size: 1.5rem;
 }
 
 canvas {
@@ -13,20 +13,20 @@ canvas {
   background-color: #586574;
   border: 2px solid white;
   border-radius: 4px;
-  padding-top: 3rem;
   padding-bottom: 3rem;
+  padding-top: 3rem;
 }
 
 .game-section {
-  vertical-align: middle;
-  text-align: center;
   font-size: 2rem;
+  text-align: center;
+  vertical-align: middle;
 }
 
 h1 {
   color: white;
-  font-size: 5rem;
   font-family: "Oxygen mono";
+  font-size: 5rem;
   margin-left: 2rem;
 }
 
@@ -47,9 +47,10 @@ li {
 ul {
   display: inline-block;
 }
+
 .list-left {
-  text-align: left;
   padding-left: 2rem;
+  text-align: left;
 }
 
 #game-controls {
@@ -61,28 +62,28 @@ ul {
 
 #game-controls,
 #game-info {
-  margin-top: 4rem;
   font-size: 2.2rem;
+  margin-top: 4rem;
 }
 
 #button {
-  cursor: pointer;
+  background-color: hsl(212deg 13.7% 40% / 80%);
+  border: 2px solid #ffc989;
   color: white;
-  position: relative;
-  top: -26rem;
-  background-color: hsla(212, 13.7%, 40%, 0.8);
+  cursor: pointer;
   display: inline-block;
   padding: 0.1rem 2.5rem;
-  border: 2px solid #ffc989;
+  position: relative;
+  top: -26rem;
 }
 
 #game-over {
-  position: relative;
-  top: -37.75rem;
-  font-family: "Oxygen";
+  background-color: hsl(212deg 13.7% 40% / 80%);
+  font-family: Oxygen;
   font-size: 4.5rem;
-  background-color: hsla(212, 13.7%, 40%, 0.8);
   margin-left: 49px;
   margin-right: 50px;
   padding: 0.5rem 0;
+  position: relative;
+  top: -37.75rem;
 }

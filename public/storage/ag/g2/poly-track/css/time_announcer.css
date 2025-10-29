@@ -1,43 +1,45 @@
 
 .time-announcer {
-	position: absolute;
 	left: 0;
+	overflow: hidden;
+	position: absolute;
 	top: 35%;
 	width: 100%;
-	overflow: hidden;
 }
 
 .time-announcer > .record {
-	margin: 0;
-	padding: 0;
-	font-size: 48px;
-	text-shadow: 0 0 5px #000;
-	color: #5f5;
-	text-align: center;
-	opacity: 0;
 	animation: 0.3s ease-out 0.8s 1 normal forwards running time-announcer-record-animation;
+	color: #5f5;
+	font-size: 48px;
+	margin: 0;
+	opacity: 0;
+	padding: 0;
+	text-align: center;
+	text-shadow: 0 0 5px #000;
 }
 
 .time-announcer > .current {
+	animation: 0.3s ease-out 0s 1 normal forwards running time-announcer-animation;
+	background-color: var(--surface-color);
+	color: var(--text-color);
+	font-size: 48px;
 	margin: 0;
 	padding: 0;
-	width: 0;
-	background-color: var(--surface-color);
-	font-size: 48px;
-	color: var(--text-color);
 	text-align: center;
-	animation: 0.3s ease-out 0s 1 normal forwards running time-announcer-animation;
-}
-.time-announcer > .difference {
-	margin: 0 0 0 auto;
-	padding: 0;
 	width: 0;
+}
+
+.time-announcer > .difference {
+	animation: 0.3s ease-out 0.3s 1 normal forwards running time-announcer-animation;
 	background-color: var(--surface-secondary-color);
 	color: #5f5;
 	font-size: 30px;
+	margin: 0 0 0 auto;
+	padding: 0;
 	text-align: center;
-	animation: 0.3s ease-out 0.3s 1 normal forwards running time-announcer-animation;
+	width: 0;
 }
+
 .time-announcer > p.red {
 	color: #f55;
 }
@@ -55,12 +57,12 @@
 
 @keyframes time-announcer-animation {
 	from {
-		width: 0;
 		opacity: 0;
+		width: 0;
 	}
 
 	to {
-		width: 100%;
 		opacity: 1;
+		width: 100%;
 	}
 }

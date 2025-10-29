@@ -1,70 +1,77 @@
 .timer {
-  position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  text-align: center;
   opacity: 0.9;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }
 
 .timer > div {
+  display: inline-block;
   margin: 0;
   padding: 0;
-  display: inline-block;
-  width: 240px;
   vertical-align: bottom;
+  width: 240px;
 }
+
 .timer > div > h2 {
-  margin: 0 auto;
-  padding: 0;
-  width: 220px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--text-color);
   font-size: 26px;
   font-weight: normal;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0;
+  text-overflow: ellipsis;
   text-shadow:
     1px 1px 1px var(--surface-color),
     -1px 1px 1px var(--surface-color),
     -1px -1px 1px var(--surface-color),
     1px -1px 1px var(--surface-color);
+  width: 220px;
 }
 
 .timer > div > div {
+  background-color: var(--surface-color);
   margin: 0;
   padding: 0;
-  background-color: var(--surface-color);
 }
+
 .timer > .left > div {
-  padding: 8px 4px 8px 8px;
   clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);
+  padding: 8px 4px 8px 8px;
 }
+
 .timer > .center > div {
-  position: relative;
-  z-index: 1;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
   margin: 0 -12px;
   padding: 8px 10px;
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+  position: relative;
+  z-index: 1;
 }
+
 .timer > .right > div {
-  padding: 8px 8px 8px 4px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+  padding: 8px 8px 8px 4px;
 }
 
 .timer > div > div > p {
-  margin: 0;
-  padding: 0;
   background-color: var(--surface-tertiary-color);
   color: var(--text-color);
   font-size: 34px;
+  margin: 0;
+  padding: 0;
 }
+
 .timer > .left > div > p {
   clip-path: polygon(6px 0, 100% 0, 100% 100%, 0 100%);
 }
+
 .timer > .center > div > p {
-  font-size: 46px;
   clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 100%, 0 100%);
+  font-size: 46px;
 }
+
 .timer > .right > div > p {
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 100%, 0 100%);
 }
@@ -72,15 +79,17 @@
 .timer > div > div > p.green {
   color: #5f5;
 }
+
 .timer > div > div > p.red {
   color: #f55;
 }
 
 .timer > div > div > p > span {
   display: inline-block;
-  width: 0.5em;
   text-align: center;
+  width: 0.5em;
 }
+
 .timer > div > div > p > span.sign {
   margin-left: -4px;
   width: 0.7em;

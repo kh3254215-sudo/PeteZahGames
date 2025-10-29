@@ -35,7 +35,8 @@
 # ========================
 # Merge Strategies
 # ========================
-*.lock merge=union
+*.lock merge=ours
+pnpm-lock.yaml merge=ours
 *.json merge=union
 *.yml  merge=union
 *.yaml merge=union
@@ -53,6 +54,7 @@
 # ========================
 *.min.js linguist-generated
 *.map linguist-generated
+scramjet.* linguist-generated
 *.test.js linguist-documentation
 
 # ========================

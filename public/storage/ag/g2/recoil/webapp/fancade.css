@@ -1,26 +1,26 @@
 @font-face {
+  font-display: swap;
   font-family: 'Baloo 2';
   font-style: normal;
   font-weight: 800;
-  font-display: swap;
   src: url("baloo2.woff") format('woff');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 .fullscreen {
+  height: 100%;
   position: absolute;
   width: 100%;
-  height: 100%;
 }
 
 .center {
   text-align: center;
 }
 
-.centered {
-  margin-left: auto; 
-  margin-right: auto; 
+.centered { 
   display: block;
+  margin-left: auto; 
+  margin-right: auto;
   text-align: center;
 }
 
@@ -30,9 +30,9 @@
 }
 
 .middle {
+  left: 50%;
   position: absolute;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -43,98 +43,98 @@
 }
 
 .edge {
-  margin-left: auto; 
-  margin-right: auto; 
-  width: 164px;
-  height: 180px;
   background-color: #cfdaed;
-  box-shadow: 5px 1px 5px rgba(0, 0, 0, 0.25);
-  transform: rotate(-5deg);
+  box-shadow: 5px 1px 5px rgb(0 0 0 / 25%);
+  height: 180px;
+  margin-left: auto; 
+  margin-right: auto;
+  transform: rotate(-5deg); 
+  width: 164px;
 }
 
 .box {
-  width: 164px;
-  height: 164px;
   background-color: white;
+  height: 164px;
   position: relative;
+  width: 164px;
 }
 
 .black {
-  width: 132px;
-  height: 156px;
   background-color: black;
-  position: absolute;
-  top: 4px;
-  right: 4px;
+  height: 156px;
   margin: 0 auto;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 132px;
 }
 
 .cover {
-  width: 128px;
   height: 128px;
   margin: 2px;
+  width: 128px;
 }
 
 .title {
+  font-family: 'Baloo 2', Ubuntu, verdana, sans-serif;
   font-size: 14px;
-  font-family: 'Baloo 2', 'Ubuntu', verdana, sans-serif;
 }
 
 .author {
-  font-family: 'Baloo 2', 'Ubuntu', verdana, sans-serif;
   border-spacing: 0;
-  font-size: 14px;
   color: #ccc;
-  text-align: right;
-  white-space: nowrap;
+  font-family: 'Baloo 2', Ubuntu, verdana, sans-serif;
+  font-size: 14px;
   overflow: hidden;
-  text-overflow: ellipsis;
   position: absolute;
-  width: 150px;
-  top: 4px;
   right: 142px;
-  transform-origin: right top;
+  text-align: right;
+  text-overflow: ellipsis;
+  top: 4px;
   transform: rotate(-90deg);
+  transform-origin: right top;
+  white-space: nowrap;
+  width: 150px;
 }
 
 .loading {
-  margin-top: 20px;
   margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .description {
-  font-family: 'Baloo 2', 'Ubuntu', verdana, sans-serif;
   display: inline-block;
+  font-family: 'Baloo 2', Ubuntu, verdana, sans-serif;
   font-size: 16px;
   line-height: 1.2em;
   width: 240px;
 }
 
 .button {
-  display: inline-block;
   border: 2px solid #00a2ff;
   border-radius: 7px;
-  width: 133px;
-  height: 43px;
+  display: inline-block;
   font-size: 16px;
+  height: 43px;
   line-height: 43px;
   margin: 0 auto;
+  width: 133px;
 }
 
 .overlay_button {
-  display: inline-block;
   border: 2px solid #000;
   border-radius: 12px;
-  width: 200px;
-  height: 50px;
+  display: inline-block;
   font-size: 18px;
+  height: 50px;
   line-height: 50px;
   margin: 11px;
+  width: 200px;
 }
 
 #play_button {
-  color: #333;
   background-color: #eee;
+  color: #333;
 }
 
 .emscripten_border {
@@ -143,10 +143,10 @@
 
 #gradient {
   background-image: linear-gradient(135deg, #70e1fd, #00a2ff);
-  position: absolute;
-  top: 0px;
-  width: 100%;
   height: 768px;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 * {
@@ -169,57 +169,57 @@ img {
 
 
 html, body {
-  font-family: 'Baloo 2', 'Ubuntu', verdana, sans-serif;
-  font-size: 18px;
+  border: 0;
   color: #bbb;
+  display: block;  /* No floating content on sides */
+  font-family: 'Baloo 2', Ubuntu, verdana, sans-serif;
+  font-size: 18px;
+  height: 100%;
+  line-height: 1.8;
+  margin: 0;
+  overflow: hidden; /*  Disable scrollbars */
   padding: 0;
   width: 100%;
-  height: 100%;
-  margin: 0px;
-  border: 0;
-  line-height: 1.8;
-  overflow: hidden; /*  Disable scrollbars */
-  display: block;  /* No floating content on sides */
 }
 
-canvas { 
-  padding-right: 0; 
-  margin-left: auto; margin-right: auto; display: block; 
-  margin-top: auto; margin-bottom: auto;
+canvas { display: block;
+  height: 768px; margin: auto; 
+  padding-right: 0;
   position: relative;
   width: 1024px;
-  height: 768px;
 }
 
 div.emscripten { text-align: center; }      
 
 /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-canvas.emscripten { 
-  border: 0px none;
-  background-color: black;
+canvas.emscripten {
+  background-color: black; 
+  border: 0 none;
+
   /* background-color: #00a2ff; */
 }
 
 #status {
+  color: rgb(120 120 120);
   display: inline-block;
-  width: 100%;
   font-weight: bold;
-  color: rgb(120, 120, 120);
   text-align: center;
+  width: 100%;
 }
 
 #modal_parent {
+  background-color: rgb(0 0 0); /* Fallback color */
+  background-color: rgb(0 0 0 / 40%); /* Black w/ opacity */
   display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  height: 100%; /* Full height */
+
   /* padding-top: 100px; Location of the box */
   left: 0;
+  overflow: auto; /* Enable scroll if needed */
+  position: fixed; /* Stay in place */
   top: 0;
   width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  z-index: 1; /* Sit on top */
 }
 
 .modal_inner {
@@ -232,12 +232,12 @@ canvas.emscripten {
 }
 
 #modal_content {
-  position: relative;
   background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
   border: 1px solid #888;
   box-sizing: border-box;
+  margin: auto;
+  padding: 20px;
+  position: relative;
 }
 
 .error_message {
@@ -251,22 +251,23 @@ canvas.emscripten {
 }
 
 #modal_close_button {
-  color: #aaaaaa;
+  color: #aaa;
+
+  /* float: right; */
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 28px;
   position: absolute;
   right: 15px;
   top: 10px;
-  /* float: right; */
-  font-size: 28px;
-  line-height: 28px;
-  font-weight: bold;
   transition: 0.2s;
 }
 
 #modal_close_button:hover,
 #modal_close_button:focus {
   color: #000;
-  text-decoration: none;
   cursor: pointer;
+  text-decoration: none;
 }
 
 a:link {
@@ -274,9 +275,11 @@ a:link {
   text-decoration: none;
   transition: 0.2s;
 }
+
 a:visited {
   color: #00B9FE;
 }
+
 a:hover, a:active {
   opacity: 0.5;
 }
@@ -286,13 +289,13 @@ a:hover, a:active {
 }
 
 .playstore075 {
-  width: 153px;
   height: 45px;
+  width: 153px;
 }
 
 .appstore075 {
-  width: 135px;
   height: 45px;
+  width: 135px;
 }
 
 #progress_or_play {
@@ -300,37 +303,38 @@ a:hover, a:active {
 }
 
 #terms_p {
+  color: rgb(20 20 20);
   font-family: sans-serif;
-  color: rgb(20, 20, 20);
   font-size: 0.7em;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
+
 #terms_p a {
-  color: rgb(240, 240, 240);
+  color: rgb(240 240 240);
 }
 
 .deeplink_message {
+  color: rgb(240 240 240);
   font-size: 1em;
-  color: rgb(240, 240, 240);
-  line-height: 1.1em;
   font-size: 20px;
+  line-height: 1.1em;
 }
 
 .menu {
-  color: rgb(240, 240, 240);
+  color: rgb(240 240 240);
 }
 
 .level_button {
-  border: 2px solid #222222;
-  border-radius: 1em;
-  color: rgb(240, 240, 240);
   background-color: #00a2ff;
-  line-height: 1em;
+  border: 2px solid #222;
+  border-radius: 1em;
+  color: rgb(240 240 240);
   height: 2.5em;
-  width: 5em;
   justify-self: center;
-  position: relative;
+  line-height: 1em;
   padding-top: 0.6em;
+  position: relative;
+  width: 5em;
 }
 
 .grid_element_center {
@@ -339,10 +343,11 @@ a:hover, a:active {
 
 .level_button_name {
   font-size: 0.6em;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 .level_button_number {
   font-size: 1.2em;
 }
@@ -352,25 +357,25 @@ a:hover, a:active {
 }
 
 .level_checkmark {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  margin: 0px;
-  padding: 0px;
-  text-align: right;
   font-size: 1.2em;
   line-height: 1.2em;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 0;
 }
 
 .level_button a {
-  color: rgb(240, 240, 240);
+  color: rgb(240 240 240);
   opacity: 1;
 }
 
 .menu_items {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 20px;
 }
 
@@ -380,20 +385,20 @@ a:hover, a:active {
 }
 
 #webview_content {
-  display: none;
   background-color: transparent;
-  position: absolute;
-  top: 0px;
-  width: 100%;
+  display: none;
   height: 768px;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .webview {
-  width: 100%;
-  height: 100%;
   background: transparent;
-  margin: 0px;
   border: 0;
+  height: 100%;
+  margin: 0;
   overflow: hidden;
+  width: 100%;
 }
 

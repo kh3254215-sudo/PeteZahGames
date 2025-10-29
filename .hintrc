@@ -2,24 +2,29 @@
   "$schema": "https://www.schemastore.org/htmlhint.json",
   "extends": ["development"],
   "hints": {
+    // Accessibility preferences
     "axe/text-alternatives": [
       "default",
       {
         "image-alt": "off"
       }
     ],
+    "axe/structure": [
+      "default",
+      {
+        "list": "off"
+      }
+    ],
+
+    // Compatibility preferences
     "compat-api/css": [
       "default",
       {
         "ignore": ["text-wrap", "text-wrap: nowrap"]
       }
     ],
-    "no-inline-styles": "off",
-    "axe/structure": [
-      "default",
-      {
-        "list": "off"
-      }
-    ]
+
+    // Style preferences
+    "no-inline-styles": "off"
   }
 }

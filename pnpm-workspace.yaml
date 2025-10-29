@@ -1,8 +1,4 @@
-ignoredBuiltDependencies:
-  - nodegit
-
 onlyBuiltDependencies:
-  - '@mercuryworkshop/scramjet'
   - bufferutil
   - canvas
   - node

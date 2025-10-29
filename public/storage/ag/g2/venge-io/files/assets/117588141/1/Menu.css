@@ -1,79 +1,79 @@
-@import "./117588330/Common.css";
-@import "Slider.css";
-@import "Table.css";
-@import "Form.css";
-@import "Popup.css";
-@import "Chat.css";
-@import "Animate.css";
+@import url("./117588330/Common.css");
+@import url("Slider.css");
+@import url("Table.css");
+@import url("Form.css");
+@import url("Popup.css");
+@import url("Chat.css");
+@import url("Animate.css");
 
 #wrapper{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
     height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
-/*========================================
+/* ========================================
 
             Menu Top Section
 
- ========================================*/
+ ======================================== */
 
 #menu {
-    position: absolute;
+    height: 100%;
     left: 0%;
+    position: absolute;
     top: 0%;
     width: 100%;
-    height: 100%;
 }
 
 #menu-bar{
+    align-items: center;
+    background: rgb(142 46 86 / 50%);
+    background: linear-gradient(0deg, rgb(38 9 49 / 55%) 0%, rgb(67 27 116) 100%);
+    border-bottom: 1px solid rgb(61 61 61);
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
     height: 50px;
-    background: rgba(142, 46, 86, 0.5);
-    background: linear-gradient(0deg, rgba(38, 9, 49, 0.55) 0%, rgb(67, 27, 116) 100%);
-    position: absolute;
-    left: 0px;
-    top: 0px;
+    justify-content: space-between;
+    left: 0;
     padding: 0 25px;
-    box-sizing: border-box;
-    border-bottom: 1px solid rgb(61,61,61);
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 #logo{
-    height: 40px;
     cursor: pointer;
+    height: 40px;
 }
 
 #menu-items{
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    margin: 0;
     position: absolute;
-    top: 0px;
     right: 0;
-    margin: 0px;
+    top: 0;
 }
 
 #menu-items li{
+    align-items: center;
+    border-left: solid 1px var(--gray-scale-700-color);
+    box-sizing: border-box;
+    color: var(--gray-scale-400-color);
+    cursor: pointer;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    padding: 0 20px;
     font-size: var(--menu-title-font-size);
     font-weight: bold;
-    color: var(--gray-scale-400-color);
-    border-left: solid 1px var(--gray-scale-700-color);
+    height: 50px;
+    justify-content: center;
     list-style: none;
-    cursor: pointer;
-    box-sizing: border-box;
+    padding: 0 20px;
 }
 
 
@@ -86,18 +86,18 @@
 }
 
 #menu-items li:hover{
+    background-color: rgb(0 0 0 / 20%);
     color: var(--gray-scale-200-color);
-    background-color: rgba(0, 0, 0, 0.2);
 }
 
 #menu-items li.active{
+    background-color: rgb(0 0 0 / 50%);
     color: var(--gray-scale-100-color);
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 #menu-items li img{
-    height: 22px;
     float: left;
+    height: 22px;
     margin-right: 5px;
     margin-top: 1px;
     opacity: 0.5;
@@ -112,38 +112,38 @@
     opacity: 1;
 }
 
-/*========================================
+/* ========================================
 
                 Play Section
 
- ========================================*/
+ ======================================== */
 
 #play-section{
+    background: rgb(0 0 0 / 80%);
+    border-radius: var(--primary-border-radius);
+    bottom: 65px;
+    padding: 20px;
+    padding-bottom: 20px;
     position: absolute;
     right: 20px;
-    bottom: 65px;
-    background: rgba(0, 0, 0, 0.8);
-    width: 300px;
-    padding: 20px;
-    border-radius: var(--primary-border-radius);
-    padding-bottom: 20px;
     text-align: center;
+    width: 300px;
 }
 
 .big-button{
-    background: rgb(66,137,72);
+    background: rgb(66 137 72);
     background: var(--primary-big-button);
+    border: none;
+    border-left: solid 8px rgb(60 109 24);
+    border-radius: var(--second-border-radius);
     color: var(--gray-scale-100-color);
+    cursor: pointer;
     font-size: 45px;
-    text-shadow: 0px 1px 2px rgb(83 102 79);
     letter-spacing: -2px;
     padding: 20px 30px;
-    border-radius: var(--second-border-radius);
-    border: none;
-    width: 100%;
-    border-left: solid 8px rgb(60 109 24);
-    cursor: pointer;
+    text-shadow: 0 1px 2px rgb(83 102 79);
     text-transform: uppercase;
+    width: 100%;
     word-break: break-word;
 }
 
@@ -156,15 +156,15 @@
 }
 
 .big-button .server-code{
-    position: absolute;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 6px 12px;
-    font-size: 16px;
-    text-shadow: none;
-    right: 0px;
-    bottom: 0px;
-    letter-spacing: 1px;
+    background: rgb(0 0 0 / 20%);
     border-top-left-radius: 6px;
+    bottom: 0;
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    position: absolute;
+    right: 0;
+    text-shadow: none;
 }
 
 .attention{
@@ -187,19 +187,19 @@
 }
 
 .invite-button{
-    background: rgb(44,128,172);
+    background: rgb(44 128 172);
     background: var(--second-big-button);
-    color: var(--gray-scale-100-color);
-    font-size: 25px;
-    text-shadow: 0px 1px 2px rgb(60, 75, 82);
-    padding: 10px 30px;
-    border-radius: 4px;
     border: none;
-    width: 100%;
     border-left: solid 8px rgb(59 109 157);
+    border-radius: 4px;
+    color: var(--gray-scale-100-color);
     cursor: pointer;
+    font-size: 25px;
     margin-top: 10px;
+    padding: 10px 30px;
+    text-shadow: 0 1px 2px rgb(60 75 82);
     text-transform: uppercase;
+    width: 100%;
 }
 
 .invite-button:hover{
@@ -207,30 +207,30 @@
 }
 
 .options{
-    width: 100%;
+    border-top: solid 2px #1c1c1c;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    border-top: solid 2px #1c1c1c;
     margin-top: 15px;
+    width: 100%;
 }
 
 .options > a{
-    position: relative;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    color: var(--gray-scale-100-color);
-    font-weight: bold;
-    text-decoration: none;
-    text-align: center;
-    padding: 10px;
-    font-size: var(--title-font-size);
-    width: 100%;
-    text-transform: uppercase;
-    box-sizing: border-box;
     border-right: solid 2px #1c1c1c;
+    box-sizing: border-box;
+    color: var(--gray-scale-100-color);
     cursor: pointer;
+    display: flex;
+    font-size: var(--title-font-size);
+    font-weight: bold;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
 }
 
 .options > a p{
@@ -256,8 +256,8 @@
 }
 
 .options > a:hover{
-    color: #ddd;
     background-color: #1c1c1c;
+    color: #ddd;
 }
 
 .options > a.option-box i{
@@ -265,13 +265,13 @@
 }
 
 .option-box .option-info{
-    position: absolute;
-    top: 7px;
-    right: 5px;
-    font-size: 14px;
     background: #335ec3;
     border-radius: 100%;
+    font-size: 14px;
     padding: 3px 6px;
+    position: absolute;
+    right: 5px;
+    top: 7px;
 }
 
 .option-box .option-info.no-message{
@@ -279,19 +279,19 @@
 }
 
 #game-info{
-    position: absolute;
+    align-items: center;
+    background-color: #000;
+    border-radius: 10px;
+    bottom: -45px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
-    right: 0;
-    bottom: -45px;
-    width: 100%;
     padding: 10px 15px;
-    border-radius: 10px;
+    position: absolute;
+    right: 0;
     text-align: center;
-    box-sizing: border-box;
-    background-color: #000;
+    width: 100%;
 }
 
 #game-info i{
@@ -299,8 +299,8 @@
 }
 
 #game-info p{
-    letter-spacing: var(--content-letter-spacing);
     color: var(--gray-scale-100-color);
+    letter-spacing: var(--content-letter-spacing);
     margin: 0;
 }
 
@@ -309,17 +309,17 @@
     position: relative;
 }
 
-#game-info p:after,
-#game-info a:after{
+#game-info p::after,
+#game-info a::after{
+    background: #2a2a2a;
+    border-radius: 10px;
     content: "";
+    height: 100%;
     position: absolute;
     right: -15px;
     top: 50%;
     transform: translateY(-50%);
     width: 2px;
-    height: 100%;
-    border-radius: 10px;
-    background: #2a2a2a;
 }
 
 #game-info a:last-child::after{
@@ -327,26 +327,26 @@
 }
 
 .game-options{
+    align-items: center;
+    border-bottom: solid 2px #1c1c1c;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    width: 100%;
     justify-content: space-between;
     margin-bottom: 15px;
-    border-bottom: solid 2px #1c1c1c;
+    width: 100%;
 }
 
 #loadout-selection-button{
-    width: calc(50% + 1px);
-    color: rgb(168, 168, 168);
-    text-transform: uppercase;
-    text-align: right;
-    line-height: 20px;
-    cursor: pointer;
     border-right: solid 2px #1c1c1c;
-    padding-right: 20px;
-    padding-bottom: 10px;
     box-sizing: border-box;
+    color: rgb(168 168 168);
+    cursor: pointer;
+    line-height: 20px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    text-align: right;
+    text-transform: uppercase;
+    width: calc(50% + 1px);
 }
 
 #loadout-selection-button span{
@@ -355,53 +355,53 @@
 }
 
 #loadout-selection-button b{
-    display: block;
     color: var(--gray-scale-100-color);
+    display: block;
     font-size: 20px;
 }
 
 #loadout-selection-button img{
-    float: left;
-    width: 40px;
-    height: 40px;
+    background-color: rgb(22 22 22);
     border-radius: 4px;
+    float: left;
+    height: 40px;
     margin-right: 15px;
-    background-color: rgb(22, 22, 22);
+    width: 40px;
 }
 
 #map-selection-button{
     color: var(--gray-scale-100-color);
-    height: 40px;
-    text-align: right;
-    line-height: 20px;
-    width: 43%;
     cursor: pointer;
+    height: 40px;
+    line-height: 20px;
     padding-bottom: 10px;
+    text-align: right;
+    width: 43%;
 
 }
 
 #map-selection-button img{
-    float: left;
-    width: 40px;
-    height: 40px;
     border-radius: 4px;
+    float: left;
+    height: 40px;
     margin-right: 8px;
+    width: 40px;
 }
 
 #map-selection-button span{
+    color: rgb(168 168 168);
     display: block;
-    color: rgb(168, 168, 168);
     font-size: 12px;
     text-transform: uppercase;
 }
 
 #map-selection-button span b{
+    color: var(--gray-scale-100-color);
     display: block;
     font-size: 20px;
-    color: var(--gray-scale-100-color);
-    white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .mini-profile{
@@ -411,164 +411,164 @@
 }
 
 .mini-detail{
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
 .level {
-    position: relative;
-    display: flex;
-    justify-content: center;
     align-items: center;
     background: #ddd;
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
     background: url('Level-Icon.png') no-repeat;
     background-size: contain;
-    color: var(--gray-scale-100-color);
-    text-shadow: 0px 1px 2px #000;
     box-sizing: border-box;
-    margin-right: 5px;
+    color: var(--gray-scale-100-color);
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    height: 35px;
+    justify-content: center;
     letter-spacing: var(--title-letter-spacing);
+    margin-right: 5px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 2px #000;
+    width: 35px;
 }
 
 .level span {
-    font-size: 11px;
     color: var(--gray-scale-100-color);
+    font-size: 11px;
     font-weight: bold;
-    text-shadow: 0px 1px 2px #000;
     letter-spacing: var(--content-letter-spacing);
+    text-shadow: 0 1px 2px #000;
 }
 
 .mini-detail .username {
     display: inline-block;
     font-size: 20px;
-    text-align: left;
     max-width: 145px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .profile-exp-wrapper{
-	position: relative;
+	align-items: center;
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	position: relative;
 }
 
 .profile-exp-wrapper p{
-	margin: 0 0 0 10px;
 	color: var(--gray-scale-100-color);
+	margin: 0 0 0 10px;
 }
 
 .profile-exp-bar{
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
 	align-items: center;
-	width: 100%;
-	height: 4px;
 	background: #535353;
 	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	height: 4px;
+	justify-content: flex-start;
 	overflow: hidden;
+	width: 100%;
 }
 
 .profile-exp-bar span{
 	background: #ff9502;
-	width: 0;
 	height: 100%;
+	width: 0;
 }
 
-/*========================================
+/* ========================================
 
            Ads Banner Section
 
- ========================================*/
+ ======================================== */
 
 .banner-area{
-    position: absolute;
-    left: 20px;
+    background-color: rgb(0 0 0 / 50%);
     bottom: 20px;
-    font-size: 22px;
     color: var(--gray-scale-100-color);
-    text-shadow: 0px 1px 2px rgb(60, 75, 82);
-    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 22px;
+    left: 20px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 2px rgb(60 75 82);
     transform: translate(0%, 0%) scale(1.0);
     transform-origin: left bottom;
-    text-align: center;
 }
 
 #home-banner-horizontal{
-    width: 728px;
     height: 90px;
+    width: 728px;
 }
 
 #home-banner-square{
     display: none;
-    width: 300px;
     height: 250px;
+    width: 300px;
 }
 
 
-/*========================================
+/* ========================================
 
          Connecting Section
 
- ========================================*/
+ ======================================== */
 
 #connecting{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    background: rgb(0, 0, 0);
-    width: 100%;
+    background: rgb(0 0 0);
     height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 #connecting #logo{
     margin-top: 30px;
-    z-index: 50;
     position: absolute;
+    z-index: 50;
 }
 
 #connecting .loading-bar{
-    color: #8f8f8f;
-    position: absolute;
-    left: 0px;
     bottom: 120px;
+    color: #8f8f8f;
     font-size: 40px;
+    left: 0;
     line-height: 75px;
-    width: 100%;
+    position: absolute;
     text-transform: uppercase;
+    width: 100%;
     z-index: 10;
 }
 
 #connecting .loading-bar .fill{
-    width: 0%;
+    background-color: rgb(0 0 0 / 50%);
     height: 70px;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 0%;
 }
 
 #connecting .loading-bar h3{
-    position: absolute;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
     margin-left: 30px;
+    padding: 0;
+    position: absolute;
 }
 
 #connecting .loading-bar .lds-ring{
     float: left;
-    transform: scale(0.8);
-    margin-top: -5px;
     margin-right: 15px;
+    margin-top: -5px;
+    transform: scale(0.8);
 }
 
 #connecting h3 b{
@@ -576,58 +576,58 @@
 }
 
 #connecting #map-image{
-    position: absolute;
+    animation: focusOn 20s linear;
+    animation-fill-mode: forwards;
+    filter: grayscale(1);
     left: 50%;
+    opacity: 0.00;
+    position: absolute;
     top: 50%;
     transform: translate(-50%, -50%) scale(1);
     width: 100%;
     z-index: 0;
-    opacity: 0.00;
-    animation: focusOn 20s linear;
-    animation-fill-mode: forwards;
-    filter: grayscale(1);
 }
 
 @keyframes focusOn{
     0%{
-        transform: translate(-50%, -50%) scale(1);
         opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
     }
 
     100%{
-        transform: translate(-50%, -50%) scale(1.2);
         opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.2);
     }
 }
 
 #connecting #map-name{
-    position: absolute;
-    left: 50px;
     bottom: 130px;
-    text-transform: uppercase;
-    font-size: 100px;
     color: var(--gray-scale-100-color);
+    font-size: 100px;
     font-style: italic;
+    left: 50px;
+    position: absolute;
+    text-transform: uppercase;
 }
 
-/*========================================
+/* ========================================
 
            Map Selection Section
 
- ========================================*/
+ ======================================== */
 
 .map-selection li,
 .selection-type li {
-    height: 75px;
+    background-color: #353535;
+    border-radius: 5px;
+    cursor: pointer;
     display: block;
+    height: 75px;
     list-style: none;
     margin-bottom: 10px;
-    background-color: #353535;
-    padding: 13px;
-    border-radius: 5px;
-    position: relative;
-    cursor: pointer;
     overflow: hidden;
+    padding: 13px;
+    position: relative;
 }
 
 .map-selection li.active,
@@ -638,12 +638,12 @@
 
 .map-selection li .fa,
 .selection-type li .fa{
-    color: rgb(87, 87, 87);
+    color: rgb(87 87 87);
 }
 
 .map-selection li.active .fa,
 .selection-type li.active .fa{
-    color: rgb(175, 175, 175);
+    color: rgb(175 175 175);
 }
 
 .map-selection li .check,
@@ -668,33 +668,33 @@
 
 .map-selection li .online,
 .selection-type li .online{
-    float: right;
     background-color: #3b8f3b;
-    color: var(--gray-scale-100-color);
-    padding: 3px 9px;
     border-radius: 3px;
-    text-transform: uppercase;
+    color: var(--gray-scale-100-color);
+    float: right;
     font-size: 15px;
+    padding: 3px 9px;
+    text-transform: uppercase;
 }
 
 .selection-type li .highlight{
-    float: right;
     background-color: #7f57c9;
-    color: var(--gray-scale-100-color);
-    padding: 3px 9px;
     border-radius: 3px;
-    text-transform: uppercase;
+    color: var(--gray-scale-100-color);
+    float: right;
     font-size: 15px;
+    padding: 3px 9px;
+    text-transform: uppercase;
 }
 
 .map-selection li b,
 .selection-type li b {
-    font-size: 20px;
-    text-transform: uppercase;
-    margin-top: 0px;
     float: left;
-    text-shadow: 0px 1px 1px #000;
+    font-size: 20px;
     letter-spacing: 1px;
+    margin-top: 0;
+    text-shadow: 0 1px 1px #000;
+    text-transform: uppercase;
     width: 200px;
 }
 
@@ -704,48 +704,49 @@
 
 .map-selection li .active-check,
 .selection-type li .active-check {
+    bottom: 10px;
+    color: #585858;
+    font-size: 30px;
     position: absolute;
     right: 15px;
-    bottom: 10px;
-    font-size: 30px;
-    color: #585858;
 }
 
 .map-selection li img,
 .selection-type li img {
-    width: 80px;
-    height: 80px;
-    float: left;
-    margin-right: 17px;
     border-radius: 3px;
+    float: left;
+    height: 80px;
+    margin-right: 17px;
+    width: 80px;
 }
 
 .map-selection li .description,
 .selection-type li .description {
-    font-size: 16px;
     color: #9b9b9b;
     float: left;
-    width: 325px;
+    font-size: 16px;
+    letter-spacing: 0;
     margin-top: 3px;
-    letter-spacing: 0px;
+    width: 325px;
 }
 
 .full-side .selection-type li .description{
-    width: 75%;
     margin-top: 10px;
+    width: 75%;
 }
 
 .map-selection li .description .mode,
 .selection-type li .description .mode {
     background-color: #545454;
+    border-radius: 2px;
+    color: #b5b5b5;
+    font-size: 13px;
     margin-right: 10px;
     padding: 1px 7px;
-    border-radius: 2px;
-    font-size: 13px;
+
     /* float: right; */
     position: absolute;
     right: 3px;
-    color: #b5b5b5;
 }
 
 .full-side .selection-type li .description .mode{
@@ -753,33 +754,33 @@
 }
 
 .map-selection-box{
-    width: calc(100% - 10px);
-    margin: 5px;
-    padding: 10px;
     border-bottom: 1px solid #585858;
     box-sizing: border-box;
+    margin: 5px;
+    padding: 10px;
+    width: calc(100% - 10px);
 }
 
 .map-selection-box .selected-map{
+    cursor: pointer;
     display: flex;
     flex-direction: row;
-    cursor: pointer;
 }
 
 .map-selection-box .selected-map-thumbnail{
-    position: relative;
-    width: 90px;
-    height: 65px;
     border: 3px solid #1a1a1a;
     border-radius: 10px;
-    overflow: hidden;
-    margin-right: 10px;
     box-sizing: border-box;
+    height: 65px;
+    margin-right: 10px;
+    overflow: hidden;
+    position: relative;
+    width: 90px;
 }
 
 .map-selection-box .selected-map-thumbnail img{
-    position: absolute;
     left: 50%;
+    position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
 }
@@ -792,10 +793,10 @@
 
 .selected-map-details .map-title{
     display:inline-block;
-    width:110px;
-    white-space: nowrap;
     overflow:hidden !important;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    width:110px;
 }
 
 .map-selection-box .selected-map-details p,
@@ -803,30 +804,30 @@
     color: var(--gray-scale-100-color);
     font-size: 16px;
     font-weight: normal;
-    margin: 0;
     letter-spacing: var(--content-letter-spacing);
+    margin: 0;
 }
 
 .map-selection-box .selected-map-details .button-style{
+    border-bottom: 2px solid #262626;
+    border-left: 2px solid #262626;
+    border-radius: 5px;
     font-size: 14px;
     padding: 5px 10px;
     text-align: center;
-    border-radius: 5px;
-    border-left: 2px solid #262626;
-    border-bottom: 2px solid #262626;
 }
 
 .selected-map:hover .selected-map-details .button-style{
-    border-left: 0px solid #262626;
-    border-bottom: 0px solid #262626;
+    border-bottom: 0 solid #262626;
+    border-left: 0 solid #262626;
 }
 
 
-/*========================================
+/* ========================================
 
              Invite Section
 
- ========================================*/
+ ======================================== */
 
 .invite-settings .field.checkbox-field{
     display: flex;
@@ -845,20 +846,19 @@
 
 .invite-settings .field select{
     font-size: 15px;
-    padding: 5px;
     margin-top: 0;
+    padding: 5px;
 }
 
 .invite-settings .field input[type="checkbox"]{
-    width: 20px;
     height: 20px;
+    width: 20px;
 }
 
 .invited-players{
-    position: relative;
     height: 180px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
+    position: relative;
 }
 
 .invited-players ul {
@@ -867,66 +867,66 @@
 }
 
 .invited-players ul li{
+   align-items: center;
+   background: rgb(0 0 0);
+   background: radial-gradient(circle, rgb(37 37 37) 0%, rgb(200 118 33 / 0%) 100%);
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-   align-items: center;
-   padding: 0;
-   background: rgb(0,0,0);
-   background: radial-gradient(circle, rgb(37, 37, 37) 0%, rgba(200,118,33,0) 100%);
    margin-bottom: 10px;
+   padding: 0;
 }
 
 .invited-players .player-detail{
+   align-items: center;
     display: flex;
    flex-direction: row;
    justify-content: space-between;
-   align-items: center;
 }
 
 .invited-players .player-detail p{
-    margin: 0;
     font-size: 15px;
+    margin: 0;
 }
 
 .invited-players ul li img{
-    width: 33px;
     height: 33px;
     margin-right: 10px;
+    width: 33px;
 }
 
 .invited-players .btn{
-    padding: 10px;
     font-size: 14px;
-    letter-spacing: var(--content-letter-spacing);
     font-weight: normal;
+    letter-spacing: var(--content-letter-spacing);
+    padding: 10px;
 }
 
 .you{
-    float: right;
     display: block;
+    float: right;
 }
 
 .alert{
     background-color: red;
     color: var(--gray-scale-100-color);
-    padding: 10px;
     font-size: 20px;
-    text-align: left;
     margin-bottom: 10px;
+    padding: 10px;
+    text-align: left;
 }
 
-/*========================================
+/* ========================================
 
               Quest Section
 
- ========================================*/
+ ======================================== */
 
 .quest-progress {
-    float: left;
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    float: left;
     margin-top: 6px;
 }
 
@@ -935,36 +935,36 @@
 }
 
 .quest-experience-bar {
+    align-items: center;
+    background: #222;
+    border-radius: 3px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 200px;
     height: 9px;
-    background: #222222;
-    border-radius: 3px;
-    overflow: hidden;
+    justify-content: flex-start;
     margin-right: 10px;
     margin-top: 5px;
+    overflow: hidden;
+    width: 200px;
 }
 
 .quest-experience-bar span {
     background: #719700;
-    width: 0;
     height: 100%;
     transition: ease all 0.3s;
+    width: 0;
 }
 
 .quest-rewards {
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
 }
 
 .quest-rewards .reward {
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
     margin-right: 15px;
 }
 
@@ -973,9 +973,9 @@
 }
 
 .quest-rewards .reward img {
-    width: 25px;
     height: initial;
     margin-right: 5px;
+    width: 25px;
 }
 
 .quest-rewards .reward p {
@@ -988,19 +988,19 @@
 }
 
 .quest-claim {
-	position: absolute;
-	display: flex;
-	justify-content: center;
 	align-items: center;
-	right: 12px;
-	border: 0;
 	background: #4C9800;
+	border: 0;
+	border-radius: 3px;
 	color: var(--gray-scale-100-color);
+	cursor: pointer;
+	display: flex;
 	font-size: 16px;
     font-weight: normal;
+	justify-content: center;
 	padding: 4px 10px;
-	border-radius: 3px;
-	cursor: pointer;
+	position: absolute;
+	right: 12px;
     transition: ease all 0.2s;
 }
 
@@ -1010,48 +1010,47 @@
 
 
 .quest-claimed {
-	position: absolute;
+	align-items: center;
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	right: 12px;
 	font-size: 16px;
+	position: absolute;
+	right: 12px;
 }
 
 .quest-claimed p {
-	margin: 0;
 	color: var(--gray-scale-100-color);
+	margin: 0;
 }
 
 .quest-claim img,
 .quest-claimed img {
-	width: 13px!important;
+    float: initial!important;
     height: initial!important;
     margin-right: 3px!important;
-    float: initial!important;
+	width: 13px!important;
 }
 
-/*========================================
+/* ========================================
 
             Reward Ads Section
 
- ========================================*/
+ ======================================== */
 
 #reward-ads {
+    background-color: rgb(0 0 0 / 63%);
+    border-radius: 10px;
+    cursor: pointer;
     display: flex;
-    flex-direction: row;
+    flex-flow: row nowrap;
     justify-content: flex-start;
-    flex-wrap: nowrap;
-    position: absolute;
     left: 20px;
-    top: 70px;
-    width: 140px;
-    background-color: rgba(0, 0, 0, 0.63);
     padding: 10px;
     padding-right: 20px;
-    border-radius: 10px;
+    position: absolute;
+    top: 70px;
     transform: scale(1.0);
-    cursor: pointer;
+    width: 140px;
 }
 
 #reward-ads:hover{
@@ -1063,100 +1062,100 @@
 }
 
 #reward-ads .reward{
-    display: inline-block;
-    width: 100%;
-    flex: 0 0 100%;
-    height: 150px;
     color: var(--gray-scale-100-color);
+    display: inline-block;
+    flex: 0 0 100%;
     font-size: 18px;
+    height: 150px;
+    width: 100%;
 }
 
 #reward-ads h3{
-    margin: 0px;
-    margin-bottom: 10px;
     color: var(--gray-scale-100-color);
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.425);
-    margin-top: 0px;
-    text-transform: uppercase;
-    position: absolute;
+    left: 0;
     letter-spacing: 1px;
-    left: 0px;
-    top: 15px;
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: 0;
+    position: absolute;
     text-align: center;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 42.5%);
+    text-transform: uppercase;
+    top: 15px;
     width: 100%;
 }
 
 #reward-ads p{
-    margin: 0px;
     font-size: 14px;
+    margin: 0;
 }
 
 #reward-ads img{
-    height: 150px;
-    outline: solid 2px rgb(113, 175, 255);
-    background: radial-gradient(circle, rgb(87, 188, 255) 0%, rgb(27, 121, 184) 100%);
-    float: left;
-    margin-right: 20px;
+    background: radial-gradient(circle, rgb(87 188 255) 0%, rgb(27 121 184) 100%);
     border-radius: 2px;
+    float: left;
+    height: 150px;
+    margin-right: 20px;
+    outline: solid 2px rgb(113 175 255);
 }
 
 #reward-ads .discord-button{
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    text-decoration: none;
-    padding: 8px 15px;
+    background: rgb(66 137 72);
+    background: linear-gradient(0deg, rgb(58 153 35) 0%, rgb(114 207 38) 90%);
     border-radius: 3px;
-    position: absolute;
-    text-shadow: 0px 1px 2px rgb(0 0 0 / 44%);
-    left: 50%;
     bottom: 11px;
+    box-shadow: 0 0 20px rgb(0 0 0);
+    color: rgb(255 255 255);
     font-size: 20px;
-    background: rgb(66,137,72);
-    background: linear-gradient(0deg, rgb(58, 153, 35) 0%, rgb(114, 207, 38) 90%);
-    transform: translate(-50%, 0px);
+    font-weight: bold;
+    left: 50%;
     min-width: 120px;
-    width: max-content;
+    padding: 8px 15px;
+    position: absolute;
     text-align: center;
-    box-shadow: 0px 0px 20px rgb(0, 0, 0);
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 44%);
+    transform: translate(-50%, 0);
+    width: max-content;
 }
 
 .daily-reward-wrapper{
-    background: rgb(77,77,77);
-    background: radial-gradient(circle, rgb(255, 136, 0) 0%, rgba(34,34,34,1) 100%);
+    background: rgb(77 77 77);
+    background: radial-gradient(circle, rgb(255 136 0) 0%, rgb(34 34 34 / 100%) 100%);
     height: calc(100% - 105px);
-    padding: 0px;
-    margin: 0px;
-    position: relative;
+    margin: 0;
+    padding: 0;
     padding-top: 20px;
+    position: relative;
 }
 
 .daily-reward-header {
+    align-items: center;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-shadow: 0px 2px 30px rgb(255, 0, 0);
-    box-sizing: border-box
+    text-shadow: 0 2px 30px rgb(255 0 0)
 }
 
 .btn-yellow{
-    background-color: #ff7700;
+    background-color: #f70;
     color: #fff;
-    text-shadow: 0px 1px 2px #000;
     font-size: 21px;
+    text-shadow: 0 1px 2px #000;
 }
 
 .daily-reward-header h3{
     font-size: 22px;
     letter-spacing: var(--title-letter-spacing);
-    text-align: center;
     margin: 10px 0;
+    text-align: center;
 }
 
 .daily-reward-header h3 span{
-    font-size: 43px;
     display: block;
-    padding: 10px 0 0 0;
+    font-size: 43px;
+    padding: 10px 0 0;
 }
 
 .daily-reward-header img{
@@ -1164,19 +1163,21 @@
 }
 
 .item-explosion{
-    width: 260px !important;
-    margin-top: -20px;
     animation: item-explosion 0.8s linear;
     animation-fill-mode: forwards;
+    margin-top: -20px;
+    width: 260px !important;
 }
 
 @keyframes item-explosion{
     0%{
         transform: scale(1);
     }
+
     80%{
         transform: scale(1.3);
     }
+
     100%{
         transform: scale(1);
     }
@@ -1186,46 +1187,47 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 140px;
-    margin-top: 20px;
     margin-left: 0;
+    margin-top: 20px;
+    width: 140px;
 }
 
 .daily-reward-content{
-    width: 100%;
+    bottom: 0;
     position: absolute;
-    bottom: 0px;
+    width: 100%;
 }
 
 .daily-reward-content ul{
-    position: relative;
-    width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 0;
-    margin-bottom: 0;
     list-style: none;
+    margin-bottom: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
 }
 
 .daily-reward-content ul li{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     background: #44240a;
     border-right: 2px solid #7e5b0c;
-    padding: 15px 0;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px 0;
+    width: 100%;
 }
+
 .daily-reward-content ul li:last-child{
     border: none;
 }
 
 .daily-reward-content ul li.active{
-    background: rgb(186,75,6);
-    background: linear-gradient(0deg, rgba(186,75,6,1) 0%, rgba(255,162,0,1) 100%);
-    text-shadow: 0px 1px 3px #000;
+    background: rgb(186 75 6);
+    background: linear-gradient(0deg, rgb(186 75 6 / 100%) 0%, rgb(255 162 0 / 100%) 100%);
+    text-shadow: 0 1px 3px #000;
 }
 
 .daily-reward-content ul li p{
@@ -1241,21 +1243,21 @@
     font-size: 22px;
 }
 
-/*========================================
+/* ========================================
 
              Responsive Section
 
- ========================================*/
+ ======================================== */
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (width <= 1200px) {
     #menu-items{
         right: 10px;
     }
 
     #menu-items li{
+        font-size: 20px;
         padding-left: 8px;
         padding-right: 8px;
-        font-size: 20px;
     }
 
     #news-area{
@@ -1263,8 +1265,8 @@
     }
 
     #reward-ads{
-        top: 70px;
         bottom: auto;
+        top: 70px;
     }
 
     #game-info{
@@ -1286,7 +1288,7 @@
 }
 
 /* Tablets */
-@media only screen and (max-width: 1100px){
+@media only screen and (width <= 1100px){
     .map-selection li, 
     .selection-type li{
         height: 100px;
@@ -1298,8 +1300,8 @@
     
     .map-selection li img, 
     .selection-type li img{
-        width: 65px;
         height: 65px;
+        width: 65px;
     }
 
     .map-selection li b, 
@@ -1339,13 +1341,13 @@
     }
 }
 
-@media only screen and (max-width: 1080px){
+@media only screen and (width <= 1080px){
     .mobile #menu {
         zoom: 1!important;
     }
 }
 
-@media only screen and (max-width: 900px){
+@media only screen and (width <= 900px){
     body{
         --scale : 1!important;
     }
@@ -1356,18 +1358,19 @@
 }
 
 /* Mobile */
-@media only screen and (max-width: 700px){
+@media only screen and (width <= 700px){
     .daily-reward-wrapper{
-        padding-top: 10px;
         height: calc(100% - 80px);
+        padding-top: 10px;
     }
 
     .daily-reward-header h3{
         font-size: 18px;
     }
+
     .daily-reward-header h3 span {
         font-size: 35px;
-        padding: 4px 0 0 0;
+        padding: 4px 0 0;
     }
 
     .daily-reward-header img{
@@ -1401,17 +1404,17 @@
 /* Play Section */
 .mobile .browser-fix #play-section,
 .mobile #play-section{
-    width: 250px;
-    right: 25px;
+    background: rgb(0 0 0 / 92%);
     bottom: 20px;
     padding: 15px;
-    background: rgba(0, 0, 0, 0.92);
+    right: 25px;
+    width: 250px;
 }
 
 .mobile .big-button{
     font-size: 30px;
-    padding: 15px 30px;
     letter-spacing: 0.06rem;
+    padding: 15px 30px;
 }
 
 .mobile .big-button .server-code{
@@ -1423,31 +1426,31 @@
 
 .mobile .invite-button{
     font-size: 18px;
-    padding: 5px;
     font-weight: 500;
+    padding: 5px;
 }
 
 .mobile .game-options.active{
-    position: absolute;
-    left: -110%;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.92);
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin-bottom: 0;
+    background: rgb(0 0 0 / 92%);
     border-bottom: 0;
+    border-radius: 10px;
+    bottom: 0;
+    left: -110%;
+    margin-bottom: 0;
+    padding: 5px 10px;
+    position: absolute;
 }
 
 .mobile #loadout-selection-button img{
-    width: 35px;
     height: 35px;
     margin-right: 10px;
+    width: 35px;
 }
 
 .mobile #map-selection-button img{
-    width: 35px;
     height: 35px;
     margin-right: 5px;
+    width: 35px;
 }
 
 .mobile #loadout-selection-button,
@@ -1465,8 +1468,8 @@
 }
 
 .mobile .mini-detail .username{
-    max-width: 93px;
     font-size: 16px;
+    max-width: 93px;
 }
 
 .mobile .profile-exp-wrapper{
@@ -1474,10 +1477,10 @@
 }
 
 .mobile .level{
-    width: 30px;
-    height: 30px;
     font-size: 15px;
+    height: 30px;
     margin-right: 10px;
+    width: 30px;
 }
 
 .mobile .options{
@@ -1490,25 +1493,25 @@
 }
 
 .mobile .option-box .option-info{
-    top: 3px;
-    right: 3px;
     font-size: 12px;
     padding: 2px 5px;
+    right: 3px;
+    top: 3px;
 }
 
 /* News */
 .mobile .news-wrapper{
-    width: 250px;
+    bottom: 20px;
     height: 120px;
     left: 45px;
-    bottom: 20px;
     padding: 10px 20px 20px;
+    width: 250px;
 }
 
 .mobile .news img{
-    width: 80px;
     height: 85px;
     margin-right: 10px;
+    width: 80px;
 }
 
 .mobile .news h3{
@@ -1524,14 +1527,14 @@
     margin-top: 5px;
 }
 
-/*Reward adds*/
+/* Reward adds */
 .mobile #reward-ads{
     width: 90px;
 }
 
 .mobile #reward-ads .reward{
-    height: 100px;
     font-size: 16px;
+    height: 100px;
 }
 
 .mobile #reward-ads h3{
@@ -1543,8 +1546,8 @@
 }
 
 .mobile #reward-ads .discord-button{
-    min-width: 90px;
     font-size: 16px;
+    min-width: 90px;
     padding: 5px;
 }
 
@@ -1561,8 +1564,8 @@
 
 .mobile #menu-items li.leaderboard, 
 .mobile #menu-items li.account p{
-    text-indent: -2000px;
     margin: 0;
+    text-indent: -2000px;
 }
 
 .mobile #menu-items li.leaderboard img {

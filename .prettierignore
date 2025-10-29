@@ -9,5 +9,12 @@ public/storage/ag/a/emulatorjs/**/*
 public/scram/**/*
 pnpm-lock.yaml
 **/*.min.css
+.sitemap-base.json
 # Ignore external
 external
+# Ignore images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp

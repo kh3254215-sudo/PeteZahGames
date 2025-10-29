@@ -15,6 +15,11 @@
     "SESSION_SECRET": {
       "description": "Express session secret",
       "required": true
+    },
+    "PORT": {
+      "description": "Port to run the server on",
+      "value": "3000",
+      "required": false
     }
   }
 }

@@ -448,11 +448,3 @@ document.addEventListener('DOMContentLoaded', () => {
     autocloak();
   }
 });
-
-// Event Handlers
-const beforeUnloadHandler = (e) => {
-  e.preventDefault();
-  e.returnValue = '';
-};
-
-const rightClickHandler = (e) => e.preventDefault();

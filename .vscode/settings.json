@@ -2,7 +2,8 @@
   // Editor Behavior
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
@@ -84,5 +85,6 @@
     ".env*": "dotenv",
     "example.env": "dotenv",
     "*.toml": "toml"
-  }
+  },
+  "cmake.ignoreCMakeListsMissing": true
 }

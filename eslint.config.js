@@ -1,4 +1,3 @@
-import css from '@eslint/css';
 import js from '@eslint/js';
 import json from '@eslint/json';
 import markdown from '@eslint/markdown';
@@ -26,7 +25,7 @@ export default defineConfig([
   },
   {
     files: ['**/*.json'],
-    ignores: ['package-lock.json', 'pnpm-lock.yaml', 'yarn.lock'],
+    ignores: ['package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', '.sitemap-base.json'],
     plugins: {
       json,
       local: localPlugin
@@ -54,12 +53,6 @@ export default defineConfig([
       'markdown/no-bare-urls': 'warn',
       'markdown/no-missing-label-refs': 'off'
     }
-  },
-  {
-    files: ['**/*.css'],
-    language: 'css/css',
-    plugins: { css },
-    extends: ['css/recommended']
   },
   {
     ignores: [

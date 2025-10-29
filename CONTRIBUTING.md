@@ -49,7 +49,13 @@ Keep messages short but descriptive. Use the imperative mood (“Add”, not
    pnpm install
    ```
 
-2. **Run locally**
+2. **Build the project**
+
+   ```bash
+   pnpm build
+   ```
+
+3. **Run locally**
 
    ```bash
    pnpm start
@@ -57,8 +63,8 @@ Keep messages short but descriptive. Use the imperative mood (“Add”, not
 
    Then visit [localhost:3000](https://localhost:3000).
 
-3. **Environment variables**
-   - Required: `SUPABASE_URL`, `SUPABASE_KEY`, `SESSION_SECRET`
+4. **Environment variables**
+   - Required: `SUPABASE_URL`, `SUPABASE_KEY`, `SESSION_SECRET`, `Port`
    - Use `.env.development` for local testing.
    - **Never commit real secrets** use placeholders in configs.
 

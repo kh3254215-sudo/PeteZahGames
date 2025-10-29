@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Gunplay";
-  src: url("../fonts/gunplay.ttf") format("truetype");
+  font-family: Gunplay;
   font-weight: 400;
+  src: url("../fonts/gunplay.ttf") format("truetype");
 }

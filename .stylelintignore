@@ -1,0 +1,9 @@
+# Generated files
+node_modules
+public/storage/ag/g/**/*
+public/storage/ag/g2/**/*
+public/storage/ag/a/emulatorjs/**/*
+**/*.min.css
+.sitemap-base.json
+# Ignore external
+external

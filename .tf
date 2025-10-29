@@ -94,6 +94,10 @@ resource "google_cloud_run_service" "app" {
           name  = "SESSION_SECRET"
           value = var.session_secret
         }
+        env {
+          name  = "PORT"
+          value = "3000"
+        }
         ports {
           container_port = 3000
         }

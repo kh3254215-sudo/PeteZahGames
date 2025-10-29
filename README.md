@@ -1,14 +1,13 @@
 # **PeteZahGames**
 
-A unblocked gaming site for you that self hosts over 400+ games from reliable
-sources.
+An unblocked gaming site that hosts over 400+ games from reliable sources.
 
 ## Our Purpose
 
 We are mainly a service that provides games completely self hosted but we also
 have a proxy!
 
-You're mainly supposed to use our site at places that have restrictions.
+Designed for restricted enviornments like schools or workplaces.
 
 ## Our Tech Stack
 
@@ -19,9 +18,6 @@ You're mainly supposed to use our site at places that have restrictions.
 ## Our Stats
 
 Our website is host to over 300k users!
-
-Links- You can visit [https://petezahgames.com](https://petezahgames.com), and
-you can get more links in our [Discord Server](https://discord.gg/cYjHFDguxS)
 
 ## Deploying
 
@@ -34,25 +30,12 @@ you can get more links in our [Discord Server](https://discord.gg/cYjHFDguxS)
 To host this example on your server/pc, you must run the following commands:
 
 ```bash
-git clone https://github.com/PeteZah-G/PeteZahGames
+git clone https://github.com/PeteZah-Games/PeteZahGames
 cd PeteZahGames
-```
-
-### npm
-
-If you're using npm, run the following commands:
-
-```bash
-npm install
-npm start
-```
-
-### pnpm
-
-If you're using pnpm, run the following commands:
-
-```bash
 pnpm install
+# Install depends, you don't need to use it if you already have all of them
+pnpm install:deps
+pnpm build
 pnpm start
 ```
 
@@ -72,83 +55,10 @@ If you would like to use one of the following buttons to deploy
 
 ## Links
 
-(Links with "(gg)" are unblocked by GoGuardian, others are untested)
+Our website is at petezahgames.com if you would like to see it
 
 > [!IMPORTANT] You can get more links in our
 > [Discord Server](https://discord.gg/cYjHFDguxS)
-
-## Wildcard (replace the \* with anything you want, for GoGuardian using the keyword "math" is recommended. )
-
-- https://\*.supergisfire.com.cdn.cloudflare.net/
-
----
-
-### **Lightspeed**
-
-- [supergisfire.com.cdn.cloudflare.net](https://supergisfire.com.cdn.cloudflare.net)
-- [51.222.141.36.ip.addr.tools](https://51.222.141.36.ip.addr.tools)
-- [ffd.travelpage.biz](https://ffd.travelpage.biz)
-- [snoopyshouldbeadmintrust.jobvn.com](https://snoopyshouldbeadmintrust.jobvn.com)
-- [reallyhardenglishcourses.neo-space.space](https://reallyhardenglishcourses.neo-space.space)
-- [fastermath.neo-space.space](https://fastermath.neo-space.space)
-- [nice.neo-space.space](https://nice.neo-space.space)
-- [civics.jobvn.com](https://civics.jobvn.com)
-- [english.jobvn.com](https://english.jobvn.com)
-- [dashboard.adidasnmdcitysock.com.cdn.cloudflare.net](https://dashboard.adidasnmdcitysock.com.cdn.cloudflare.net)
-
----
-
-### **GoGuardian**
-
-- [mathhelp.moorcroftmr.uk](https://mathhelp.moorcroftmr.uk)
-- [mathhelp.deezpotatos.cc](https://mathhelp.deezpotatos.cc)
-- [sciencias.rawal-karan.com.np](https://sciencias.rawal-karan.com.np)
-- [sciencias.redinfosys.com](https://sciencias.redinfosys.com)
-- [thisistakingtoolong.dj-jam.be](https://thisistakingtoolong.dj-jam.be)
-
----
-
-### **Securly**
-
-- [boing.macleod.nom.za](https://boing.macleod.nom.za)
-- [type.shela.nu](https://type.shela.nu)
-- [1copa.1copa.com](https://1copa.1copa.com)
-- [yayjobs.juniorjobs.ro](https://yayjobs.juniorjobs.ro)
-
----
-
-### **Content Keeper**
-
-- [theythem.itfiredup.com](https://theythem.itfiredup.com)
-- [yoooooo.itfiredup.com](https://yoooooo.itfiredup.com)
-
----
-
-### **Linewize**
-
-- [yoooo.primatools.ro](https://yoooo.primatools.ro)
-- [happy.primatools.ro](https://happy.primatools.ro)
-
----
-
-### **Palo Alto**
-
-- [petezahmybeloved.shela.nu](https://petezahmybeloved.shela.nu)
-- [ilikemath.shela.nu](https://ilikemath.shela.nu)
-
----
-
-### **Blocksi**
-
-- [precalculuslessons.dj-jam.be](https://precalculuslessons.dj-jam.be)
-
----
-
-### **Cisco Umbrella**
-
-- [blueinfosys.redinfosys.com](https://blueinfosys.redinfosys.com)
-
----
 
 ## Star History
 

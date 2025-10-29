@@ -1,37 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-  padding: 0;
+  font-family: Inter !important;
   margin: 0;
-  font-family: 'Inter' !important;
+  padding: 0;
 }
 
 #adWrapper {
-  width: 100%;
-  height: 100%
+  height: 100%;
+  width: 100%
 }
 
 #adContainer {
-  width: 100%;
-  height: 100%
+  height: 100%;
+  width: 100%
 }
 
 #videoContent {
+  height: 100%;
   overflow: hidden;
   position: absolute;
-  width: 100%;
-  height: 100%
+  width: 100%
 }
 
 #game-container {
-  z-index: 0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 45px;
   background-color: #5a7371;
-  box-shadow: 0 5px 5px #888
+  inset: 0 0 45px;
+  box-shadow: 0 5px 5px #888;
+  position: absolute;
+  z-index: 0
 }
 
 #game-container.fullscreen {
@@ -39,8 +36,8 @@ body {
 }
 
 #unity-container.unity-mobile {
-  width: 100%;
-  height: 100%
+  height: 100%;
+  width: 100%
 }
 
 .unity-mobile .game-footer {
@@ -58,20 +55,20 @@ body {
 .game-btn {
   background: 3cc0dc;
   background: linear-gradient(to bottom, #259cd8 0%, #3CC0DC 100%);
-  cursor: pointer;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
+  border: solid #d0e0ea 2px;
   border-radius: 15px;
-  text-shadow: 1px 1px 3px #666;
+  border-radius: 15px;
+  border-radius: 15px;
   color: #fff;
+  cursor: pointer;
+  display: block;
   font-size: 20px;
   font-weight: 700;
-  text-decoration: none;
-  border: solid #d0e0ea 2px;
-  text-transform: uppercase;
+  margin: 0 auto;
   padding: 10px;
-  display: block;
-  margin: 0 auto
+  text-decoration: none;
+  text-shadow: 1px 1px 3px #666;
+  text-transform: uppercase
 }
 
 .game-btn:hover {
@@ -85,24 +82,24 @@ body {
 }
 
 .game-footer {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  box-sizing: content-box
+  box-sizing: content-box;
+  user-select: none;
+  user-select: none
 }
 
 .game-footer .game-footer-logo {
-  height: 45px;
   font-size: 24px;
+  height: 45px;
   line-height: 45px;
-  padding: 0 10px;
-  margin: 0
+  margin: 0;
+  padding: 0 10px
 }
 
 .game-footer .game-footer-logo a,
 .game-footer .game-footer-logo a:hover,
 .game-footer .game-footer-logo a:active {
-  text-decoration: none;
-  color: inherit
+  color: inherit;
+  text-decoration: none
 }
 
 .game-footer .game-footer-fullscreen-btn img {
@@ -115,11 +112,11 @@ body {
 
 .game-footer .game-footer-btn {
   color: #fff;
-  height: 45px;
-  overflow-y: hidden;
-  margin-left: 5px;
   cursor: pointer;
-  font-weight: 700
+  font-weight: 700;
+  height: 45px;
+  margin-left: 5px;
+  overflow-y: hidden
 }
 
 .game-footer .game-footer-btn.game-footer-logo {
@@ -131,9 +128,9 @@ body {
 }
 
 .game-footer .game-footer-btn a.game-footer-link {
-  line-height: 45px;
+  display: inline-block;
   height: 45px;
-  display: inline-block
+  line-height: 45px
 }
 
 .game-footer .game-footer-btn a.game-footer-link:link,
@@ -143,16 +140,16 @@ body {
 }
 
 .game-footer .game-footer-more {
-  text-transform: uppercase;
+  font-size: 16px;
   padding: 0 10px;
-  font-size: 16px
+  text-transform: uppercase
 }
 
 .game-footer .game-footer-img-button {
-  width: 70px;
-  overflow-x: hidden;
+  cursor: pointer;
   height: 45px;
-  cursor: pointer
+  overflow-x: hidden;
+  width: 70px
 }
 
 .game-footer .game-footer-img-button div {
@@ -163,25 +160,25 @@ body {
 .game-footer .game-footer-img-button div a {
   font-size: 0;
   height: 45px;
-  width: 70px;
-  line-height: 62px
+  line-height: 62px;
+  width: 70px
 }
 
 .gameloader {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  overflow: hidden
+  overflow: hidden;
+  user-select: none;
+  user-select: none
 }
 
 .gameloader .gameloader-game-name {
+  color: #fff;
   font-size: 20px;
   font-weight: 700;
-  text-transform: uppercase;
-  color: #fff;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  text-shadow: 1px 1px 1px #00476c
+  text-shadow: 1px 1px 1px #00476c;
+  text-transform: uppercase
 }
 
 .gameloader .gameloader-logo {
@@ -190,18 +187,18 @@ body {
 }
 
 .gameloader .gameloader-logo img {
-  width: 100%;
   border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3)
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+  width: 100%
 }
 
 .gameloader .gameloader-progressbar {
-  width: 300px;
-  height: 1.2vh;
-  border-radius: .6vh;
   background-color: #fff;
+  border-radius: .6vh;
   flex-grow: 1;
-  transition: .2s ease-out all
+  height: 1.2vh;
+  transition: .2s ease-out all;
+  width: 300px
 }
 
 @keyframes fillColor {
@@ -227,23 +224,23 @@ body {
 }
 
 .gameloader .gameloader-progressbar .gameloader-progressbar-progress {
-  width: 0;
-  height: 100%;
-  border-radius: .6vh;
-  background-color: #3cf7dc;
-  transition: .2s ease-out all;
-  animation-name: fillColor;
   animation-duration: 3.5s;
+  animation-fill-mode: both;
   animation-iteration-count: infinite;
-  animation-fill-mode: both
+  animation-name: fillColor;
+  background-color: #3cf7dc;
+  border-radius: .6vh;
+  height: 100%;
+  transition: .2s ease-out all;
+  width: 0
 }
 
 .gameloader .gameloader-progress-info {
+  color: #fff;
+  font-size: 14px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 6px;
-  font-size: 14px;
-  color: #fff;
   text-align: center;
   text-shadow: 1px 1px 1px #00476c
 }
@@ -266,86 +263,58 @@ a:hover {
 
 .ball-beat,
 .ball-beat>div {
-  position: relative;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box
+  box-sizing: border-box;
+  box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative
 }
 
 .ball-beat {
+  color: #fff;
   display: block;
-  font-size: 0;
-  color: #fff
+  font-size: 0
 }
 
 .ball-beat>div {
+  background-color: currentcolor;
+  border: 0 solid currentcolor;
   display: inline-block;
-  float: none;
-  background-color: currentColor;
-  border: 0 solid currentColor
+  float: none
 }
 
 .ball-beat {
-  width: 108px;
-  height: 36px
+  height: 36px;
+  width: 108px
 }
 
 .ball-beat>div {
-  width: 20px;
+  animation: ball-beat .7s -.15s infinite linear;
+  animation: ball-beat .7s -.15s infinite linear;
+  animation: ball-beat .7s -.15s infinite linear;
+  animation: ball-beat .7s -.15s infinite linear;
+  border-radius: 100%;
   height: 20px;
   margin: 8px;
-  border-radius: 100%;
-  -webkit-animation: ball-beat .7s -.15s infinite linear;
-  -moz-animation: ball-beat .7s -.15s infinite linear;
-  -o-animation: ball-beat .7s -.15s infinite linear;
-  animation: ball-beat .7s -.15s infinite linear
+  width: 20px
 }
 
 .ball-beat>div:nth-child(2n-1) {
-  -webkit-animation-delay: -.5s;
-  -moz-animation-delay: -.5s;
-  -o-animation-delay: -.5s;
+  animation-delay: -.5s;
+  animation-delay: -.5s;
+  animation-delay: -.5s;
   animation-delay: -.5s
 }
 
-@-webkit-keyframes ball-beat {
+@keyframes ball-beat {
   50% {
     opacity: .2;
-    -webkit-transform: scale(.75);
+    transform: scale(.75);
     transform: scale(.75)
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1)
-  }
-}
-
-@-moz-keyframes ball-beat {
-  50% {
-    opacity: .2;
-    -moz-transform: scale(.75);
-    transform: scale(.75)
-  }
-
-  100% {
-    opacity: 1;
-    -moz-transform: scale(1);
-    transform: scale(1)
-  }
-}
-
-@-o-keyframes ball-beat {
-  50% {
-    opacity: .2;
-    -o-transform: scale(.75);
-    transform: scale(.75)
-  }
-
-  100% {
-    opacity: 1;
-    -o-transform: scale(1);
+    transform: scale(1);
     transform: scale(1)
   }
 }
@@ -353,17 +322,45 @@ a:hover {
 @keyframes ball-beat {
   50% {
     opacity: .2;
-    -webkit-transform: scale(.75);
-    -moz-transform: scale(.75);
-    -o-transform: scale(.75);
+    transform: scale(.75);
     transform: scale(.75)
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -o-transform: scale(1);
+    transform: scale(1);
+    transform: scale(1)
+  }
+}
+
+@keyframes ball-beat {
+  50% {
+    opacity: .2;
+    transform: scale(.75);
+    transform: scale(.75)
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    transform: scale(1)
+  }
+}
+
+@keyframes ball-beat {
+  50% {
+    opacity: .2;
+    transform: scale(.75);
+    transform: scale(.75);
+    transform: scale(.75);
+    transform: scale(.75)
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    transform: scale(1);
+    transform: scale(1);
     transform: scale(1)
   }
 }
@@ -374,8 +371,8 @@ canvas {
 }
 
 .jss128 {
-  text-shadow: 2px 2px 2px #00476c;
-  font-weight: 700
+  font-weight: 700;
+  text-shadow: 2px 2px 2px #00476c
 }
 
 .jss129 {
@@ -389,8 +386,8 @@ canvas {
 }
 
 .jss131 {
-  text-shadow: 2px 2px 2px #00476c;
-  font-weight: 700
+  font-weight: 700;
+  text-shadow: 2px 2px 2px #00476c
 }
 
 .jss132 {
@@ -404,8 +401,8 @@ canvas {
 }
 
 .jss125 {
-  text-shadow: 2px 2px 2px #00476c;
-  font-weight: 700
+  font-weight: 700;
+  text-shadow: 2px 2px 2px #00476c
 }
 
 .jss126 {
@@ -431,16 +428,16 @@ canvas {
 }
 
 .jss31 {
-  width: 100%;
+  box-sizing: border-box;
   display: flex;
-  z-index: 1;
   flex-wrap: wrap;
-  box-sizing: border-box
+  width: 100%;
+  z-index: 1
 }
 
 .jss32 {
-  margin: 0;
-  box-sizing: border-box
+  box-sizing: border-box;
+  margin: 0
 }
 
 .jss33 {
@@ -520,8 +517,8 @@ canvas {
 }
 
 .jss52 {
-  width: calc(100% + 8px);
-  margin: -4px
+  margin: -4px;
+  width: calc(100% + 8px)
 }
 
 .jss52>.jss32 {
@@ -529,8 +526,8 @@ canvas {
 }
 
 .jss53 {
-  width: calc(100% + 16px);
-  margin: -8px
+  margin: -8px;
+  width: calc(100% + 16px)
 }
 
 .jss53>.jss32 {
@@ -538,8 +535,8 @@ canvas {
 }
 
 .jss54 {
-  width: calc(100% + 24px);
-  margin: -12px
+  margin: -12px;
+  width: calc(100% + 24px)
 }
 
 .jss54>.jss32 {
@@ -547,8 +544,8 @@ canvas {
 }
 
 .jss55 {
-  width: calc(100% + 32px);
-  margin: -16px
+  margin: -16px;
+  width: calc(100% + 32px)
 }
 
 .jss55>.jss32 {
@@ -556,8 +553,8 @@ canvas {
 }
 
 .jss56 {
-  width: calc(100% + 40px);
-  margin: -20px
+  margin: -20px;
+  width: calc(100% + 40px)
 }
 
 .jss56>.jss32 {
@@ -565,346 +562,346 @@ canvas {
 }
 
 .jss57 {
+  flex-basis: 0;
   flex-grow: 1;
-  max-width: 100%;
-  flex-basis: 0
+  max-width: 100%
 }
 
 .jss58 {
-  max-width: 8.33333%;
-  flex-basis: 8.33333%
+  flex-basis: 8.33333%;
+  max-width: 8.33333%
 }
 
 .jss59 {
-  max-width: 16.66667%;
-  flex-basis: 16.66667%
+  flex-basis: 16.66667%;
+  max-width: 16.66667%
 }
 
 .jss60 {
-  max-width: 25%;
-  flex-basis: 25%
+  flex-basis: 25%;
+  max-width: 25%
 }
 
 .jss61 {
-  max-width: 33.33333%;
-  flex-basis: 33.33333%
+  flex-basis: 33.33333%;
+  max-width: 33.33333%
 }
 
 .jss62 {
-  max-width: 41.66667%;
-  flex-basis: 41.66667%
+  flex-basis: 41.66667%;
+  max-width: 41.66667%
 }
 
 .jss63 {
-  max-width: 50%;
-  flex-basis: 50%
+  flex-basis: 50%;
+  max-width: 50%
 }
 
 .jss64 {
-  max-width: 58.33333%;
-  flex-basis: 58.33333%
+  flex-basis: 58.33333%;
+  max-width: 58.33333%
 }
 
 .jss65 {
-  max-width: 66.66667%;
-  flex-basis: 66.66667%
+  flex-basis: 66.66667%;
+  max-width: 66.66667%
 }
 
 .jss66 {
-  max-width: 75%;
-  flex-basis: 75%
+  flex-basis: 75%;
+  max-width: 75%
 }
 
 .jss67 {
-  max-width: 83.33333%;
-  flex-basis: 83.33333%
+  flex-basis: 83.33333%;
+  max-width: 83.33333%
 }
 
 .jss68 {
-  max-width: 91.66667%;
-  flex-basis: 91.66667%
+  flex-basis: 91.66667%;
+  max-width: 91.66667%
 }
 
 .jss69 {
-  max-width: 100%;
-  flex-basis: 100%
+  flex-basis: 100%;
+  max-width: 100%
 }
 
-@media(min-width:600px) {
+@media(width >=600px) {
   .jss70 {
+    flex-basis: 0;
     flex-grow: 1;
-    max-width: 100%;
-    flex-basis: 0
+    max-width: 100%
   }
 
   .jss71 {
-    max-width: 8.33333%;
-    flex-basis: 8.33333%
+    flex-basis: 8.33333%;
+    max-width: 8.33333%
   }
 
   .jss72 {
-    max-width: 16.66667%;
-    flex-basis: 16.66667%
+    flex-basis: 16.66667%;
+    max-width: 16.66667%
   }
 
   .jss73 {
-    max-width: 25%;
-    flex-basis: 25%
+    flex-basis: 25%;
+    max-width: 25%
   }
 
   .jss74 {
-    max-width: 33.33333%;
-    flex-basis: 33.33333%
+    flex-basis: 33.33333%;
+    max-width: 33.33333%
   }
 
   .jss75 {
-    max-width: 41.66667%;
-    flex-basis: 41.66667%
+    flex-basis: 41.66667%;
+    max-width: 41.66667%
   }
 
   .jss76 {
-    max-width: 50%;
-    flex-basis: 50%
+    flex-basis: 50%;
+    max-width: 50%
   }
 
   .jss77 {
-    max-width: 58.33333%;
-    flex-basis: 58.33333%
+    flex-basis: 58.33333%;
+    max-width: 58.33333%
   }
 
   .jss78 {
-    max-width: 66.66667%;
-    flex-basis: 66.66667%
+    flex-basis: 66.66667%;
+    max-width: 66.66667%
   }
 
   .jss79 {
-    max-width: 75%;
-    flex-basis: 75%
+    flex-basis: 75%;
+    max-width: 75%
   }
 
   .jss80 {
-    max-width: 83.33333%;
-    flex-basis: 83.33333%
+    flex-basis: 83.33333%;
+    max-width: 83.33333%
   }
 
   .jss81 {
-    max-width: 91.66667%;
-    flex-basis: 91.66667%
+    flex-basis: 91.66667%;
+    max-width: 91.66667%
   }
 
   .jss82 {
-    max-width: 100%;
-    flex-basis: 100%
+    flex-basis: 100%;
+    max-width: 100%
   }
 }
 
-@media(min-width:960px) {
+@media(width >=960px) {
   .jss83 {
+    flex-basis: 0;
     flex-grow: 1;
-    max-width: 100%;
-    flex-basis: 0
+    max-width: 100%
   }
 
   .jss84 {
-    max-width: 8.33333%;
-    flex-basis: 8.33333%
+    flex-basis: 8.33333%;
+    max-width: 8.33333%
   }
 
   .jss85 {
-    max-width: 16.66667%;
-    flex-basis: 16.66667%
+    flex-basis: 16.66667%;
+    max-width: 16.66667%
   }
 
   .jss86 {
-    max-width: 25%;
-    flex-basis: 25%
+    flex-basis: 25%;
+    max-width: 25%
   }
 
   .jss87 {
-    max-width: 33.33333%;
-    flex-basis: 33.33333%
+    flex-basis: 33.33333%;
+    max-width: 33.33333%
   }
 
   .jss88 {
-    max-width: 41.66667%;
-    flex-basis: 41.66667%
+    flex-basis: 41.66667%;
+    max-width: 41.66667%
   }
 
   .jss89 {
-    max-width: 50%;
-    flex-basis: 50%
+    flex-basis: 50%;
+    max-width: 50%
   }
 
   .jss90 {
-    max-width: 58.33333%;
-    flex-basis: 58.33333%
+    flex-basis: 58.33333%;
+    max-width: 58.33333%
   }
 
   .jss91 {
-    max-width: 66.66667%;
-    flex-basis: 66.66667%
+    flex-basis: 66.66667%;
+    max-width: 66.66667%
   }
 
   .jss92 {
-    max-width: 75%;
-    flex-basis: 75%
+    flex-basis: 75%;
+    max-width: 75%
   }
 
   .jss93 {
-    max-width: 83.33333%;
-    flex-basis: 83.33333%
+    flex-basis: 83.33333%;
+    max-width: 83.33333%
   }
 
   .jss94 {
-    max-width: 91.66667%;
-    flex-basis: 91.66667%
+    flex-basis: 91.66667%;
+    max-width: 91.66667%
   }
 
   .jss95 {
-    max-width: 100%;
-    flex-basis: 100%
+    flex-basis: 100%;
+    max-width: 100%
   }
 }
 
-@media(min-width:1280px) {
+@media(width >=1280px) {
   .jss96 {
+    flex-basis: 0;
     flex-grow: 1;
-    max-width: 100%;
-    flex-basis: 0
+    max-width: 100%
   }
 
   .jss97 {
-    max-width: 8.33333%;
-    flex-basis: 8.33333%
+    flex-basis: 8.33333%;
+    max-width: 8.33333%
   }
 
   .jss98 {
-    max-width: 16.66667%;
-    flex-basis: 16.66667%
+    flex-basis: 16.66667%;
+    max-width: 16.66667%
   }
 
   .jss99 {
-    max-width: 25%;
-    flex-basis: 25%
+    flex-basis: 25%;
+    max-width: 25%
   }
 
   .jss100 {
-    max-width: 33.33333%;
-    flex-basis: 33.33333%
+    flex-basis: 33.33333%;
+    max-width: 33.33333%
   }
 
   .jss101 {
-    max-width: 41.66667%;
-    flex-basis: 41.66667%
+    flex-basis: 41.66667%;
+    max-width: 41.66667%
   }
 
   .jss102 {
-    max-width: 50%;
-    flex-basis: 50%
+    flex-basis: 50%;
+    max-width: 50%
   }
 
   .jss103 {
-    max-width: 58.33333%;
-    flex-basis: 58.33333%
+    flex-basis: 58.33333%;
+    max-width: 58.33333%
   }
 
   .jss104 {
-    max-width: 66.66667%;
-    flex-basis: 66.66667%
+    flex-basis: 66.66667%;
+    max-width: 66.66667%
   }
 
   .jss105 {
-    max-width: 75%;
-    flex-basis: 75%
+    flex-basis: 75%;
+    max-width: 75%
   }
 
   .jss106 {
-    max-width: 83.33333%;
-    flex-basis: 83.33333%
+    flex-basis: 83.33333%;
+    max-width: 83.33333%
   }
 
   .jss107 {
-    max-width: 91.66667%;
-    flex-basis: 91.66667%
+    flex-basis: 91.66667%;
+    max-width: 91.66667%
   }
 
   .jss108 {
-    max-width: 100%;
-    flex-basis: 100%
+    flex-basis: 100%;
+    max-width: 100%
   }
 }
 
-@media(min-width:1920px) {
+@media(width >=1920px) {
   .jss109 {
+    flex-basis: 0;
     flex-grow: 1;
-    max-width: 100%;
-    flex-basis: 0
+    max-width: 100%
   }
 
   .jss110 {
-    max-width: 8.33333%;
-    flex-basis: 8.33333%
+    flex-basis: 8.33333%;
+    max-width: 8.33333%
   }
 
   .jss111 {
-    max-width: 16.66667%;
-    flex-basis: 16.66667%
+    flex-basis: 16.66667%;
+    max-width: 16.66667%
   }
 
   .jss112 {
-    max-width: 25%;
-    flex-basis: 25%
+    flex-basis: 25%;
+    max-width: 25%
   }
 
   .jss113 {
-    max-width: 33.33333%;
-    flex-basis: 33.33333%
+    flex-basis: 33.33333%;
+    max-width: 33.33333%
   }
 
   .jss114 {
-    max-width: 41.66667%;
-    flex-basis: 41.66667%
+    flex-basis: 41.66667%;
+    max-width: 41.66667%
   }
 
   .jss115 {
-    max-width: 50%;
-    flex-basis: 50%
+    flex-basis: 50%;
+    max-width: 50%
   }
 
   .jss116 {
-    max-width: 58.33333%;
-    flex-basis: 58.33333%
+    flex-basis: 58.33333%;
+    max-width: 58.33333%
   }
 
   .jss117 {
-    max-width: 66.66667%;
-    flex-basis: 66.66667%
+    flex-basis: 66.66667%;
+    max-width: 66.66667%
   }
 
   .jss118 {
-    max-width: 75%;
-    flex-basis: 75%
+    flex-basis: 75%;
+    max-width: 75%
   }
 
   .jss119 {
-    max-width: 83.33333%;
-    flex-basis: 83.33333%
+    flex-basis: 83.33333%;
+    max-width: 83.33333%
   }
 
   .jss120 {
-    max-width: 91.66667%;
-    flex-basis: 91.66667%
+    flex-basis: 91.66667%;
+    max-width: 91.66667%
   }
 
   .jss121 {
-    max-width: 100%;
-    flex-basis: 100%
+    flex-basis: 100%;
+    max-width: 100%
   }
 }
 
 .jss135 {
-  z-index: 1500;
-  pointer-events: none
+  pointer-events: none;
+  z-index: 1500
 }
 
 .jss135.jss136 {
@@ -912,17 +909,17 @@ canvas {
 }
 
 .jss137 {
+  background-color: #445655;
+  border-radius: 2px;
   color: #fff;
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
+  font-size: .625rem;
+  line-height: 1.4em;
+  min-height: 0;
   opacity: 0;
   padding: 4px 8px;
   transform: scale(0);
-  font-size: .625rem;
-  transition: opacity 150ms cubic-bezier(.4, 0, 1, 1) 0ms, transform 150ms cubic-bezier(.4, 0, 1, 1) 0;
-  min-height: 0;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
-  line-height: 1.4em;
-  border-radius: 2px;
-  background-color: #445655
+  transition: opacity 150ms cubic-bezier(.4, 0, 1, 1) 0ms, transform 150ms cubic-bezier(.4, 0, 1, 1) 0
 }
 
 .jss137.jss136 {
@@ -932,9 +929,9 @@ canvas {
 }
 
 .jss138 {
-  padding: 8px 16px;
   font-size: .875rem;
-  line-height: 1.14286em
+  line-height: 1.14286em;
+  padding: 8px 16px
 }
 
 .jss139 {
@@ -942,7 +939,7 @@ canvas {
   transform-origin: right center
 }
 
-@media(min-width:600px) {
+@media(width >=600px) {
   .jss139 {
     margin: 0 14px
   }
@@ -953,7 +950,7 @@ canvas {
   transform-origin: left center
 }
 
-@media(min-width:600px) {
+@media(width >=600px) {
   .jss140 {
     margin: 0 14px
   }
@@ -964,7 +961,7 @@ canvas {
   transform-origin: center bottom
 }
 
-@media(min-width:600px) {
+@media(width >=600px) {
   .jss141 {
     margin: 14px 0
   }
@@ -975,7 +972,7 @@ canvas {
   transform-origin: center top
 }
 
-@media(min-width:600px) {
+@media(width >=600px) {
   .jss142 {
     margin: 14px 0
   }
@@ -986,100 +983,100 @@ canvas {
 }
 
 .jss7 {
-  margin: 0;
-  display: block
+  display: block;
+  margin: 0
 }
 
 .jss8 {
-  color: rgba(0, 0, 0, .54);
+  color: rgb(0 0 0 / 54%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 7rem;
   font-weight: 300;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
+  letter-spacing: -.04em;
   line-height: 1.14286em;
-  margin-left: -.04em;
-  letter-spacing: -.04em
+  margin-left: -.04em
 }
 
 .jss9 {
-  color: rgba(0, 0, 0, .54);
+  color: rgb(0 0 0 / 54%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 3.5rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
+  letter-spacing: -.02em;
   line-height: 1.30357em;
-  margin-left: -.02em;
-  letter-spacing: -.02em
+  margin-left: -.02em
 }
 
 .jss10 {
-  color: rgba(0, 0, 0, .54);
+  color: rgb(0 0 0 / 54%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 2.8125rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.06667em;
   margin-left: -.02em
 }
 
 .jss11 {
-  color: rgba(0, 0, 0, .54);
+  color: rgb(0 0 0 / 54%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 2.125rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.20588em
 }
 
 .jss12 {
-  color: rgba(0, 0, 0, .87);
+  color: rgb(0 0 0 / 87%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.35417em
 }
 
 .jss13 {
-  color: rgba(0, 0, 0, .87);
+  color: rgb(0 0 0 / 87%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 1.3125rem;
   font-weight: 500;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.16667em
 }
 
 .jss14 {
-  color: rgba(0, 0, 0, .87);
+  color: rgb(0 0 0 / 87%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: 1rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.5em
 }
 
 .jss15 {
-  color: rgba(0, 0, 0, .87);
+  color: rgb(0 0 0 / 87%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: .875rem;
   font-weight: 500;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.71429em
 }
 
 .jss16 {
-  color: rgba(0, 0, 0, .87);
+  color: rgb(0 0 0 / 87%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: .875rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.46429em
 }
 
 .jss17 {
-  color: rgba(0, 0, 0, .54);
+  color: rgb(0 0 0 / 54%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: .75rem;
   font-weight: 400;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   line-height: 1.375em
 }
 
 .jss18 {
-  color: rgba(0, 0, 0, .87);
+  color: rgb(0 0 0 / 87%);
+  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   font-size: .875rem;
   font-weight: 500;
-  font-family: mariupol, roboto, helvetica, arial, sans-serif;
   text-transform: uppercase
 }
 
@@ -1101,8 +1098,8 @@ canvas {
 
 .jss23 {
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
 .jss24 {
@@ -1126,7 +1123,7 @@ canvas {
 }
 
 .jss29 {
-  color: rgba(0, 0, 0, .54)
+  color: rgb(0 0 0 / 54%)
 }
 
 .jss30 {
@@ -1134,10 +1131,10 @@ canvas {
 }
 
 .jss4 {
-  padding: 10px;
   font-size: 16px;
-  min-height: 20px;
   font-weight: 700;
+  min-height: 20px;
+  padding: 10px;
   text-shadow: 1px 1px 1px #00476c;
   text-transform: uppercase
 }
@@ -1152,24 +1149,21 @@ canvas {
 }
 
 .jss1 {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  position: absolute;
-  overflow: hidden;
-  background-size: cover;
   background-color: #002b50;
-  background-position: center
+  background-position: center;
+  background-size: cover;
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1
 }
 
 .jss2 {
-  top: 0;
-  right: 4px;
-  z-index: 2;
+  line-height: 0;
   position: absolute;
-  line-height: 0
+  right: 4px;
+  top: 0;
+  z-index: 2
 }
 
 .jss3 {
@@ -1190,8 +1184,8 @@ html {
 }
 
 body {
-  margin: 0;
-  background-color: #fafafa
+  background-color: #fafafa;
+  margin: 0
 }
 
 @media print {
