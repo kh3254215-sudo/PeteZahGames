@@ -34,7 +34,11 @@ const __dirname = path.dirname(__filename);
 const publicPath = "public";
 const { SUPABASE_URL, SUPABASE_KEY, SUPABASE_SERVICE_ROLE_KEY } = process.env;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-const bare = createBareServer("/bare/");
+const bare = createBareServer("/bare/", {
+  requestOptions: {
+    agent: false, 
+  }
+});
 const barePremium = createBareServer("/api/bare-premium/");
 const app = express();
 app.use(cookieParser());
@@ -106,69 +110,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, cookie: { secure: false } }));
 
-app.use(
-  "/api/roblox/easyfun",
-  createProxyMiddleware({
-    target: "https://easyfun.gg",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/easyfun": "" },
-  })
-);
+function toIPv4(ip) {
+  if (!ip) return '127.0.0.1';
+  if (ip.includes(',')) ip = ip.split(',')[0].trim();
+  if (ip.startsWith('::ffff:')) ip = ip.replace('::ffff:', '');
+  return ip.match(/^(\d{1,3}\.){3}\d{1,3}$/) ? ip : '127.0.0.1';
+}
 
-app.use(
-  "/api/roblox/easyfun-api",
-  createProxyMiddleware({
-    target: "https://api.easyfun.gg",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/easyfun-api": "" },
-  })
-);
-
-app.use(
-  "/api/roblox/ldrescdn/easyfun/official-prod-v2",
-  createProxyMiddleware({
-    target: "https://res.ldrescdn.com/easyfun/official-prod-v2",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/ldrescdn/easyfun/official-prod-v2": "" },
-  })
-);
-
-app.use(
-  "/api/roblox/setupcmp",
-  createProxyMiddleware({
-    target: "https://cmp.setupcmp.com/cmp/cmp/",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/setupcmp": "" },
-  })
-);
-
-app.use(
-  "/api/roblox/ldplayer",
-  createProxyMiddleware({
-    target: "https://appcenter.ldplayer.net",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/ldplayer": "" },
-  })
-);
-
-app.use(
-  "/api/roblox/ldplayer-cdn",
-  createProxyMiddleware({
-    target: "https://cdn.ldplayer.net",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/ldplayer-cdn": "" },
-  })
-);
-
-app.use(
-  "/api/roblox/req-ldrescdn",
-  createProxyMiddleware({
-    target: "https://res.ldrescdn.com",
-    changeOrigin: true,
-    pathRewrite: { "^/api/roblox/req-ldrescdn": "" },
-  })
-);
-// todo: put these in a seperate file
+app.get("/ip", async (req, res) => {
+  try {
+    const response = await fetch("https://frogiesarcade.win/ip");
+    const body = await response.text();
+    res.status(response.status).send(body);
+  } catch {
+    res.status(500).send("Error fetching IP page");
+  }
+});
 
 app.get("/results/:query", async (req, res) => {
   try {
@@ -459,7 +416,8 @@ server.on("upgrade", (req, socket, head) => {
     socket.destroy();
   }
 });
-// In my serverside config I rewrite /api/wisp-premium/ to go to a bare/wisp servers from non-flagged ip datacenters to allow for cloudflare/google protected sites to work.
+// In my serverside config I rewrite /api/bare-premium/ and /api/wisp-premium/ to go to a bare/wisp servers from non-flagged ip datacenters to allow for cloudflare/google protected sites to work.
+// If you are self hosting, this will not apply to you, and google/youtube/cloudflare protected sites will probably not work unless you run this on a non-flagged.
 
 const port = parseInt(process.env.PORT || "3000");
 
