@@ -25,7 +25,7 @@ export async function signupHandler(req, res) {
     const now = Date.now();
 
     const isFirstUser = db.prepare('SELECT COUNT(*) AS count FROM users').get().count === 0;
-    const isAdmin = isFirstUser || email === process.env.ADMIN_EMAILS;
+    const isAdmin = isFirstUser || email === process.env.ADMIN_EMAIL;
 
     db.prepare(`
       INSERT INTO users (id, email, password_hash, created_at, updated_at, is_admin, email_verified)
