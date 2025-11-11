@@ -164,7 +164,6 @@ app.get("/results/:query", async (req, res) => {
   }
 });
 
-// Helper to check if user is owner
 function isOwner(user) {
   return user && user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL;
 }
@@ -207,7 +206,6 @@ app.get("/api/profile", (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    // Return correct role for frontend: Owner, Admin, Staff, or User
     let role = 'User';
     if (user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL) {
       role = 'Owner';
@@ -440,7 +438,6 @@ app.get("/api/admin/users", (req, res) => {
   }
   try {
     const user = db.prepare('SELECT is_admin, email FROM users WHERE id = ?').get(req.session.user.id);
-    // Allow owner (is_admin === 1 && email matches), admin (is_admin === 3), or staff (is_admin === 2) to access admin area
     if (!user || !(user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL || user.is_admin === 2 || user.is_admin === 3)) {
       return res.status(403).json({ error: "Admin access required" });
     }

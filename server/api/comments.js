@@ -6,7 +6,7 @@ export async function addCommentHandler(req, res) {
   if (!req.session.user) return res.status(401).json({ error: 'Unauthorized' });
   const { type, targetId, content } = req.body;
   if (!['changelog','feedback'].includes(type) || !targetId || !content) return res.status(400).json({ error: 'Invalid request' });
-  // Basic bad word filter (expand as needed)
+  // no bad words >:(
   const banned = [/\bnigg\w*\b/i, /\bcunt\b/i, /\bchink\b/i, /\bfag\w*\b/i, /\btrann\w*\b/i, /\bspic\b/i, /\bslut\b/i, /\bwhore\b/i, /\bretard\b/i];
   if (banned.some(r => r.test(content))) return res.status(400).json({ error: 'Inappropriate language detected.' });
   const id = randomUUID();

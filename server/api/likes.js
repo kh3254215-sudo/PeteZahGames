@@ -13,7 +13,6 @@ export async function likeHandler(req, res) {
       .run(id, type, targetId, req.session.user.id, now);
     res.json({ message: 'Liked!' });
   } catch {
-    // Already liked
     db.prepare('DELETE FROM likes WHERE type = ? AND target_id = ? AND user_id = ?')
       .run(type, targetId, req.session.user.id);
     res.json({ message: 'Unliked.' });

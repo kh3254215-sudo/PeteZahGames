@@ -425,7 +425,6 @@
     </div>
   </div>
 
-  <!-- Admin User Management Modal -->
   <div id="admin-user-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(10,29,55,0.85);z-index:10000;align-items:center;justify-content:center;">
     <div style="background:linear-gradient(135deg,#111117,#182129);border-radius:24px;padding:32px;max-width:400px;width:90vw;box-shadow:0 12px 25px rgba(0,0,0,0.7);border:1px solid #3a4a5a;position:relative;">
       <button id="close-admin-user-modal" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:#99aabb;font-size:24px;cursor:pointer;">&times;</button>
@@ -454,7 +453,6 @@
         
         if (response.ok) {
           userData = data.user;
-          // Use role from backend for admin area access
           const role = data.user.app_metadata?.role;
           isAdmin = role === 'Owner' || role === 'Admin' || role === 'Staff';
           
@@ -568,7 +566,6 @@
       currentAdminUserId = userId;
       const modal = document.getElementById('admin-user-modal');
       const content = document.getElementById('admin-user-modal-content');
-      // Show role in modal: Owner, Admin, Staff, or User
       let role = '';
       if (user.is_admin === 1 && user.email === (window.lastAdminUsers && window.lastAdminUsers[0] && window.lastAdminUsers[0].email ? window.lastAdminUsers[0].email : '')) {
         role = '<span style="color:#fbbf24">Owner</span>';
@@ -830,7 +827,6 @@
       }
     });
 
-    // Extra features logic
     function openInIframe(url) {
       try {
         if (window.parent !== window && window.parent.postMessage) {
@@ -850,7 +846,6 @@
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('favorite-games').value = localStorage.getItem('favorite_games') || '';
     });
-    // Redirect to profile if already logged in
     (async function() {
       try {
         const r = await fetch('/api/profile', { credentials: 'include' });

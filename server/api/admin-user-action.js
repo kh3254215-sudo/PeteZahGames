@@ -12,7 +12,6 @@ export async function adminUserActionHandler(req, res) {
   if (userId === req.session.user.id) return res.status(400).json({ error: 'Cannot manage yourself' });
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
-  // Only owner can promote/demote admins or staff
   if (["promote_admin", "demote_admin", "staff"].includes(action) && !isOwner) {
     return res.status(403).json({ error: 'Only the owner can manage admin/staff roles.' });
   }
@@ -30,7 +29,6 @@ export async function adminUserActionHandler(req, res) {
     db.prepare('UPDATE users SET is_admin = 0 WHERE id = ?').run(userId); // 0 = user
     return res.json({ message: 'Admin demoted to user.' });
   }
-  // Staff and admins can suspend, ban, or delete users (but not owner)
   if ([2,3].includes(admin.is_admin) || isOwner) {
     if (action === 'suspend') {
       db.prepare('UPDATE users SET email_verified = 0 WHERE id = ?').run(userId);
