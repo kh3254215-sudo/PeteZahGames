@@ -3,14 +3,22 @@ import { epoxyPath } from '@mercuryworkshop/epoxy-transport';
 import { libcurlPath } from '@mercuryworkshop/libcurl-transport';
 import { server as wisp } from '@mercuryworkshop/wisp-js/server';
 import { createBareServer } from '@tomphttp/bare-server-node';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { randomUUID } from "crypto";
+import db from './server/db.js';
 import dotenv from 'dotenv';
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import rateLimit from 'express-rate-limit';
 import session from 'express-session';
 import fs from 'fs';
+import { signupHandler } from "./server/api/signup.js";
+import { signinHandler } from "./server/api/signin.js";
+import { adminUserActionHandler } from './server/api/admin-user-action.js';
+import { addCommentHandler, getCommentsHandler } from './server/api/comments.js';
+import { likeHandler, getLikesHandler } from './server/api/likes.js';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { parseJSONC } from 'jsonc-parser';
 import NodeCache from 'node-cache';
@@ -19,8 +27,6 @@ import { createServer } from 'node:http';
 import { hostname } from 'node:os';
 import path, { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { signinHandler } from './server/api/signin.js';
-import { signupHandler } from './server/api/signup.js';
 
 const configRaw = fs.readFileSync('./config.jsonc', 'utf-8');
 const config = parseJSONC(configRaw);
@@ -153,7 +159,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }
+    cookie: { secure: true }
   })
 );
 app.use((req, res, next) => {
@@ -182,15 +188,10 @@ app.use((req, res, next) => {
     })
   );
 
+
   app.get('/ip', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/pages/other/roblox/ip.html'));
   });
-
-  const redirectRoutes = JSON.parse(fs.readFileSync(path.join(__dirname, 'config', 'redirectitems.json'), 'utf8'));
-
-  function isOwner(user) {
-    return user && user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL;
-  }
 
   // Add stricter rate limits for signup and profile-pic upload
   const signupLimiter = rateLimit({
@@ -299,7 +300,7 @@ app.use((req, res, next) => {
           }
         }
       });
-    } catch (error) {
+    } catch {
       return res.status(500).json({ error: 'Internal server error' });
     }
   });
@@ -308,8 +309,7 @@ app.use((req, res, next) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
     try {
-      const { username, bio, age, school, favgame, mood } = req.body;
-      const now = Date.now();
+      const { username, bio, age, school } = req.body;
       db.prepare('UPDATE users SET username = ?, bio = ?, age = ?, school = ? WHERE id = ?').run(
         username || null,
         bio || null,
@@ -320,7 +320,7 @@ app.use((req, res, next) => {
       req.session.user.username = username;
       req.session.user.bio = bio;
       return res.status(200).json({ message: 'Profile updated' });
-    } catch (error) {
+    } catch {
       return res.status(500).json({ error: 'Internal server error' });
     }
   });
@@ -603,41 +603,7 @@ app.use((req, res, next) => {
       'Content-Type': 'text/html',
       'Set-Cookie': 'verified=ok; Max-Age=86400; Path=/; HttpOnly; SameSite=Lax'
     });
-    app.get('/auth/callback', (req, res) => {
-      return res.sendFile(join(__dirname, publicPath, 'auth-callback.html'));
-    });
-    function parseCookies(header) {
-      if (!header) return {};
-      return header.split(';').reduce((acc, cookie) => {
-        const [name, value] = cookie.trim().split('=');
-        acc[name] = value;
-        return acc;
-      }, {});
-    }
-
-    const isVerified = (req) => {
-      const cookies = parseCookies(req.headers.cookie);
-      return cookies.verified === 'ok' || req.headers['x-bot-token'] === process.env.BOT_TOKEN;
-    };
-
-    const isBrowser = (req) => {
-      const ua = req.headers['user-agent'] || '';
-      return /Mozilla|Chrome|Safari|Firefox|Edge/i.test(ua);
-    };
-
-    const handleHttpVerification = (req, res, next) => {
-      const acceptsHtml = req.headers.accept?.includes('text/html');
-      if (!acceptsHtml) return next();
-      if (isVerified(req) && isBrowser(req)) return next();
-      if (!isBrowser(req)) {
-        res.writeHead(403, { 'Content-Type': 'text/plain' });
-        return res.end('Forbidden');
-      }
-      res.writeHead(200, {
-        'Content-Type': 'text/html',
-        'Set-Cookie': 'verified=ok; Max-Age=86400; Path=/; HttpOnly; SameSite=Lax'
-      });
-      res.end(`
+    res.end(`
     <!DOCTYPE html>
     <html>
       <body>
@@ -649,172 +615,171 @@ app.use((req, res, next) => {
       </body>
     </html>
   `);
-    };
-
-    const handleUpgradeVerification = (req, socket, next) => {
-      const verified = isVerified(req);
-      const isWsBrowser = isBrowser(req);
-      console.log(
-        `WebSocket Upgrade Attempt: URL=${req.url}, Verified=${verified}, IsBrowser=${isWsBrowser}, Cookies=${req.headers.cookie || 'none'}`
-      );
-      if (req.url.startsWith('/wisp/')) {
-        return next();
-      }
-      if (verified && isWsBrowser) {
-        return next();
-      }
-      console.log(`WebSocket Rejected: URL=${req.url}, Reason=${verified ? 'Not a browser' : 'Not verified'}`);
-      socket.destroy();
-    };
-
-    const server = createServer((req, res) => {
-      if (bare.shouldRoute(req)) {
-        handleHttpVerification(req, res, () => {
-          bare.routeRequest(req, res);
-        });
-      } else if (barePremium.shouldRoute(req)) {
-        handleHttpVerification(req, res, () => {
-          barePremium.routeRequest(req, res);
-        });
-      } else {
-        app.handle(req, res);
-      }
-    });
-
-    server.on('upgrade', (req, socket, head) => {
-      if (bare.shouldRoute(req)) {
-        handleUpgradeVerification(req, socket, () => {
-          bare.routeUpgrade(req, socket, head);
-        });
-      } else if (barePremium.shouldRoute(req)) {
-        handleUpgradeVerification(req, socket, () => {
-          barePremium.routeUpgrade(req, socket, head);
-        });
-      } else if (req.url && (req.url.startsWith('/wisp/') || req.url.startsWith('/api/wisp-premium/'))) {
-        handleUpgradeVerification(req, socket, () => {
-          if (req.url.startsWith('/api/wisp-premium/')) {
-            req.url = req.url.replace('/api/wisp-premium/', '/wisp/');
-          }
-          wisp.routeRequest(req, socket, head);
-        });
-      } else {
-        socket.end();
-      }
-    });
-    const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-    const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov'];
-
-    // Load cache at startup
-    const urls = JSON.parse(fs.readFileSync('.sitemap-base.json', 'utf8'));
-    cache.set('urls', urls);
-
-    // --- Priority & changefreq ---
-    function computePriority(commitCount, maxCommits) {
-      if (maxCommits === 0) return 0.5;
-      const normalized = commitCount / maxCommits;
-      return Math.max(0.1, Math.min(1.0, normalized));
-    }
-    function computeChangefreq(lastmod) {
-      const last = new Date(lastmod);
-      const days = (Date.now() - last.getTime()) / (1000 * 60 * 60 * 24);
-      if (days <= 7) return 'daily';
-      if (days <= 30) return 'weekly';
-      if (days <= 180) return 'monthly';
-      return 'yearly';
-    }
-
-    // --- XML generator ---
-    function generateXml(domain, urls) {
-      const maxCommits = urls.reduce((max, u) => Math.max(max, u.commitCount), 0);
-      let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-      xml += `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n`;
-      xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n`;
-      xml += `        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"\n`;
-      xml += `        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n`;
-      urls.forEach((u) => {
-        const priority = computePriority(u.commitCount, maxCommits).toFixed(2);
-        const changefreq = computeChangefreq(u.lastmod);
-        xml += `  <url>\n`;
-        xml += `    <loc>${domain}${u.loc}</loc>\n`;
-        xml += `    <lastmod>${u.lastmod}</lastmod>\n`;
-        xml += `    <changefreq>${changefreq}</changefreq>\n`;
-        xml += `    <priority>${priority}</priority>\n`;
-        if (IMAGE_EXTENSIONS.includes(u.ext)) {
-          xml += `    <image:image><image:loc>${domain}${u.loc}</image:loc></image:image>\n`;
-        }
-        if (VIDEO_EXTENSIONS.includes(u.ext)) {
-          xml += `    <video:video>\n`;
-          xml += `      <video:content_loc>${domain}${u.loc}</video:content_loc>\n`;
-          xml += `      <video:title>${path.basename(u.loc)}</video:title>\n`;
-          xml += `      <video:description>Video file ${path.basename(u.loc)}</video:description>\n`;
-          xml += `    </video:video>\n`;
-        }
-        xml += `  </url>\n`;
-      });
-      xml += `</urlset>`;
-      return xml;
-    }
-
-    // --- JSON generator ---
-    function generateJson(domain, urls) {
-      const maxCommits = urls.reduce((max, u) => Math.max(max, u.commitCount), 0);
-      return urls.map((u) => ({
-        loc: domain + u.loc,
-        lastmod: u.lastmod,
-        changefreq: computeChangefreq(u.lastmod),
-        priority: computePriority(u.commitCount, maxCommits),
-        type: IMAGE_EXTENSIONS.includes(u.ext) ? 'image' : VIDEO_EXTENSIONS.includes(u.ext) ? 'video' : 'page'
-      }));
-    }
-
-    // --- TXT generator ---
-    function generateTxt(domain, urls) {
-      return urls.map((u) => domain + u.loc).join('\n');
-    }
-
-    // --- Routes ---
-    app.use(express.static(path.join(__dirname, 'public'))); // serve sitemap.xsl
-
-    app.get('/sitemap.xml', (req, res) => {
-      res.type('application/xml');
-      const domain = req.protocol + '://' + req.get('host');
-      res.send(generateXml(domain, cache.get('urls')));
-    });
-
-    app.get('/sitemap.json', (req, res) => {
-      const domain = req.protocol + '://' + req.get('host');
-      res.json(generateJson(domain, cache.get('urls')));
-    });
-
-    app.get('/sitemap.txt', (req, res) => {
-      res.type('text/plain');
-      const domain = req.protocol + '://' + req.get('host');
-      res.send(generateTxt(domain, cache.get('urls')));
-    });
-    const port = parseInt(config.PORT || process.env.PORT || '3000');
-    server.keepAliveTimeout = 5000;
-    server.headersTimeout = 6000;
-
-    server.listen({ port }, () => {
-      const address = server.address();
-      console.log(`Listening on:`);
-      console.log(`\thttp://localhost:${address.port}`);
-      console.log(`\thttp://${hostname()}:${address.port}`);
-      console.log(`\thttp://${address.family === 'IPv6' ? `[${address.address}]` : address.address}:${address.port}`);
-    });
-
-    process.on('SIGINT', () => shutdown('INT'));
-    process.on('SIGTERM', () => shutdown('TERM'));
-
-    function shutdown(signal) {
-      console.log(`SIG${signal} received: shutting down...`);
-      server.close(() => {
-        console.log('HTTP server closed');
-        bare.close(() => {
-          console.log('Bare server closed');
-          process.exit(0);
-        });
-      });
-    }
   };
+
+  const handleUpgradeVerification = (req, socket, next) => {
+    const verified = isVerified(req);
+    const isWsBrowser = isBrowser(req);
+    console.log(
+      `WebSocket Upgrade Attempt: URL=${req.url}, Verified=${verified}, IsBrowser=${isWsBrowser}, Cookies=${req.headers.cookie || 'none'}`
+    );
+    if (req.url.startsWith('/wisp/')) {
+      return next();
+    }
+    if (verified && isWsBrowser) {
+      return next();
+    }
+    console.log(`WebSocket Rejected: URL=${req.url}, Reason=${verified ? 'Not a browser' : 'Not verified'}`);
+    socket.destroy();
+  };
+
+  const server = createServer((req, res) => {
+    if (bare.shouldRoute(req)) {
+      handleHttpVerification(req, res, () => {
+        bare.routeRequest(req, res);
+      });
+    } else if (barePremium.shouldRoute(req)) {
+      handleHttpVerification(req, res, () => {
+        barePremium.routeRequest(req, res);
+      });
+    } else {
+      app.handle(req, res);
+    }
+  });
+
+  server.on('upgrade', (req, socket, head) => {
+    if (bare.shouldRoute(req)) {
+      handleUpgradeVerification(req, socket, () => {
+        bare.routeUpgrade(req, socket, head);
+      });
+    } else if (barePremium.shouldRoute(req)) {
+      handleUpgradeVerification(req, socket, () => {
+        barePremium.routeUpgrade(req, socket, head);
+      });
+    } else if (req.url && (req.url.startsWith('/wisp/') || req.url.startsWith('/api/wisp-premium/'))) {
+      handleUpgradeVerification(req, socket, () => {
+        if (req.url.startsWith('/api/wisp-premium/')) {
+          req.url = req.url.replace('/api/wisp-premium/', '/wisp/');
+        }
+        wisp.routeRequest(req, socket, head);
+      });
+    } else {
+      socket.end();
+    }
+  });
+  const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+  const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov'];
+
+  // Load cache at startup
+  const urls = JSON.parse(fs.readFileSync('.sitemap-base.json', 'utf8'));
+  cache.set('urls', urls);
+
+  // --- Priority & changefreq ---
+  function computePriority(commitCount, maxCommits) {
+    if (maxCommits === 0) return 0.5;
+    const normalized = commitCount / maxCommits;
+    return Math.max(0.1, Math.min(1.0, normalized));
+  }
+  function computeChangefreq(lastmod) {
+    const last = new Date(lastmod);
+    const days = (Date.now() - last.getTime()) / (1000 * 60 * 60 * 24);
+    if (days <= 7) return 'daily';
+    if (days <= 30) return 'weekly';
+    if (days <= 180) return 'monthly';
+    return 'yearly';
+  }
+
+  // --- XML generator ---
+  function generateXml(domain, urls) {
+    const maxCommits = urls.reduce((max, u) => Math.max(max, u.commitCount), 0);
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n`;
+    xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n`;
+    xml += `        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"\n`;
+    xml += `        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n`;
+    urls.forEach((u) => {
+      const priority = computePriority(u.commitCount, maxCommits).toFixed(2);
+      const changefreq = computeChangefreq(u.lastmod);
+      xml += `  <url>\n`;
+      xml += `    <loc>${domain}${u.loc}</loc>\n`;
+      xml += `    <lastmod>${u.lastmod}</lastmod>\n`;
+      xml += `    <changefreq>${changefreq}</changefreq>\n`;
+      xml += `    <priority>${priority}</priority>\n`;
+      if (IMAGE_EXTENSIONS.includes(u.ext)) {
+        xml += `    <image:image><image:loc>${domain}${u.loc}</image:loc></image:image>\n`;
+      }
+      if (VIDEO_EXTENSIONS.includes(u.ext)) {
+        xml += `    <video:video>\n`;
+        xml += `      <video:content_loc>${domain}${u.loc}</video:content_loc>\n`;
+        xml += `      <video:title>${path.basename(u.loc)}</video:title>\n`;
+        xml += `      <video:description>Video file ${path.basename(u.loc)}</video:description>\n`;
+        xml += `    </video:video>\n`;
+      }
+      xml += `  </url>\n`;
+    });
+    xml += `</urlset>`;
+    return xml;
+  }
+
+  // --- JSON generator ---
+  function generateJson(domain, urls) {
+    const maxCommits = urls.reduce((max, u) => Math.max(max, u.commitCount), 0);
+    return urls.map((u) => ({
+      loc: domain + u.loc,
+      lastmod: u.lastmod,
+      changefreq: computeChangefreq(u.lastmod),
+      priority: computePriority(u.commitCount, maxCommits),
+      type: IMAGE_EXTENSIONS.includes(u.ext) ? 'image' : VIDEO_EXTENSIONS.includes(u.ext) ? 'video' : 'page'
+    }));
+  }
+
+  // --- TXT generator ---
+  function generateTxt(domain, urls) {
+    return urls.map((u) => domain + u.loc).join('\n');
+  }
+
+  // --- Routes ---
+  app.use(express.static(path.join(__dirname, 'public'))); // serve sitemap.xsl
+
+  app.get('/sitemap.xml', (req, res) => {
+    res.type('application/xml');
+    const domain = req.protocol + '://' + req.get('host');
+    res.send(generateXml(domain, cache.get('urls')));
+  });
+
+  app.get('/sitemap.json', (req, res) => {
+    const domain = req.protocol + '://' + req.get('host');
+    res.json(generateJson(domain, cache.get('urls')));
+  });
+
+  app.get('/sitemap.txt', (req, res) => {
+    res.type('text/plain');
+    const domain = req.protocol + '://' + req.get('host');
+    res.send(generateTxt(domain, cache.get('urls')));
+  });
+  const port = parseInt(config.PORT || process.env.PORT || '3000');
+  server.keepAliveTimeout = 5000;
+  server.headersTimeout = 6000;
+
+  server.listen({ port }, () => {
+    const address = server.address();
+    console.log(`Listening on:`);
+    console.log(`\thttp://localhost:${address.port}`);
+    console.log(`\thttp://${hostname()}:${address.port}`);
+    console.log(`\thttp://${address.family === 'IPv6' ? `[${address.address}]` : address.address}:${address.port}`);
+  });
+
+  process.on('SIGINT', () => shutdown('INT'));
+  process.on('SIGTERM', () => shutdown('TERM'));
+
+  function shutdown(signal) {
+    console.log(`SIG${signal} received: shutting down...`);
+    server.close(() => {
+      console.log('HTTP server closed');
+      bare.close(() => {
+        console.log('Bare server closed');
+        process.exit(0);
+      });
+    });
+  }
 });

@@ -33,15 +33,15 @@ async function waitForTransport() {
     try {
       await connection.setTransport('/epoxy/index.mjs', [{ wisp: store.wispurl }]);
       return;
-    } catch (e) {
+    } catch {
       try {
         await connection.setTransport('/baremux/index.mjs', [store.bareurl]);
         return;
-      } catch (e2) {
+      } catch {
         try {
           await connection.setTransport('/libcurl/index.mjs', [{ wisp: store.wispurl }]);
           return;
-        } catch (e3) {
+        } catch {
           attempts++;
           if (attempts >= maxAttempts) {
             console.error('Failed to set any transport after', maxAttempts, 'attempts');
@@ -89,7 +89,9 @@ function createTab(url = store.homepage) {
       if (doc && (doc.title.includes('Just a moment') || doc.title.includes('Checking your browser'))) {
         frame.frame.src = '/static/google-embed.html#' + tab.url;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('Could not access frame document:', e);
+    }
   };
 
   frame.frame.style.transform = `scale(${tab.zoomLevel})`;
@@ -105,7 +107,7 @@ function createTab(url = store.homepage) {
     try {
       const title = frame.frame.contentWindow?.document?.title || new URL(e.url).hostname;
       tab.title = title || '...';
-    } catch (err) {
+    } catch {
       tab.title = new URL(e.url).hostname || '...';
     }
 
