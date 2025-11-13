@@ -60,9 +60,30 @@ Our website is at petezahgames.com if you would like to see it
 > [!IMPORTANT] You can get more links in our
 > [Discord Server](https://discord.gg/cYjHFDguxS)
 
+## Docs
+
+### So... our codebase is really horrible
+
+We plan to clean things up in the future, but for now here is a simple list of
+things to know:
+
+- Most routes are in the `/public/` folder (especially pages)
+- If you need to find the exact route of a page use dev tools to find the
+  iFrame's source:
+  <img width="411" height="39" alt="image" src="https://github.com/user-attachments/assets/00cf72ab-3d9b-463a-bb53-dd755f82b9f7" />
+- Yes, we know using an iFrame for the entire site is horrible practice. We're
+  working on it.
+- We use SQLite as our database
+- Just because a file has a number after its name does not mean that it is
+  redundant.
+- UV Static is in `/public/static/` and Scramjet is in `/public/scram`
+- API routes are all in `server.js`
+- If you need any other help feel free to `@mention` a developer on Discord or
+  contact PeteZah directly.
+
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=PeteZah-Games/PeteZahGames&type=Date)](https://www.star-history.com/#PeteZah-Games/PeteZahGames&Date)
+[![StarGazers](https://api.star-history.com/svg?repos=PeteZah-Games/PeteZahGames&type=date&theme=dark&legend=top-left)](https://github.com/PeteZah-Games/PeteZahGames/stargazers)
 
 ## Contributors
 
