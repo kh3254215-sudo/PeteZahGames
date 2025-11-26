@@ -150,7 +150,7 @@ const Submodules = ['scramjet', 'ultraviolet'];
 /** @type {Record<string, string>} */
 const buildCommands = {
   scramjet: "CI=true pnpm install && PATH='$HOME/.cargo/bin:$PATH' npm run rewriter:build && npm run build:all",
-  ultraviolet: 'CI=true pnpm install --ignore-workspace --no-frozen-lockfile --no-verify-store-integrity && pnpm run build'
+  ultraviolet: 'CI=true pnpm install --ignore-workspace --no-lockfile --no-verify-store-integrity && pnpm run build'
 };
 const YELLOW = '\x1b[33m';
 const GREEN = '\x1b[32m';

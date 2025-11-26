@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import argon2 from 'argon2';
 import { randomUUID } from 'crypto';
 import db from '../db.js';
 
@@ -19,7 +19,14 @@ export async function signupHandler(req, res) {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    // Use Argon2id with the same config as signin upgrade
+    const passwordHash = await argon2.hash(password, {
+      type: argon2.argon2id,
+      memoryCost: 65565,   // 64 MB
+      timeCost: 5,         // iterations
+      parallelism: 1       // threads
+    });
+
     const userId = randomUUID();
     const now = Date.now();
 
@@ -38,7 +45,9 @@ export async function signupHandler(req, res) {
     ).run(userId, email, passwordHash, now, now, isAdmin ? 1 : 0, 1, school || null, age || null, ip);
 
     res.status(201).json({
-      message: isFirstUser ? 'Admin account created and verified automatically!' : 'Account created successfully! You can now log in.'
+      message: isFirstUser
+        ? 'Admin account created and verified automatically!'
+        : 'Account created successfully! You can now log in.'
     });
   } catch (error) {
     console.error('Signup error:', error);
