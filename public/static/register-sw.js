@@ -1,4 +1,5 @@
-'use strict';
+import { __uv$config } from './uv/uv.config.js';
+('use strict');
 /**
  * Distributed with Ultraviolet and compatible with most configurations.
  */
@@ -13,7 +14,7 @@ const swAllowedHostnames = ['localhost', '127.0.0.1'];
  * Global util
  * Used in 404.html and index.html
  */
-async function registerSW() {
+export async function registerSW() {
   if (!navigator.serviceWorker) {
     if (location.protocol !== 'https:' && !swAllowedHostnames.includes(location.hostname))
       throw new Error('Service workers cannot be registered without https.');
@@ -23,6 +24,7 @@ async function registerSW() {
 
   // Ultraviolet has a stock `sw.js` script.
   await navigator.serviceWorker.register(stockSW, {
+    type: 'module',
     scope: __uv$config.prefix
   });
 }
