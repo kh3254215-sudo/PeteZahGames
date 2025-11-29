@@ -1,55 +1,60 @@
-import IPv6Rotator from './ipv6-rotator.js';
-import https from 'https';
+import crypto from 'crypto';
 
-const rotator = new IPv6Rotator('2607:5300:205:200');
-
-console.log('Testing OVH IPv6 Rotation (avoiding roblox IPs)...\n');
-
-async function testConnection(ip) {
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: 'api64.ipify.org',
-      port: 443,
-      path: '/',
-      method: 'GET',
-      family: 6,
-      localAddress: ip,
-      timeout: 5000
-    };
-
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => resolve(data.trim()));
-    });
-
-    req.on('error', reject);
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('Timeout'));
-    });
-    req.end();
-  });
-}
-
-async function runTests() {
-  console.log('Generating 5 random IPs from your OVH /64 block...\n');
-  
-  for (let i = 0; i < 5; i++) {
-    const ip = rotator.generateRandomIP();
-    console.log(`Test ${i + 1}: ${ip}`);
-    
-    try {
-      const result = await testConnection(ip);
-      console.log(`  ✓ Works! External IP: ${result}\n`);
-    } catch (error) {
-      console.log(`  ✗ Failed: ${error.message}\n`);
-    }
+/**
+ * IPv6 Address Rotator
+ * Generates random IPv6 addresses from your OVH /64 block
+ * Avoids the roblox-* interface addresses (1-196 in hex = 0x1 to 0xc4)
+ */
+class IPv6Rotator {
+  constructor(prefix = '2607:5300:205:200') {
+    this.prefix = prefix;
+    this.reservedRanges = [
+      { start: 0x1, end: 0xc4 }  // roblox-1 to roblox-196
+    ];
   }
-  
-  console.log('='.repeat(60));
-  console.log('SUCCESS! You have 18 quintillion IPs available!');
-  console.log('Range: 2607:5300:205:200::/64 (excluding roblox IPs)');
+
+  /**
+   * Generate a random IPv6 address avoiding reserved ranges
+   */
+  generateRandomIP() {
+    let randomHex;
+    let firstSegment;
+    
+    // Keep generating until we get one outside reserved ranges
+    do {
+      randomHex = crypto.randomBytes(8).toString('hex');
+      // Get first 16 bits to check against reserved ranges
+      firstSegment = parseInt(randomHex.substr(0, 4), 16);
+    } while (this.isReserved(firstSegment));
+    
+    // Format as proper IPv6
+    const parts = [];
+    for (let i = 0; i < randomHex.length; i += 4) {
+      parts.push(randomHex.substr(i, 4));
+    }
+    
+    return `${this.prefix}::${parts.join(':')}`;
+  }
+
+  /**
+   * Check if a segment falls in reserved range
+   */
+  isReserved(segment) {
+    for (const range of this.reservedRanges) {
+      if (segment >= range.start && segment <= range.end) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get address for a specific session
+   */
+  getAddressForSession(sessionId, ttl = 300000) {
+    // For now, just generate random - can add session persistence later
+    return this.generateRandomIP();
+  }
 }
 
-runTests().catch(console.error);
+export default IPv6Rotator;

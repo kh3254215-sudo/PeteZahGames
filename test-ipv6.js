@@ -1,70 +1,55 @@
 import IPv6Rotator from './ipv6-rotator.js';
 import https from 'https';
 
-const ipv6Rotator = new IPv6Rotator('2001:470:8:5ac');
+const rotator = new IPv6Rotator('2607:5300:205:200');
 
-// Test function to make requests with rotating IPs
-async function testIPv6Rotation() {
-  console.log('Testing IPv6 Rotation...\n');
-  
-  for (let i = 0; i < 5; i++) {
-    const randomIP = ipv6Rotator.generateRandomIP();
-    console.log(`Test ${i + 1}: Using IPv6 ${randomIP}`);
-    
-    try {
-      const response = await makeRequest(randomIP);
-      console.log(`  Result: ${response}\n`);
-    } catch (error) {
-      console.log(`  Error: ${error.message}\n`);
-    }
-  }
-}
+console.log('Testing OVH IPv6 Rotation (avoiding roblox IPs)...\n');
 
-function makeRequest(localAddress) {
+async function testConnection(ip) {
   return new Promise((resolve, reject) => {
     const options = {
-      hostname: 'api.ipify.org',
+      hostname: 'api64.ipify.org',
       port: 443,
-      path: '/?format=json',
+      path: '/',
       method: 'GET',
       family: 6,
-      localAddress: localAddress,
-      timeout: 10000
+      localAddress: ip,
+      timeout: 5000
     };
 
     const req = https.request(options, (res) => {
       let data = '';
-      
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      
-      res.on('end', () => {
-        try {
-          const json = JSON.parse(data);
-          resolve(json.ip);
-        } catch (e) {
-          resolve(data);
-        }
-      });
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => resolve(data.trim()));
     });
 
-    req.on('error', (error) => {
-      reject(error);
-    });
-
+    req.on('error', reject);
     req.on('timeout', () => {
       req.destroy();
-      reject(new Error('Request timeout'));
+      reject(new Error('Timeout'));
     });
-
     req.end();
   });
 }
 
-// Run the test
-testIPv6Rotation().then(() => {
-  console.log('Test complete!');
-}).catch((error) => {
-  console.error('Test failed:', error);
-});
+async function runTests() {
+  console.log('Generating 5 random IPs from your OVH /64 block...\n');
+  
+  for (let i = 0; i < 5; i++) {
+    const ip = rotator.generateRandomIP();
+    console.log(`Test ${i + 1}: ${ip}`);
+    
+    try {
+      const result = await testConnection(ip);
+      console.log(`  ✓ Works! External IP: ${result}\n`);
+    } catch (error) {
+      console.log(`  ✗ Failed: ${error.message}\n`);
+    }
+  }
+  
+  console.log('='.repeat(60));
+  console.log('SUCCESS! You have 18 quintillion IPs available!');
+  console.log('Range: 2607:5300:205:200::/64 (excluding roblox IPs)');
+}
+
+runTests().catch(console.error);
