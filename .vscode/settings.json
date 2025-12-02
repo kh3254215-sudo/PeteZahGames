@@ -1,10 +1,6 @@
 {
-  // Editor Behavior
+  // --- Editor ---
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.fixAll.stylelint": "always"
-  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
@@ -13,20 +9,63 @@
   "editor.renderControlCharacters": true,
   "editor.guides.indentation": true,
   "editor.cursorSmoothCaretAnimation": "on",
+  "editor.inlineSuggest.enabled": true,
+  "editor.suggest.preview": true,
+  "editor.linkedEditing": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.minimap.enabled": true,
+  "editor.minimap.renderCharacters": false,
+  "editor.wordWrap": "on",
+  "editor.bracketPairColorization.enabled": true,
 
-  // File Handling
+  // --- Files ---
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.autoSave": "onWindowChange",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "external": true
+  },
+  "files.associations": {
+    ".env*": "dotenv",
+    "example.env": "dotenv",
+    "*.toml": "toml",
+    "*.mdx": "markdown",
+    "*ignore": "ignore",
+    "*.xsl": "xsl"
+  },
+  "files.readonlyInclude": {
+    "**/package-lock.json": true,
+    "**/pnpm-lock.yaml": true,
+    "**/yarn.lock": true
+  },
 
-  // ESLint
+  // --- Search ---
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true,
+    "**/scram": true
+  },
+  "search.useIgnoreFiles": true,
+
+  // --- ESLint ---
   "eslint.enable": true,
-  "eslint.validate": ["javascript", "typescript", "json", "jsonc", "markdown", "css", "html", "yaml"],
   "eslint.useFlatConfig": true,
+  "eslint.validate": ["javascript", "typescript", "json", "jsonc", "markdown", "css", "html", "yaml"],
   "eslint.codeActionsOnSave.rules": ["@typescript-eslint/no-unused-vars", "no-console"],
 
-  // Prettier
+  // --- Prettier ---
   "prettier.requireConfig": true,
   "prettier.useEditorConfig": true,
   "prettier.printWidth": 100,
@@ -35,27 +74,52 @@
   "prettier.arrowParens": "always",
   "prettier.endOfLine": "lf",
 
-  // TypeScript
+  // --- TypeScript ---
   "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.suggest.enabled": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.quoteStyle": "single",
 
-  // Experimental
-  "workbench.experimental.editor.experimentalStickyScroll": true,
-  "terminal.integrated.experimentalUseTitleEvent": true,
+  // --- Testing & Debugging ---
+  "testing.autoRun.mode": "rerun",
   "debug.javascript.usePreview": true,
+  "debug.javascript.terminalOptions": {
+    "outFiles": ["${workspaceFolder}/dist/**/*.js", "${workspaceFolder}/build/**/*.js"]
+  },
+
+  // --- Terminal ---
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.experimentalLinkProvider": true,
+  "terminal.integrated.experimentalUseTitleEvent": true,
+
+  // --- Git ---
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always",
+  "git.ignoreLimitWarning": true,
+  "git.branchProtection": ["main", "develop"],
+  "git.branchProtectionPrompt": "alwaysCommitToNewBranch",
+
+  // --- Workbench ---
+  "workbench.editor.enablePreview": true,
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.editor.experimentalInlineCompletions": true,
+  "workbench.editor.experimentalLanguageStatus": true,
+  "workbench.editor.experimentalHover": true,
+  "workbench.iconTheme": "vs-seti",
+
+  // --- Experimental ---
+  "workbench.experimental.editor.experimentalStickyScroll": true,
   "extensions.experimental.affinity": {
-    "denoland.vscode-deno": 1,
     "esbenp.prettier-vscode": 2
   },
-  // File assolciations
-  "files.associations": {
-    ".env*": "dotenv",
-    "example.env": "dotenv",
-    "*.toml": "toml"
-  },
+
+  // --- CMake ---
   "cmake.ignoreCMakeListsMissing": true
 }

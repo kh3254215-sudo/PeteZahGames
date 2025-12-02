@@ -1,0 +1,89 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "install:deps",
+      "label": "Install Command Line Dependencies",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "label": "Start Server",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "label": "Lint (ESLint + Stylelint)",
+      "group": "test",
+      "problemMatcher": {
+        "source": "eslint",
+        "base": "$eslint-stylish"
+      }
+    },
+    {
+      "type": "npm",
+      "script": "lint:check",
+      "label": "Lint Check",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "lint:scripts",
+      "label": "Lint Scripts",
+      "group": "test",
+      "problemMatcher": {
+        "source": "eslint",
+        "base": "$eslint-stylish"
+      }
+    },
+    {
+      "type": "npm",
+      "script": "lint:styles",
+      "label": "Lint Styles",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "format",
+      "label": "Format Code (Prettier)",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "label": "Build Project",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build:debug",
+      "label": "Build Project (Debug)",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Full Check & Build",
+      "dependsOn": ["Lint (ESLint + Stylelint)", "Format Code (Prettier)", "Build Project"],
+      "group": "build",
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

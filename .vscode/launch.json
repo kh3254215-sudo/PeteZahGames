@@ -1,0 +1,77 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Start Server",
+      "program": "${workspaceFolder}/server.js",
+      "runtimeExecutable": "node",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "restart": true,
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build Project",
+      "program": "${workspaceFolder}/build.js",
+      "runtimeExecutable": "node",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build Project (Debug)",
+      "program": "${workspaceFolder}/build.js",
+      "runtimeExecutable": "node",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": ["--env=debug"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run dependency Installer",
+      "program": "${workspaceFolder}/install.js",
+      "runtimeExecutable": "node",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Lint (ESLint + Stylelint)",
+      "runtimeExecutable": "pnpm",
+      "args": ["run", "lint"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Format (Prettier)",
+      "runtimeExecutable": "pnpm",
+      "args": ["run", "format"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Check & Build",
+      "configurations": ["Lint (ESLint + Stylelint)", "Format (Prettier)", "Build Project"]
+    }
+  ]
+}
