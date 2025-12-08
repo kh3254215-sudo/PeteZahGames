@@ -1,7 +1,7 @@
 import argon2 from 'argon2';
+import { createHash, randomUUID } from 'crypto';
+import dotenv from 'dotenv';
 import db from '../db.js';
-import dotenv from "dotenv";
-import { randomUUID, createHash } from 'crypto';
 
 dotenv.config();
 
@@ -70,10 +70,8 @@ function validateRequest(req, body) {
   if (!body.bot_token || !validateBotToken(body.bot_token)) return false;
   if (!userAgent || userAgent.length < 10) return false;
 
-  const botPatterns = [
-    /bot|crawler|spider|scraper|curl|wget|python|java|go-http|php|ruby|perl|headless|puppeteer|selenium/i
-  ];
-  if (botPatterns.some(pattern => pattern.test(userAgent))) return false;
+  const botPatterns = [/bot|crawler|spider|scraper|curl|wget|python|java|go-http|php|ruby|perl|headless|puppeteer|selenium/i];
+  if (botPatterns.some((pattern) => pattern.test(userAgent))) return false;
 
   if (!accept.includes('application/json') && !accept.includes('*/*') && !accept.includes('text/html')) return false;
   if (!contentType.includes('application/json')) return false;
@@ -123,8 +121,8 @@ export async function signupHandler(req, res) {
     const passwordHash = await argon2.hash(password, {
       type: argon2.argon2id,
       memoryCost: 65565, // ~64 MB
-      timeCost: 5,       // iterations
-      parallelism: 1     // threads
+      timeCost: 5, // iterations
+      parallelism: 1 // threads
     });
 
     const userId = randomUUID();
@@ -134,18 +132,18 @@ export async function signupHandler(req, res) {
     const isFirstUser = db.prepare('SELECT COUNT(*) AS count FROM users').get().count === 0;
     const isAdmin = isFirstUser || email === process.env.ADMIN_EMAIL;
 
-    db.prepare(`
+    db.prepare(
+      `
       INSERT INTO users (id, email, password_hash, created_at, updated_at, is_admin, email_verified, school, age, ip)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(userId, email, passwordHash, now, now, isAdmin ? 1 : 0, 1, school || null, age || null, ip);
+    `
+    ).run(userId, email, passwordHash, now, now, isAdmin ? 1 : 0, 1, school || null, age || null, ip);
 
     const ipKey = `signup_${ip}`;
     requestTimestamps.delete(ipKey);
 
     res.status(201).json({
-      message: isFirstUser
-        ? 'Admin account created and verified automatically!'
-        : 'Account created successfully! You can now log in.'
+      message: isFirstUser ? 'Admin account created and verified automatically!' : 'Account created successfully! You can now log in.'
     });
   } catch (error) {
     console.error('Signup error:', error);

@@ -319,18 +319,18 @@ app.post('/api/save-localstorage', (req, res) => {
     const { data } = req.body;
 
     if (!data || typeof data !== 'string') {
-      return res.status(400).json({ error: "Invalid data format" });
+      return res.status(400).json({ error: 'Invalid data format' });
     }
 
     if (data.length > 10 * 1024 * 1024) {
-      return res.status(400).json({ error: "Data too large. Maximum size is 10MB" });
+      return res.status(400).json({ error: 'Data too large. Maximum size is 10MB' });
     }
 
     let parsedData;
     try {
       parsedData = JSON.parse(data);
     } catch (e) {
-      return res.status(400).json({ error: "Invalid JSON format" });
+      return res.status(400).json({ error: 'Invalid JSON format' });
     }
 
     const sanitizedData = JSON.stringify(parsedData);
@@ -341,8 +341,9 @@ app.post('/api/save-localstorage', (req, res) => {
       INSERT INTO user_settings (user_id, localstorage_data, updated_at)
       VALUES (?, ?, ?)
       ON CONFLICT(user_id) DO UPDATE SET localstorage_data = ?, updated_at = ?
-    `).run(req.session.user.id, sanitizedData, now, sanitizedData, now);
-    return res.status(200).json({ message: "LocalStorage saved" });
+    `
+    ).run(req.session.user.id, sanitizedData, now, sanitizedData, now);
+    return res.status(200).json({ message: 'LocalStorage saved' });
   } catch (error) {
     console.error('Save error:', error);
     return res.status(500).json({ error: 'Internal server error' });
@@ -394,24 +395,30 @@ app.get('/api/changelog', (req, res) => {
 });
 app.get('/api/feedback', (req, res) => {
   try {
-    const isAdmin = req.session.user ? (() => {
-      try {
-        const user = db.prepare('SELECT is_admin, email FROM users WHERE id = ?').get(req.session.user.id);
-        return user && (user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL || user.is_admin === 2 || user.is_admin === 3);
-      } catch {
-        return false;
-      }
-    })() : false;
+    const isAdmin = req.session.user
+      ? (() => {
+          try {
+            const user = db.prepare('SELECT is_admin, email FROM users WHERE id = ?').get(req.session.user.id);
+            return user && ((user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL) || user.is_admin === 2 || user.is_admin === 3);
+          } catch {
+            return false;
+          }
+        })()
+      : false;
 
-    const feedback = db.prepare(`
+    const feedback = db
+      .prepare(
+        `
       SELECT f.*, u.username${isAdmin ? ', u.email' : ''}
       FROM feedback f
       LEFT JOIN users u ON f.user_id = u.id
       ORDER BY f.created_at DESC
       LIMIT 100
-    `).all();
+    `
+      )
+      .all();
 
-    const sanitizedFeedback = feedback.map(f => {
+    const sanitizedFeedback = feedback.map((f) => {
       const safe = {
         id: f.id,
         content: f.content,
@@ -540,8 +547,10 @@ app.get('/api/admin/users', (req, res) => {
       FROM users
       ORDER BY created_at DESC
       LIMIT 10000
-    `).all();
-    const usersWithExtras = users.map(u => {
+    `
+      )
+      .all();
+    const usersWithExtras = users.map((u) => {
       let ip = 'N/A';
       if (user.is_admin === 1 && user.email === process.env.ADMIN_EMAIL) {
         ip = u.ip || 'N/A';
@@ -636,11 +645,13 @@ const handleUpgradeVerification = (req, socket, next) => {
     console.log(`WebSocket Upgrade Attempt: URL=${req.url}, Verified=${verified}`);
   }
 
-  if (req.url.startsWith("/wisp/") ||
-    req.url.startsWith("/api/wisp-premium/") ||
-    req.url.startsWith("/api/alt-wisp-1/") ||
-    req.url.startsWith("/api/alt-wisp-2/") ||
-    req.url.startsWith("/api/alt-wisp-3/")) {
+  if (
+    req.url.startsWith('/wisp/') ||
+    req.url.startsWith('/api/wisp-premium/') ||
+    req.url.startsWith('/api/alt-wisp-1/') ||
+    req.url.startsWith('/api/alt-wisp-2/') ||
+    req.url.startsWith('/api/alt-wisp-3/')
+  ) {
     return next();
   }
 
@@ -665,8 +676,8 @@ const server = createServer((req, res) => {
     } catch (error) {
       console.error('Bare server error:', error.message);
       if (!res.headersSent) {
-        res.writeHead(500, { "Content-Type": "text/plain" });
-        res.end("Internal server error");
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Internal server error');
       }
     }
   };
@@ -684,7 +695,7 @@ const server = createServer((req, res) => {
   }
 });
 
-server.on("upgrade", (req, socket, head) => {
+server.on('upgrade', (req, socket, head) => {
   const handleBareUpgrade = (bareServer) => {
     try {
       bareServer.routeUpgrade(req, socket, head);
@@ -698,16 +709,18 @@ server.on("upgrade", (req, socket, head) => {
     handleUpgradeVerification(req, socket, () => handleBareUpgrade(bare));
   } else if (barePremium.shouldRoute(req)) {
     handleUpgradeVerification(req, socket, () => handleBareUpgrade(barePremium));
-  } else if (req.url?.startsWith("/wisp/") ||
-    req.url?.startsWith("/api/wisp-premium/") ||
-    req.url?.startsWith("/api/alt-wisp-1/") ||
-    req.url?.startsWith("/api/alt-wisp-2/") ||
-    req.url?.startsWith("/api/alt-wisp-3/")) {
+  } else if (
+    req.url?.startsWith('/wisp/') ||
+    req.url?.startsWith('/api/wisp-premium/') ||
+    req.url?.startsWith('/api/alt-wisp-1/') ||
+    req.url?.startsWith('/api/alt-wisp-2/') ||
+    req.url?.startsWith('/api/alt-wisp-3/')
+  ) {
     // Skip verification for WISP endpoints
-    if (req.url.startsWith("/api/wisp-premium/")) req.url = req.url.replace("/api/wisp-premium/", "/wisp/");
-    if (req.url.startsWith("/api/alt-wisp-1/")) req.url = req.url.replace("/api/alt-wisp-1/", "/wisp/");
-    if (req.url.startsWith("/api/alt-wisp-2/")) req.url = req.url.replace("/api/alt-wisp-2/", "/wisp/");
-    if (req.url.startsWith("/api/alt-wisp-3/")) req.url = req.url.replace("/api/alt-wisp-3/", "/wisp/");
+    if (req.url.startsWith('/api/wisp-premium/')) req.url = req.url.replace('/api/wisp-premium/', '/wisp/');
+    if (req.url.startsWith('/api/alt-wisp-1/')) req.url = req.url.replace('/api/alt-wisp-1/', '/wisp/');
+    if (req.url.startsWith('/api/alt-wisp-2/')) req.url = req.url.replace('/api/alt-wisp-2/', '/wisp/');
+    if (req.url.startsWith('/api/alt-wisp-3/')) req.url = req.url.replace('/api/alt-wisp-3/', '/wisp/');
     try {
       wisp.routeRequest(req, socket, head);
     } catch (error) {

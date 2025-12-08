@@ -3,14 +3,46 @@ import { execSync, spawn } from 'child_process';
 import { createWriteStream, promises as fs } from 'fs';
 import fse from 'fs-extra';
 import ignore from 'ignore';
-// Git metadata (isomorphic-git) is intentionally not imported to avoid
-// expensive git lookups during sitemap builds. Commit-counts are disabled.
 import minimist from 'minimist';
+import { createHash } from 'node:crypto';
+import { readdirSync, statSync } from 'node:fs';
+import { access } from 'node:fs/promises';
+import { join } from 'node:path';
 import os from 'os';
 import pLimit from 'p-limit';
 import path from 'path';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
+
+/**
+ * Creates hash of given files/folders. Used to conditionally deploy custom
+ * resources depending if source files have changed
+ * @param {string[]} paths
+ * @param {import("crypto").Hash} inputHash
+ * @returns {string|import("crypto").Hash}
+ */
+function computeMetaHash(paths, inputHash) {
+  const hash = inputHash ? inputHash : createHash('sha1');
+  for (const path of paths) {
+    const statInfo = statSync(path);
+    if (statInfo.isDirectory()) {
+      const directoryEntries = readdirSync(path, { withFileTypes: true });
+      const fullPaths = directoryEntries.map((e) => join(path, e.name));
+      // recursively walk sub-folders
+      computeMetaHash(fullPaths, hash);
+    } else {
+      const statInfo = statSync(path);
+      // compute hash string name:size:mtime
+      const fileInfo = `${path}:${statInfo.size}:${statInfo.mtimeMs}`;
+      hash.update(fileInfo);
+    }
+  }
+  // if not being called recursively, get the digest and return it as the hash result
+  if (!inputHash) {
+    return hash.digest().toString('base64');
+  }
+  return hash;
+}
 
 /**
  * @typedef {Object} SitemapEntry
@@ -684,31 +716,18 @@ async function main() {
   } else {
     console.log('Skipping submodule builds due to SKIP_SUBMODULES flag');
   }
+  const markerPath = path.join(__dirname, 'optimg', 'processed.sha1');
 
-  await processInputImages();
-  await processInputVectors();
+  try {
+    await access(markerPath);
+  } catch {
+    await processInputImages();
+    await processInputVectors();
+  }
   // Setup sitemap paths
   const sitemapDir = path.join(__dirname);
   const sitemapBasePath = path.join(sitemapDir, '.sitemap-base.json');
   const _sitemapCachePath = path.join(sitemapDir, '.sitemap-cache.json');
-
-  // Load previous git cache if available (unless --no-cache is set)
-  if (!NO_CACHE) {
-    try {
-      const previousCache = await fse.readJson(sitemapCachePath);
-      if (previousCache && typeof previousCache === 'object') {
-        for (const [key, value] of Object.entries(previousCache)) {
-          gitCache.set(key, value);
-        }
-        console.log(`Loaded ${Object.keys(previousCache).length} cached git entries`);
-      }
-    } catch (err) {
-      console.warn(err instanceof Error ? err.message : String(err));
-      console.log('No previous git cache found, starting fresh');
-    }
-  } else {
-    console.log('Skipping git cache load due to --no-cache flag');
-  }
 
   // Crawl files asynchronously
   const allCrawled = await crawlAsync(path.join(__dirname, 'public'));
