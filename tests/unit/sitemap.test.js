@@ -1,6 +1,6 @@
 /* global describe test expect */
 
-const helpers = require('../../server/helpers/sitemap.cjs');
+import * as helpers from '../../server/helpers/sitemap.js';
 
 describe('sitemap helpers', () => {
   test('computePriority returns expected bounds and values', () => {

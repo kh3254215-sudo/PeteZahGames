@@ -1,2 +1,3 @@
 pnpm exec prettier -c
 pnpm lint:check || echo "Just testing for now, lint errors found."
+pnpm test

@@ -1,7 +1,6 @@
-/* global describe test expect beforeAll */
-const request = require('supertest');
-const express = require('express');
-const app = express();
+/* global describe test expect */
+import request from 'supertest';
+import { app } from '../../server.js';
 
 describe('API endpoints', () => {
   test('GET /sitemap.json returns an object', async () => {
@@ -24,11 +23,12 @@ describe('API endpoints', () => {
     expect(res.text.split('\n').length).toBeGreaterThan(0);
   }, 10000);
 
-  test('GET /ip returns an HTML page', async () => {
+  test('GET /ip returns an integer', async () => {
     const res = await request(app).get('/ip').set('User-Agent', 'Mozilla/5.0');
     expect(res.statusCode).toBe(200);
-    expect(res.text).toContain('<script>');
-  }, 10000);
+    const ipValue = parseInt(res.text, 10);
+    expect(Number.isInteger(ipValue)).toBe(true);
+  });
 
   test('Non-existent route returns 404', async () => {
     const res = await request(app).get('/non-existent-route-12345');

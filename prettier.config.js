@@ -17,8 +17,6 @@ export default {
   embeddedLanguageFormatting: 'auto',
   vueIndentScriptAndStyle: false,
   singleAttributePerLine: false,
-
-  // Plugin support
   plugins: ['prettier-plugin-organize-imports'],
 
   // File-specific overrides
