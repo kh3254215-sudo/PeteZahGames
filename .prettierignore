@@ -6,6 +6,9 @@ public/storage/ag/g2/**/*
 !public/storage/ag/g2/**/*.html
 public/storage/ag/a/emulatorjs/**/*
 !public/storage/ag/a/emulatorjs/**/*.html
+**/ag/a/**/*
+!**/ag/a/**/*.html
+**/*.min.*
 public/scram/*
 pnpm-lock.yaml
 **/*.min.css
@@ -18,3 +21,9 @@ external
 *.jpeg
 *.gif
 *.webp
+**/dist
+**/build
+**/.git
+**/uv
+**/petezah
+test-results

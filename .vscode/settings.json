@@ -1,7 +1,7 @@
 {
   // --- Editor ---
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "prettier.prettier-vscode",
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
   "editor.trimAutoWhitespace": true,
@@ -55,7 +55,17 @@
     "**/dist": true,
     "**/build": true,
     "**/.git": true,
-    "**/scram": true
+    "**/scram": true,
+    "**/uv": true,
+    "**/petezah": true,
+    "**/ag/g/": true,
+    "**/ag/g2/": true,
+    "!**/ag/g/*.html": true,
+    "!**/ag/g2/*.html": true,
+    "**/ag/a/": true,
+    "!**/ag/a/*.html": true,
+    "pnpm-lock.yaml": true,
+    "**/*.min.*": true
   },
   "search.useIgnoreFiles": true,
 
@@ -76,7 +86,7 @@
 
   // --- TypeScript ---
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "prettier.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "non-relative",
@@ -121,5 +131,7 @@
   },
 
   // --- CMake ---
-  "cmake.ignoreCMakeListsMissing": true
+  "cmake.ignoreCMakeListsMissing": true,
+  "editor.formatOnPaste": true,
+  "editor.experimentalGpuAcceleration": "on"
 }

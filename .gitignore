@@ -151,3 +151,5 @@ $RECYCLE.BIN/
 # Sitemap cache
 .sitemap*
 !.sitemapignore
+# Tests
+test-results
