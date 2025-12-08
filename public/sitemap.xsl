@@ -85,15 +85,36 @@
             <xsl:for-each select="sitemap:url">
               <tr>
                 <td><a href="{sitemap:loc}"><xsl:value-of select="sitemap:loc"/></a></td>
-                <td><xsl:value-of select="sitemap:priority"/></td>
-                <td><xsl:value-of select="sitemap:changefreq"/></td>
-                <td><xsl:value-of select="sitemap:lastmod"/></td>
+                <td>
+                  <xsl:choose>
+                    <xsl:when test="normalize-space(sitemap:priority)">
+                      <xsl:value-of select="sitemap:priority"/>
+                    </xsl:when>
+                    <xsl:otherwise>N/A</xsl:otherwise>
+                  </xsl:choose>
+                </td>
+                <td>
+                  <xsl:choose>
+                    <xsl:when test="normalize-space(sitemap:changefreq)">
+                      <xsl:value-of select="sitemap:changefreq"/>
+                    </xsl:when>
+                    <xsl:otherwise>Unknown</xsl:otherwise>
+                  </xsl:choose>
+                </td>
+                <td>
+                  <xsl:choose>
+                    <xsl:when test="string-length(sitemap:lastmod) &gt; 0">
+                      <xsl:value-of select="substring(sitemap:lastmod,1,10)" />
+                    </xsl:when>
+                    <xsl:otherwise>N/A</xsl:otherwise>
+                  </xsl:choose>
+                </td>
               </tr>
             </xsl:for-each>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2">Total URLs: <xsl:value-of select="count(sitemap:url)"/></td>
+              <td colspan="4">Total URLs: <xsl:value-of select="count(sitemap:url)"/></td>
             </tr>
           </tfoot>
         </table>

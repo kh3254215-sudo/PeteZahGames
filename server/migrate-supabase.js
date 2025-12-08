@@ -1,4 +1,3 @@
-// @ts-check
 import argon2 from 'argon2';
 import { randomUUID } from 'crypto';
 import db from './db.js';

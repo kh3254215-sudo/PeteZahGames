@@ -1,25 +1,24 @@
-import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
-import bareServerPkg from "@tomphttp/bare-server-node";
-import bcrypt from "bcrypt";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import fileUpload from "express-fileupload";
-import fs from "fs";
-import { createProxyMiddleware } from "http-proxy-middleware";
-import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
-import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
-import NodeCache from "node-cache";
-import { hostname } from "node:os";
-import path, { join } from "node:path";
-import session from "express-session";;
-import { server as wisp } from "@mercuryworkshop/wisp-js/server";
-import { randomUUID } from "crypto";
-import { createServer } from "node:http";
-import { fileURLToPath } from "node:url";
-import rateLimit from "express-rate-limit";
-const { createBareServer } = bareServerPkg;
+import { baremuxPath } from '@mercuryworkshop/bare-mux/node';
+import { epoxyPath } from '@mercuryworkshop/epoxy-transport';
+import { libcurlPath } from '@mercuryworkshop/libcurl-transport';
+import { server as wisp } from '@mercuryworkshop/wisp-js/server';
+import bareServerPkg from '@tomphttp/bare-server-node';
+import bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import { randomBytes, randomUUID } from 'crypto';
+import dotenv from 'dotenv';
+import express from 'express';
+import fileUpload from 'express-fileupload';
+import rateLimit from 'express-rate-limit';
+import session from 'express-session';
+import fs from 'fs';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import NodeCache from 'node-cache';
+import { createServer } from 'node:http';
+import { hostname } from 'node:os';
+import path, { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { adminUserActionHandler } from './server/api/admin-user-action.js';
 import { addCommentHandler, getCommentsHandler } from './server/api/comments.js';
 import { getLikesHandler, likeHandler } from './server/api/likes.js';
@@ -27,6 +26,7 @@ import { signinHandler } from './server/api/signin.js';
 import { signupHandler } from './server/api/signup.js';
 import db from './server/db.js';
 import parseConfig from './server/parseconfig.js';
+const { createBareServer } = bareServerPkg;
 
 const config = parseConfig('./config.jsonc');
 const legalRemoved = config.legalRemoved || [];
@@ -39,11 +39,9 @@ if (fs.existsSync(envFile)) {
 }
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const publicPath = "public";
-const bare = createBareServer("/bare/", {
-});
-const barePremium = createBareServer("/api/bare-premium/", {
-});
+const publicPath = 'public';
+const bare = createBareServer('/bare/', {});
+const barePremium = createBareServer('/api/bare-premium/', {});
 
 const app = express();
 
@@ -71,7 +69,7 @@ if (process.env.SESSION_SECRET) {
   SESSION_SECRET = process.env.SESSION_SECRET;
 } else {
   console.warn('SESSION_SECRET not set, generating a random one for this session');
-  SESSION_SECRET = crypto.randomBytes(32).toString('hex');
+  SESSION_SECRET = randomBytes(32).toString('hex');
 }
 app.use(
   session({
@@ -116,20 +114,21 @@ applyCommonMiddleware(app);
 
 const verifyMiddleware = (req, res, next) => {
   const verified = req.cookies?.verified === 'ok' || req.headers['x-bot-token'] === process.env.BOT_TOKEN;
-  const ua = req.headers['user-agent'] || '';
-  const isBrowser = /Mozilla|Chrome|Safari|Firefox|Edge/i.test(ua);
-  const acceptsHtml = req.headers.accept?.includes('text/html');
+  const acceptsHtml = (req.headers.accept || '').includes('text/html');
 
-  if (!isBrowser) return res.status(403).send('Forbidden');
-  if (verified && isBrowser) return next();
+  // Non-HTML clients (CLI, fetchers, bots without HTML Accept) proceed.
   if (!acceptsHtml) return next();
 
-  req.session.verified = true;
+  // HTML-capable clients: if already verified, proceed.
+  if (verified) return next();
 
+  // Not verified + accepts HTML → serve one-time verification page.
+  req.session.verified = true;
   res.status(200).send(`
     <!DOCTYPE html>
     <html><body>
       <script>
+        document.cookie = "verified=ok; Max-Age=86400; Path=/; SameSite=Lax";
         setTimeout(() => window.location.replace(window.location.pathname), 100);
       </script>
       <noscript>Enable JavaScript to continue.</noscript>
@@ -178,7 +177,7 @@ app.use(
 );
 
 app.get('/ip', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/pages/other/roblox/ip.html'));
+  res.send('173');
 });
 
 // Add stricter rate limits for signup and profile-pic upload
@@ -578,11 +577,7 @@ const isBrowser = (req) => {
 const handleHttpVerification = (req, res, next) => {
   const acceptsHtml = req.headers.accept?.includes('text/html');
   if (!acceptsHtml) return next();
-  if (isVerified(req) && isBrowser(req)) return next();
-  if (!isBrowser(req)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    return res.end('Forbidden');
-  }
+  if (isVerified(req)) return next();
   res.writeHead(200, {
     'Content-Type': 'text/html',
     'Set-Cookie': 'verified=ok; Max-Age=86400; Path=/; HttpOnly; SameSite=Lax'
@@ -603,10 +598,9 @@ const handleHttpVerification = (req, res, next) => {
 
 const handleUpgradeVerification = (req, socket, next) => {
   const verified = isVerified(req);
-  const isWsBrowser = isBrowser(req);
-  console.log(`WebSocket Upgrade Attempt: URL=${req.url}, Verified=${verified}, IsBrowser=${isWsBrowser}, Cookies=${req.headers.cookie || 'none'}`);
+  console.log(`WebSocket Upgrade Attempt: URL=${req.url}, Verified=${verified}, Cookies=${req.headers.cookie || 'none'}`);
 
-  // Allow all WISP endpoints without verification
+  // Always allow WISP endpoints
   if (
     req.url.startsWith('/wisp/') ||
     req.url.startsWith('/api/wisp-premium/') ||
@@ -617,12 +611,15 @@ const handleUpgradeVerification = (req, socket, next) => {
     return next();
   }
 
-  if (verified && isWsBrowser) {
-    return next();
+  // For other upgrades, prefer allowing and rely on rate limits and upstream auth.
+  // If you want a mild gate, you can require verification ONLY on specific paths.
+  // Example: gate upgrades under /secure/, otherwise allow.
+  if (req.url.startsWith('/secure/') && !verified) {
+    console.log(`WebSocket Rejected: URL=${req.url}, Reason=Not verified`);
+    return socket.destroy();
   }
 
-  console.log(`WebSocket Rejected: URL=${req.url}, Reason=${verified ? 'Not a browser' : 'Not verified'}`);
-  socket.destroy();
+  return next();
 };
 
 const server = createServer((req, res) => {
@@ -694,7 +691,7 @@ app.use((req, res) => {
   return res.status(404).sendFile(join(__dirname, publicPath, '404.html'));
 });
 function startServer() {
-  server.listen({ port }, () => {
+  return server.listen({ port }, () => {
     const address = server.address();
     console.log(`Listening on:`);
     console.log(`\thttp://localhost:${address.port}`);
@@ -702,20 +699,22 @@ function startServer() {
     console.log(`\thttp://${address.family === 'IPv6' ? `[${address.address}]` : address.address}:${address.port}`);
   });
 }
-startServer();
+export function stopServer() {
+  server.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
+}
+if (process.env.NODE_ENV !== 'test') {
+  startServer();
+}
 
 process.on('SIGINT', () => shutdown('INT'));
 process.on('SIGTERM', () => shutdown('TERM'));
 
 function shutdown(signal) {
   console.log(`SIG${signal} received: shutting down...`);
-  server.close(() => {
-    console.log('HTTP server closed');
-    bare.close(() => {
-      console.log('Bare server closed');
-      process.exit(0);
-    });
-  });
+  stopServer();
 }
 
 export { app, server, startServer };
