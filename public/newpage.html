@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pete Proxy</title>
-    <script type="text/javascript" src="//pl27983175.effectivegatecpm.com/c1/07/27/c10727dadb32856a5f427df5cc7f44ab.js"></script>
     <link rel="icon" type="icon/x-icon" href="storage/images/logo-png-removebg-preview.png" />
     <link rel="stylesheet" type="text/css" href="/storage/css/themes2.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="text/javascript" src="//pl27983175.effectivegatecpm.com/c1/07/27/c10727dadb32856a5f427df5cc7f44ab.js"></script>
+    <script
+      src="https://pl27983175.effectivegatecpm.com/c1/07/27/c10727dadb32856a5f427df5cc7f44ab.js"
+      integrity="sha384-sR9IG6oROSRkwlR7bngUe5gQZUVaOoVebzaoqT1sOwBkwDuK+cRd/EYMgMo4xp9k"
+      crossorigin="anonymous"
+    ></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
       body {
@@ -772,7 +775,8 @@
     </script>
     <script src="/scram/scramjet.all.js"></script>
     <script id="config-script" src="config.js"></script>
-    <script>
+    <script type="module">
+      import vpn from '/storage/js/vpn.js';
       class SearchSuggestions {
         constructor() {
           this.maxResults = 6;
@@ -997,122 +1001,7 @@
       const vpnPanel = document.getElementById('vpn-panel');
       const vpnCards = document.querySelectorAll('.vpn-region-card');
 
-      const regionData = {
-        default: {
-          flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDMiPjxyZWN0IHdpZHRoPSI2IiBoZWlnaHQ9IjMiIGZpbGw9IiNkNTIwMWYiLz48cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSIxLjUiIGZpbGw9IiNmZmYiLz48L3N2Zz4=',
-          name: 'Canada',
-          location: 'Quebec'
-        },
-        1: {
-          flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NDEwIDM5MDAiPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz48cGF0aCBkPSJNMCwwaDc0MTB2MzAwSDBaTTAsNjAwaDE3NDEwdjMwMEgwWk0wLDEyMDBoNzQxMHYzMDBIMFpNMCwxODAwaDc0MTB2MzAwSDBaTTAsMjQwMGg3NDEwdjMwMEgwWk0wLDMwMDBoNzQxMHYzMDBIMFpNMCwzNjAwaDE3NDEwdjMwMEgweiIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIyOTY0IiBoZWlnaHQ9IjIxMDAiIGZpbGw9IiMzYzNiNmUiLz48L3N2Zz4=',
-          name: 'America',
-          location: 'Texas'
-        },
-        2: {
-          flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NDEwIDM5MDAiPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz48cGF0aCBkPSJNMCwwaDc0MTB2MzAwSDBaTTAsNjAwaDE3NDEwdjMwMEgwWk0wLDEyMDBoNzQxMHYzMDBIMFpNMCwxODAwaDc0MTB2MzAwSDBaTTAsMjQwMGg3NDEwdjMwMEgwWk0wLDMwMDBoNzQxMHYzMDBIMFpNMCwzNjAwaDE3NDEwdjMwMEgweiIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIyOTY0IiBoZWlnaHQ9IjIxMDAiIGZpbGw9IiMzYzNiNmUiLz48L3N2Zz4=',
-          name: 'America',
-          location: 'Phoenix'
-        },
-        3: {
-          flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NDEwIDM5MDAiPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz48cGF0aCBkPSJNMCwwaDc0MTB2MzAwSDBaTTAsNjAwaDE3NDEwdjMwMEgwWk0wLDEyMDBoNzQxMHYzMDBIMFpNMCwxODAwaDc0MTB2MzAwSDBaTTAsMjQwMGg3NDEwdjMwMEgwWk0wLDMwMDBoNzQxMHYzMDBIMFpNMCwzNjAwaDE3NDEwdjMwMEgweiIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIyOTY0IiBoZWlnaHQ9IjIxMDAiIGZpbGw9IiMzYzNiNmUiLz48L3N2Zz4=',
-          name: 'America',
-          location: 'Mclean'
-        },
-        4: {
-          flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzQxMCIgaGVpZ2h0PSIzOTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjEzMDAiIGZpbGw9IiNmZjAwMDAiLz48cmVjdCB3aWR0aD0iNzQxMCIgaGVpZ2h0PSIzMDAiIHk9IjEzMDAiIGZpbGw9IiNmZmZmZmYiLz48cmVjdCB3aWR0aD0iNzQxMCIgaGVpZ2h0PSIxMzAwIiB5PSIyNjAwIiBmaWxsPSIjZmYwMDAwIi8+PC9zdmc+',
-          name: 'Austria',
-          location: 'Vienna'
-        }
-      };
-
-      const regionConfig = {
-        default: { wisp: '/wisp/', config: 'config.js' },
-        1: { wisp: '/api/alt-wisp-1/', config: '/static/alt-config-1.js' },
-        2: { wisp: '/api/alt-wisp-2/', config: '/static/alt-config-2.js' },
-        3: { wisp: '/api/alt-wisp-3/', config: '/static/alt-config-3.js' },
-        4: { wisp: '/api/alt-wisp-4/', config: '/static/alt-config-4.js' }
-      };
-
-      vpnToggle.addEventListener('click', function (e) {
-        e.stopPropagation();
-        vpnPanel.classList.toggle('show');
-        vpnToggle.classList.toggle('active');
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!vpnPanel.contains(e.target) && !vpnToggle.contains(e.target)) {
-          vpnPanel.classList.remove('show');
-          vpnToggle.classList.remove('active');
-        }
-      });
-
-      vpnCards.forEach((card) => {
-        card.addEventListener('click', function () {
-          const selectedRegion = this.getAttribute('data-region');
-          const config = regionConfig[selectedRegion];
-          const data = regionData[selectedRegion];
-
-          vpnCards.forEach((c) => c.classList.remove('selected'));
-          this.classList.add('selected');
-
-          document.getElementById('current-flag').style.backgroundImage = `url('${data.flag}')`;
-          document.getElementById('current-region').textContent = data.name;
-
-          localStorage.setItem('selectedVpnRegion', selectedRegion);
-
-          const configScript = document.getElementById('config-script');
-          if (configScript) {
-            configScript.remove();
-          }
-
-          const newConfigScript = document.createElement('script');
-          newConfigScript.id = 'config-script';
-          newConfigScript.src = config.config;
-          newConfigScript.onload = function () {
-            if (typeof _CONFIG !== 'undefined') {
-              _CONFIG.wispurl = (location.protocol === 'https:' ? 'wss' : 'ws') + '://' + location.host + config.wisp;
-              store.wispurl = _CONFIG.wispurl;
-              connection.setTransport('/epoxy/index.mjs', [{ wisp: store.wispurl }]).catch((err) => {
-                console.log('Transport update:', err);
-              });
-            }
-          };
-          document.body.appendChild(newConfigScript);
-
-          window.dispatchEvent(
-            new StorageEvent('storage', {
-              key: 'selectedVpnRegion',
-              newValue: selectedRegion,
-              url: window.location.href
-            })
-          );
-
-          vpnPanel.classList.remove('show');
-          vpnToggle.classList.remove('active');
-        });
-      });
-
-      const savedRegion = localStorage.getItem('selectedVpnRegion');
-      if (savedRegion && regionConfig[savedRegion]) {
-        const savedData = regionData[savedRegion];
-        document.getElementById('current-flag').style.backgroundImage = `url('${savedData.flag}')`;
-        document.getElementById('current-region').textContent = savedData.name;
-
-        vpnCards.forEach((card) => {
-          if (card.getAttribute('data-region') === savedRegion) {
-            card.classList.add('selected');
-          } else {
-            card.classList.remove('selected');
-          }
-        });
-
-        const config = regionConfig[savedRegion];
-        const configScript = document.getElementById('config-script');
-        if (configScript) {
-          configScript.src = config.config;
-        }
-      }
-
+      await vpn(vpnToggle, vpnPanel, vpnCards);
       const { ScramjetController } = $scramjetLoadController();
       const scramjet = new ScramjetController({
         prefix: '/scramjet/',

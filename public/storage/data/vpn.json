@@ -1,0 +1,33 @@
+{
+  "$schema": "./vpn.schema.json",
+  "default": {
+    "flag": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDMiPjxyZWN0IHdpZHRoPSI2IiBoZWlnaHQ9IjMiIGZpbGw9IiNkNTIwMWYiLz48cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSIxLjUiIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+    "name": "Canada",
+    "location": "Quebec",
+    "wisp": "/wisp/"
+  },
+  "1": {
+    "flag": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NDEwIDM5MDAiPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz48cGF0aCBkPSJNMCwwaDc0MTB2MzAwSDBaTTAsNjAwaDE3NDEwdjMwMEgwWk0wLDEyMDBoNzQxMHYzMDBIMFpNMCwxODAwaDc0MTB2MzAwSDBaTTAsMjQwMGg3NDEwdjMwMEgwWk0wLDMwMDBoNzQxMHYzMDBIMFpNMCwzNjAwaDE3NDEwdjMwMEgweiIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIyOTY0IiBoZWlnaHQ9IjIxMDAiIGZpbGw9IiMzYzNiNmUiLz48L3N2Zz4=",
+    "name": "America",
+    "location": "Texas",
+    "wisp": "/api/alt-wisp-1/"
+  },
+  "2": {
+    "flag": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NDEwIDM5MDAiPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz48cGF0aCBkPSJNMCwwaDc0MTB2MzAwSDBaTTAsNjAwaDE3NDEwdjMwMEgwWk0wLDEyMDBoNzQxMHYzMDBIMFpNMCwxODAwaDc0MTB2MzAwSDBaTTAsMjQwMGg3NDEwdjMwMEgwWk0wLDMwMDBoNzQxMHYzMDBIMFpNMCwzNjAwaDE3NDEwdjMwMEgweiIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIyOTY0IiBoZWlnaHQ9IjIxMDAiIGZpbGw9IiMzYzNiNmUiLz48L3N2Zz4=",
+    "name": "America",
+    "location": "Phoenix",
+    "wisp": "/api/alt-wisp-2/"
+  },
+  "3": {
+    "flag": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NDEwIDM5MDAiPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz48cGF0aCBkPSJNMCwwaDc0MTB2MzAwSDBaTTAsNjAwaDE3NDEwdjMwMEgwWk0wLDEyMDBoNzQxMHYzMDBIMFpNMCwxODAwaDc0MTB2MzAwSDBaTTAsMjQwMGg3NDEwdjMwMEgwWk0wLDMwMDBoNzQxMHYzMDBIMFpNMCwzNjAwaDE3NDEwdjMwMEgweiIgZmlsbD0iI2ZmZiIvPjxyZWN0IHdpZHRoPSIyOTY0IiBoZWlnaHQ9IjIxMDAiIGZpbGw9IiMzYzNiNmUiLz48L3N2Zz4=",
+    "name": "America",
+    "location": "Mclean",
+    "wisp": "/api/alt-wisp-3"
+  },
+  "4": {
+    "flag": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzQxMCIgaGVpZ2h0PSIzOTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjEzMDAiIGZpbGw9IiNmZjAwMDAiLz48cmVjdCB3aWR0aD0iNzQxMCIgaGVpZ2h0PSIzMDAiIHk9IjEzMDAiIGZpbGw9IiNmZmZmZmYiLz48cmVjdCB3aWR0aD0iNzQxMCIgaGVpZ2h0PSIxMzAwIiB5PSIyNjAwIiBmaWxsPSIjZmYwMDAwIi8+PC9zdmc+",
+    "name": "Austria",
+    "location": "Vienna",
+    "wisp": "/api/alt-wisp-4/"
+  }
+}

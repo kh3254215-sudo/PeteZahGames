@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VPN Region Data",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional schema identifier for this document",
+      "pattern": "^(https?:\\/\\/[^\\s]+|(?:\\.{1,2}\\/).*|\\/.*)$"
+    }
+  },
+  "patternProperties": {
+    "^(default|\\d+)$": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "string",
+          "description": "SVG data image",
+          "pattern": "^data:image/svg\\+xml;base64,[A-Za-z0-9+/=]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Country name"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location within the country (e.g., city, state, province)"
+        },
+        "wisp": {
+          "type": "string",
+          "description": "WISP configuration URL",
+          "pattern": "^(https?:\\/\\/[^\\s]+|(?:\\.{1,2}\\/).*|\\/.*)$"
+        }
+      },
+      "required": ["flag", "name", "location", "wisp"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
