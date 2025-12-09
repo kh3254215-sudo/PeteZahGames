@@ -11,7 +11,7 @@
   "dependencies": {
     "@mercuryworkshop/bare-mux": "^2.1.7",
     "@mercuryworkshop/epoxy-transport": "^2.1.27",
-    "@mercuryworkshop/libcurl-transport": "^1.4.0",
+    "@mercuryworkshop/libcurl-transport": "^1.5.2",
     "@mercuryworkshop/scramjet": "https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz",
     "@mercuryworkshop/wisp-js": "^0.4.0",
     "@supabase/supabase-js": "^2.86.0",

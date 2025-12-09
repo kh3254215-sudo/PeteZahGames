@@ -15,8 +15,8 @@ importers:
         specifier: ^2.1.27
         version: 2.1.28
       '@mercuryworkshop/libcurl-transport':
-        specifier: ^1.4.0
-        version: 1.5.1
+        specifier: ^1.5.2
+        version: 1.5.2
       '@mercuryworkshop/scramjet':
         specifier: https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz
         version: https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz
@@ -93,8 +93,8 @@ packages:
   '@mercuryworkshop/epoxy-transport@2.1.28':
     resolution: {integrity: sha512-lv/Kfdn37y8ZCXQaIT3Ebj4OSztBqeXdbR9rchbHQBKIw/fNSQJLGNBHV5ScXSzqt7NCwv8ZiZx7urRyk7Ua/Q==}
 
-  '@mercuryworkshop/libcurl-transport@1.5.1':
-    resolution: {integrity: sha512-tNyH1HuQIJRQ2sBVeFmHcIPf15Mv5v6Zq/qrOp3ReE5oBswT13MKLSybzu2VbVRo/QNud18nbKvVz3JeSre79g==}
+  '@mercuryworkshop/libcurl-transport@1.5.2':
+    resolution: {integrity: sha512-E0tD/3W6HE99ypc7CStpchU6xs+TP5u2vms/9q/46BShblB2pbRCNeXHBlvXqdz97nh2Xh4A68DryDt5CM29Dg==}
 
   '@mercuryworkshop/scramjet@https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz':
     resolution: {tarball: https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz}
@@ -550,8 +550,8 @@ packages:
     resolution: {integrity: sha512-rbku49cWloU5bSMI+zaRaXdQHXnthP6DZ/vLnfdSKyL4zUzuWnomtOEiZZOd+ioQ+avFo/qau3KPTc7Fjy1uPA==}
     engines: {node: '>=12'}
 
-  libcurl.js@0.7.3:
-    resolution: {integrity: sha512-svlEs42mmKocPKVsl+EViVPb/DuNRUecO+Fs7I3LOmu6YHfoBAfhTSmyCRg57H7QEFHgafZOf/TkA24s/i2AKg==}
+  libcurl.js@0.7.4:
+    resolution: {integrity: sha512-UpvVirvATP7fD0t4rnsxVRuUpPVIo2QvWj4+5JrMsd1KSEvYkON36+COOPAl88hPlGJddk+DfZRvyF7KG7YcSA==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -899,9 +899,9 @@ snapshots:
     dependencies:
       '@mercuryworkshop/epoxy-tls': 2.1.18-1
 
-  '@mercuryworkshop/libcurl-transport@1.5.1':
+  '@mercuryworkshop/libcurl-transport@1.5.2':
     dependencies:
-      libcurl.js: 0.7.3
+      libcurl.js: 0.7.4
 
   '@mercuryworkshop/scramjet@https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz':
     dependencies:
@@ -1408,7 +1408,7 @@ snapshots:
 
   is-regexp@3.1.0: {}
 
-  libcurl.js@0.7.3: {}
+  libcurl.js@0.7.4: {}
 
   math-intrinsics@1.1.0: {}
 
