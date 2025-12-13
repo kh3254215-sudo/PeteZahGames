@@ -5,6 +5,7 @@ entrypoint = "server.js"
 modules = ["nodejs-22.x"]
 packager.language = "nodejs"
 onBoot = "pnpm install && echo 'Dependencies installed'"
+build = "node build.js"
 
 [nix]
 channel = "stable-23_11"

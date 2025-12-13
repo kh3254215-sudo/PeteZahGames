@@ -32,8 +32,7 @@
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,
-    "external": true
+    "**/node_modules": true
   },
   "files.associations": {
     ".env*": "dotenv",
@@ -65,7 +64,8 @@
     "**/ag/a/": true,
     "!**/ag/a/*.html": true,
     "pnpm-lock.yaml": true,
-    "**/*.min.*": true
+    "**/*.min.*": true,
+    "external": true
   },
   "search.useIgnoreFiles": true,
 
@@ -133,5 +133,6 @@
   // --- CMake ---
   "cmake.ignoreCMakeListsMissing": true,
   "editor.formatOnPaste": true,
-  "editor.experimentalGpuAcceleration": "on"
+  "editor.experimentalGpuAcceleration": "on",
+  "gitlens.hovers.annotations.over": "annotation"
 }

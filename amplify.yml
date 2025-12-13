@@ -9,7 +9,7 @@ applications:
             - pnpm install --frozen-lockfile
         build:
           commands:
-            - pnpm run build || echo "No build script defined; publishing /public"
+            - pnpm run build
       artifacts:
         baseDirectory: public
         files:

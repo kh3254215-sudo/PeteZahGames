@@ -19,7 +19,7 @@
     "format:check": "prettier --check .",
     "build": "node build.js",
     "build:debug": "node build.js --env=debug",
-    "test:unit": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:unit": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install",
     "test": "pnpm test:unit && pnpm test:e2e",

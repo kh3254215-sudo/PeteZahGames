@@ -75,7 +75,7 @@ function installDepsUnix() {
 
     if (!has('nvm')) {
       console.log('Installing NVM...');
-      run('curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash');
+      run('curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash');
       run('export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh"');
     }
 
@@ -85,7 +85,7 @@ function installDepsUnix() {
     ['git', 'curl'].forEach(installMac);
     if (!has('nvm')) {
       console.log('Installing NVM...');
-      run('curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash');
+      run('curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash');
       run('export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh"');
     }
 
@@ -116,7 +116,7 @@ function main() {
       console.log('Windows detected. Running dependency install inside WSL...');
       run(`wsl bash -ic "bash ./wsl-install-deps.sh"`);
     } else {
-      console.error('WSL not detected. Please install WSL first.');
+      console.error('WSL not detected. Please install WSL first\nMore information can be found at https://aka.ms/wslinstall.');
       process.exit(1);
     }
   } else {

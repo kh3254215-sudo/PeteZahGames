@@ -182,7 +182,7 @@ const Submodules = ['scramjet', 'ultraviolet'];
 // --- Build commands ---
 /** @type {Record<string, string>} */
 const buildCommands = {
-  scramjet: 'CI=true pnpm install --no-verify-store-integrity	--store-dir ~/.pnpm-store && npm run rewriter:build && npm run build:all',
+  scramjet: 'CI=true pnpm install -P  --no-verify-store-integrity	--shamefully-hoist --store-dir ~/.pnpm-store && npm run rewriter:build && npm run build:all',
   ultraviolet: 'CI=true pnpm install --ignore-workspace --no-lockfile --no-verify-store-integrity && pnpm run build'
 };
 const YELLOW = '\x1b[33m';
@@ -275,7 +275,7 @@ function checkWSL() {
     if (!distros || distros.trim().length === 0) {
       throw new Error('WSL is installed but no distros found.');
     }
-    console.log(`WSL distros detected: \n${distros.trim()}`);
+    console.log(`WSL distros detected: \n\n${distros.trim()}`);
   } catch (err) {
     throw new Error('WSL is not installed or inaccessible. Details: ' + (err instanceof Error ? err.message : String(err)));
   }
@@ -293,19 +293,37 @@ function wrapCommandForWSL(command, cwd) {
     return command;
   }
   checkWSL();
-
-  // Convert Windows path to WSL path
-  const wslPath = cwd.replace(/\\/g, '/').replace(/^([A-Za-z]):/, (_, d) => `/mnt/${d.toLowerCase()}`);
-
-  // Important: do not inject Windows PATH, let WSL use its own PATH
-  const wslCommand = `cd '${wslPath}' && export PATH="$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && ${command}`;
-
+  // Create a temp dir inside WSL
+  const tmpDir = execSync('wsl mktemp -d', { encoding: 'utf8' }).trim();
   if (DEBUG) {
-    console.log(`Converted Windows path ${cwd} to WSL path ${wslPath}`);
-    return `wsl bash -c "source ~/.bashrc && echo '${command}' && ${wslCommand}"`;
-  } else {
-    return `wsl bash -c "source ~/.bashrc && ${wslCommand}"`;
+    console.log(`${YELLOW}mktemp created WSL temp dir: ${tmpDir}${RESET}`);
   }
+
+  // Convert Windows path to WSL path (/mnt/c/... style)
+  const wslPath = cwd.replace(/\\/g, '/').replace(/^([A-Za-z]):/, (_, d) => `/mnt/${d.toLowerCase()}`);
+  if (DEBUG) {
+    console.log(`${YELLOW}Converted Windows path ${cwd} → WSL path ${wslPath}${RESET}`);
+  }
+
+  // Copy the submodule into the WSL temp dir with progress bar
+  const files = fse.readdirSync(cwd);
+  let copied = 0;
+  const total = files.length;
+
+  for (const file of files) {
+    execSync(`wsl cp -r "${wslPath}" "${tmpDir}/"`, { stdio: 'inherit' });
+    copied++;
+    const percent = Math.round((copied / total) * 100);
+    process.stdout.write(`\rCopying ${GREEN}${file}${RESET} (${copied}/${total}) ${percent}%`);
+  }
+  process.stdout.write('\n');
+  console.log(`${GREEN}Copy complete: ${cwd} → ${tmpDir}${RESET}`);
+
+  // Path to the copied submodule inside WSL
+  const tmpSubdir = `${tmpDir}/${path.basename(cwd)}`;
+
+  // Return the wrapped command string
+  return `wsl bash -c "cd '${tmpSubdir}' && ${command}"`;
 }
 
 /**
@@ -720,6 +738,7 @@ async function main() {
 
   try {
     await access(markerPath);
+    computeMetaHash([path.join(__dirname, 'inputimages'), path.join(__dirname, 'inputvectors')]);
   } catch {
     await processInputImages();
     await processInputVectors();

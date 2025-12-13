@@ -63,7 +63,7 @@ done
 # Install NVM and Node 22+
 if ! has nvm; then
   echo "Installing NVM..."
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
   export NVM_DIR="$HOME/.nvm"
   source "$NVM_DIR/nvm.sh"
 fi
@@ -80,7 +80,9 @@ if ! has pnpm; then
   echo "Installing pnpm..."
   corepack enable
   corepack prepare pnpm@latest --activate
-  source "$HOME/.bashrc"
+  source "$HOME/.bashrc
+  echo "store-dir=$HOME/.pnpm-store" >> ~/.npmrc
+"
 fi
 
 # Install rspack, typescript, rslib globally

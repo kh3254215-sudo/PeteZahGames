@@ -1,12 +1,19 @@
 const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
 const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov'];
-
+/**
+ * @param {number} commitCount
+ * @param {number} maxCommits
+ * @returns {number}
+ */
 function computePriority(commitCount, maxCommits) {
   if (maxCommits === 0) return 0.5;
   const normalized = commitCount / maxCommits;
   return Math.max(0.1, Math.min(1.0, normalized));
 }
-
+/**
+ * @param {Date} lastmod
+ * @returns {string}
+ */
 function computeChangefreq(lastmod) {
   const last = new Date(lastmod);
   const days = (Date.now() - last.getTime()) / (1000 * 60 * 60 * 24);
@@ -15,7 +22,11 @@ function computeChangefreq(lastmod) {
   if (days <= 180) return 'monthly';
   return 'yearly';
 }
-
+/**
+ * @param {URL} domain
+ * @param {Array<{ loc: string; lastmod: Date; commitCount: number; ext: string }>} urls
+ * @returns {string}
+ */
 function generateXml(domain, urls) {
   const maxCommits = urls.reduce((max, u) => Math.max(max, u.commitCount), 0);
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
@@ -46,20 +57,42 @@ function generateXml(domain, urls) {
   xml += `</urlset>`;
   return xml;
 }
-
+/**
+ * @param {URL} domain
+ * @param {UrlEntry[]} urls
+ * @returns {JsonEntry[]}
+ */
 function generateJson(domain, urls) {
   const maxCommits = urls.reduce((max, u) => Math.max(max, u.commitCount), 0);
   return urls.map((u) => ({
-    loc: domain + u.loc,
+    loc: domain.toString() + u.loc, // safer than domain + u.loc
     lastmod: u.lastmod,
     changefreq: computeChangefreq(u.lastmod),
     priority: computePriority(u.commitCount, maxCommits),
     type: IMAGE_EXTENSIONS.includes(u.ext) ? 'image' : VIDEO_EXTENSIONS.includes(u.ext) ? 'video' : 'page'
   }));
 }
-
+/**
+ * @param {URL} domain
+ * @param {Array<{ loc: string }>} urls
+ * @returns {string}
+ */
 function generateTxt(domain, urls) {
   return urls.map((u) => domain + u.loc).join('\n');
 }
-
 export { computeChangefreq, computePriority, generateJson, generateTxt, generateXml };
+/**
+ * @typedef {Object} UrlEntry
+ * @property {string} loc
+ * @property {Date} lastmod
+ * @property {number} commitCount
+ * @property {string} ext
+ */
+/**
+ * @typedef {Object} JsonEntry
+ * @property {string} loc
+ * @property {Date} lastmod
+ * @property {string} changefreq
+ * @property {number} priority
+ * @property {'image' | 'video' | 'page'} type
+ */

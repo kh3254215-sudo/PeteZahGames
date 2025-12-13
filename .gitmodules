@@ -3,4 +3,4 @@
 	url = https://github.com/PeteZah-Games/Ultraviolet.git
 [submodule "external/scramjet"]
 	path = external/scramjet
-	url = https://github.com/proxy-alt/scramjet-mirror.git
+	url = https://github.com/HeyPuter/browser.js.git
