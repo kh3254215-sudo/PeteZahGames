@@ -11,7 +11,7 @@ async function migrateUser(userData, settingsData) {
     if (userData.encrypted_password) {
       passwordHash = userData.encrypted_password;
     } else {
-      passwordHash = await bcrypt.hash('temp_password_' + randomUUID(), 10);
+      passwordHash = null;
     }
 
     db.prepare(
@@ -26,7 +26,10 @@ async function migrateUser(userData, settingsData) {
       userData.user_metadata?.name || null,
       userData.user_metadata?.bio || null,
       userData.user_metadata?.avatar_url || null,
-      new Date(userData.created_at).getTime() || now,
+      (() => {
+        const createdAtTime = new Date(userData.created_at).getTime();
+        return Number.isNaN(createdAtTime) ? now : createdAtTime;
+      })(),
       now
     );
 
@@ -42,7 +45,7 @@ async function migrateUser(userData, settingsData) {
     console.log(`Migrated user: ${userData.email} -> ${userId}`);
     return userId;
   } catch (error) {
-    console.error(`Error migrating user ${userData.email}:`, error);
+    console.error(`Error migrating user ${userId}:`, error);
     return null;
   }
 }
