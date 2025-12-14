@@ -19,7 +19,7 @@
     "@mercuryworkshop/libcurl-transport": "^1.4.0",
     "@mercuryworkshop/scramjet": "https://github.com/MercuryWorkshop/scramjet/archive/refs/tags/latest.tar.gz",
     "@mercuryworkshop/wisp-js": "^0.4.0",
-    "@supabase/supabase-js": "^2.86.0",
+    "@supabase/supabase-js": "^2.87.1",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "@tomphttp/bare-server-node": "^2.0.3",
     "bcrypt": "^6.0.0",
