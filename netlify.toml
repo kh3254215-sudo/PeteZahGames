@@ -1,8 +1,11 @@
 [dev]
-  command = "pnpm start"
+  command = "pnpm install && pnpm start"
   port = 3000
   autoLaunch = true
-  framework = "express"
+
+[build]
+  command = "pnpm install && pnpm run build"
+  publish = "public"
 
 [build.processing]
   skip_processing = false
@@ -18,28 +21,12 @@
 [build.processing.images]
   optimize = true
 
-[build]
-  command = "pnpm install && pnpm run build"
-  publish = "public"
-
 [template]
   incoming-hooks = ["Contentful"]
   required-extensions = ["supabase"]
 
 [template.onboarding]
   instructions = """
-  Welcome to your new Express + Supabase project!
-  1. Replace the SUPABASE_URL and SUPABASE_KEY in [template.environment].
-  2. Set your SESSION_SECRET to a secure random string.
-  3. Run `pnpm install` and `pnpm start` to begin development.
-  """
-
-[template.environment]
-    SUPABASE_URL = "change me to your supabase url"
-    SUPABASE_KEY = "change me to your supabase anon key"
-    SESSION_SECRET = "change me to your express session secret"
-    PORT = "3000"
-
-  [dev]
-    command = "pnpm install && pnpm start"
-    port = 3000
+Welcome to your new Express + Supabase project!
+1. Replace the SUPABASE_URL and SUPABASE_KEY in [template.environment].
+2. Set your SESSION_SECRET to a secure random string._
