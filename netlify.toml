@@ -1,11 +1,9 @@
-[dev]
-  command = "pnpm install && pnpm start"
-  port = 3000
-  autoLaunch = true
-
 [build]
-  command = "pnpm install && pnpm run build"
-  publish = "public"
+  command = "corepack enable && pnpm install --frozen-lockfile && pnpm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
 
 [build.processing]
   skip_processing = false
@@ -21,6 +19,11 @@
 [build.processing.images]
   optimize = true
 
+[dev]
+  command = "pnpm start"
+  port = 3000
+  autoLaunch = true
+
 [template]
   incoming-hooks = ["Contentful"]
   required-extensions = ["supabase"]
@@ -29,4 +32,5 @@
   instructions = """
 Welcome to your new Express + Supabase project!
 1. Replace the SUPABASE_URL and SUPABASE_KEY in [template.environment].
-2. Set your SESSION_SECRET to a secure random string._
+2. Set your SESSION_SECRET to a secure random string.
+"""
